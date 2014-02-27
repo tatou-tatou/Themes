@@ -1,0 +1,43 @@
+#! /bin/sh
+# Put the file in ~/.config/bspwm/
+
+bspc monitor -d 1 2 3 4
+
+bspc config border_width          1
+bspc config window_gap            0
+bspc config split_ratio           0.60
+bspc config borderless_monocle    true
+bspc config gapless_monocle       true
+bspc config focus_follows_pointer  true
+
+
+
+#
+## COLOURS ##
+#
+
+bspc config focused_border_color "#5c5748"
+bspc config normal_border_color "#2D2D2D"
+bspc config presel_border_color "#878438"
+
+
+
+#
+## RULES ##
+#
+
+# Float
+bspc rule -a wine floating=true
+
+# Center floating windows
+bspc rule -a \* center=true
+
+
+
+#
+## PANEL ##
+#
+
+bspwmpanel &
+sleep 2
+mailbox_to_fifo &

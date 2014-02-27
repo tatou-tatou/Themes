@@ -1,0 +1,19 @@
+#! /bin/sh
+if [ $(pgrep -cx bspwmpanel) -gt 1 ] ; then
+    printf "%s\n" "The panel is already running." >&2
+    exit 1
+fi
+
+trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
+
+[ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
+mkfifo "$PANEL_FIFO"
+
+bspc config top_padding 18
+
+bspc control --subscribe > "$PANEL_FIFO" &
+clock -sf 'S\b0\u0  \f3 \f2%d \f5%b  \f3\f5 %H:%M \br\ur\fr' > "$PANEL_FIFO" &
+
+cat "$PANEL_FIFO" | bspwmpanel-bar | bar-aint-recursive &
+
+wait
