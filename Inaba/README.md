@@ -33,12 +33,12 @@ I also configured sxhkd to call it after pressing various keybinds. Here's an ex
 With those settings, pressing the XF86AudioRaiseVolume button will increase the PCM channel volume by 1 dB and then output the new volume value in place of the current song. The volume change notification will then disappear after 3 seconds (and get replaced by the current mpd song again).
 
 ##Font
-In the terminal and the panel, I'm using a modified MonteCarlo font with manually added icon glyphs. You can find it in my [dotfiles](https://github.com/tatou-tatou/dotfiles/tree/master/.fonts/MonteCarlo-glyphes) repo.
+In the terminal and the panel, I'm using a modified MonteCarlo font with manually added icon glyphs. You can find it in my [Monégasque](https://github.com/tatou-tatou/Monegasque) repo.
 
 The gtk font is Lucida Grande.
 
 ##Gtk theme and icons
-The gtk theme is [there](https://github.com/tatou-tatou/dotfiles/tree/master/.themes/Custom). The gtk2 part is modified from SimpliX, the gtk3 part from Numix. It needs some fixing though, especially the gtk3 part (obviously). Also, I intended to redo it from scratch using only Numix as a base.
+The gtk theme is [there](https://github.com/tatou-tatou/A73). The gtk2 part is modified from SimpliX, the gtk3 part from Numix. It needs some fixing though, especially the gtk3 part (obviously). Also, I intended to redo it from scratch using only Numix as a base.
 
 The icons are from [cldx/Numix](https://github.com/cldx/numix). They are incomplete and none of the mime type icons work properly in SpaceFM. As the repo seems abandoned, I might fix that someday.
 
