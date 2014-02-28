@@ -1,4 +1,7 @@
 #Clic
+
+
+
 For mouseplebs. Work in progress, only a rough outline, it's only for show.
 
 * dzen or bar (wip branch) to allow for clickable elements in the panel.
