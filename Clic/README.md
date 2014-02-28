@@ -1,6 +1,5 @@
 #Clic
-
-
+![Clic](https://raw.github.com/tatou-tatou/Themes/master/Clic/clic.png)
 
 For mouseplebs. Work in progress, only a rough outline, it's only for show.
 
