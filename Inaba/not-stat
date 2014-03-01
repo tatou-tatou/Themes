@@ -2,11 +2,14 @@
 #
 # not-stat OPTION ["STRING"]
 #
-# Kinda works like statnot, except it do not use libnotify and is not written in python:
+# Kinda works like statnot, except it does not use libnotify and is not written in python:
 #  - Send a pre-defined notification to a fifo with a fitting icon. The fifo is meant to be read by lemonboy's bar (see bspwmpanel-bar).
 #  - Every notifications are temporary and get replaced by the current mpd song (or by nothing) after a certain amount of time (3s by default).
 #  - Currently, volume and battery icons change their shape according to the respective value of what they represent.
-#  - To be used with the modified MonteCarlo font on https://github.com/tatou-tatou/dotfiles/tree/master/.fonts/MonteCarlo-glyphes (otherwise, you will not have any icons).
+#  - To be used with the modified MonteCarlo font on  (otherwise, you will not have any icons).
+#
+#
+# I wrote this to have fun and to waste time, I would not recommend anyone else to use it: if you want notifications in your panel, tweak statnot to work with something else than with dwm. t's easy to do and probably much better as it's a true, full featured, notification daemon.
 #
 #
 
@@ -21,7 +24,7 @@ countdown=3
 # FIFO
 fifo="/tmp/panel-fifo"
 
-# Character used by the bspwmpanel-bar script to know where to put the notification (read bspwmpanel-bar to understand what I mean)
+# Character used by the bspwmpanel-bar script to know where to put the notification.
 premessage="m"
 
 #####################
@@ -152,7 +155,7 @@ done
 #
 ###
 
-echo -E "$premessage" "\b4\u4\fr $icon \b0\u0\f5 \f3\f5$message \fr\br\ur" > $fifo
+echo -E "$premessage" "\b4\fr $icon \b0\f5 \f3\f5$message \fr\br" > $fifo
 
 echo $$ > ~/.notifier.pid
 
@@ -162,7 +165,7 @@ if [ $mpd_replace == true ]
 then
 	icon="$(mpc | grep -E 'playing|paused' | cut -d'[' -f2 | cut -d']' -f1 | sed 's/paused//g' | sed 's/playing//g')"
 	message=" $(mpc current -f %title%)"
-	echo -E "$premessage" "\b4\u4\fr $icon \b0\u0\f5 \f3\f5$message \fr\br\ur" > $fifo
+	echo -E "$premessage" "\b4\fr $icon \b0\f5 \f3\f5$message \fr\br" > $fifo
 else
 	echo -E "$premessage" "" > $fifo
 fi
