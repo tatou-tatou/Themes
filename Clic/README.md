@@ -1,10 +1,14 @@
 #Clic
 ![Clic](https://raw.github.com/tatou-tatou/Themes/master/Clic/clic.png)
 
-For mouseplebs. Work in progress, only a rough outline, it's only for show.
+For mouseplebs. Work in progress, only a rough outline, it's only for fun and doesn't really work. For example, mouse click stop working when changing workspaces using the panel arrows.
 
-* dzen or bar (wip branch) to allow for clickable elements in the panel.
-* Autohide dock
-* xtitle to output the client name. Left clicking on it toggles monocle. Right clicking pin it. Middle click kills the client. An [X] icon to close it.
-* Icon to launch myGTKmenu, right click launch dmenu2
-* Replace tags in the panel by arrows. Send a notification through libnotify or dzen-notify or not-stat when changing workspace.
+* Bar-ain't-recursive (wip branch) to allow for clickable elements in the panel.
+* xtitle to output the client name. An [X] icon to close it.
+* Clicking on MENU launch myGTKmenu.
+* Replaced tags in the panel by arrows (with the tag number). Click on them to switch to the next tag.
+
+I plan to:
+* Implement notifications, through dzen-notify, statnot or not-stat.
+* Clicking on the hour shows the date in a popup.
+* Find a way to notice me which tags are occupied. I might use dzen to do that, with a fading message in the center of the screen when switching tags. Just like any shitty DE.

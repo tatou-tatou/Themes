@@ -9,7 +9,7 @@
 /* Choose between an underline or an overline */
 #define BAR_UNDERLINE 1
 /* The thickness of the underline (in pixels). Set to 0 to disable. */
-#define BAR_UNDERLINE_HEIGHT 2
+#define BAR_UNDERLINE_HEIGHT 0
 /* Default bar position, overwritten by '-b' switch */
 #define BAR_BOTTOM 0
 /* The fonts used for the bar, comma separated. Only the first 2 will be used. */
@@ -27,7 +27,7 @@
 #define COLOR3 0x5C5541          // FG color of the squares before notifications, date and time (grey)
 #define COLOR4 0x3D444E          // BG color of the notifications ICONS (blue)
 #define COLOR5 0xded0b4          // FG color of NOTIFICATIONS, MUSIC and CLOCK (yellowish white)
-#define COLOR6 0x302E26
+#define COLOR6 0x62712C          // BG color of MONOCLE
 #define COLOR7 0x302E26
 #define COLOR8 0x5C5748
 #define COLOR9 0xeddec9          // FG color of the TAGS and MAILS

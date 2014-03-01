@@ -24,32 +24,32 @@ while read -r line ; do
                 case $item in
                     O*)
                         # focused occupied desktop
-                        wm_infos="$wm_infos \\f9 "
+                        wm_infos="$wm_infos  "
                         ;;
                     F*)
                         # focused free desktop
-                        wm_infos="$wm_infos \\f9 "
+                        wm_infos="$wm_infos  "
                         ;;
                     U*)
                         # focused urgent desktop
-                        wm_infos="$wm_infos\\b4\\u4 \\f9 \\b1\\u1"
+                        wm_infos="$wm_infos\\b4  \\b1"
                         ;;
                     o*)
                         # occupied desktop
-                        wm_infos="$wm_infos \\f9 "
+                        wm_infos="$wm_infos  "
                         ;;
                     f*)
                         # free desktop
-                        wm_infos="$wm_infos \\f9 "
+                        wm_infos="$wm_infos  "
                         ;;
                     u*)
                         # urgent desktop
-                        wm_infos="$wm_infos\\b4\\u4 \\f9 \\b1\\u1"
+                        wm_infos="$wm_infos\\b4  \\b1"
                         ;;
                     L*)
                         # layout
-			layout=$(printf "%s" "$(echo ${name} |sed 's/tiled/\\fr/g' |sed 's/monocle/\\f5\\b0\\u1 M \\br\\ur/g')")
-                        wm_infos="\\b1\\u1 $wm_infos \\fr\\br\\ur"
+			layout=$(printf "%s" "$(echo ${name} |sed 's/tiled//g' |sed 's/monocle/\\b6  Monocle \\br/g')")
+                        wm_infos="\\b1\\f9 $wm_infos \\fr\\br"
                         ;;
                 esac
                 shift

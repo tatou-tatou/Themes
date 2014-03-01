@@ -1,0 +1,22 @@
+#! /bin/sh
+if [ $(pgrep -cx bspwmpanel) -gt 1 ] ; then
+    printf "%s\n" "The panel is already running." >&2
+    exit 1
+fi
+
+trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
+
+[ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
+mkfifo "$PANEL_FIFO"
+
+bspc config top_padding 19
+
+. bar_WIP_colors
+
+bspc control --subscribe > "$PANEL_FIFO" &
+xtitle -sf 'T%s' > "$PANEL_FIFO" &
+clock -sf "S%{B$bg_clock} %{F$fg_heart}%{F$fg_clock}%H:%M %{B-}%{F-}" > "$PANEL_FIFO" &
+
+cat "$PANEL_FIFO" | ./bspwmpanel-WIP-bar | bar-aint-recursive -g 1280x19 -B $bg_global -F $fg_global -f "-windows-montecarlo-medium-r-normal--11-110-72-72-c-60-microsoft-cp1252" &
+
+wait

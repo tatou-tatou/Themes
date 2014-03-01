@@ -1,0 +1,41 @@
+# GLOBAL SETTINGS
+bg_global="#ff1A1917"
+fg_global="#ffDED0B4"
+
+# NOTIFICATION ICONS (BLUE)
+bg_icons="#ff3D444E"
+fg_icons="#ffDED0B4"
+
+# NOTIFICATIONS
+bg_notifications="#ff201f1d"
+fg_notifications="#ffDED0B4"
+
+# DATE AND CLOCK
+bg_clock="#ff533F48"
+fg_clock="#ffDED0B4"
+fg_clockemph="#ff878438"
+
+# TAGS
+bg_tags="#ff3D444E"
+fg_tags="#ffDED0B4"
+bg_urgenttags="#ffA7402a"
+fg_urgenttags="#ffeddec9"
+
+# MAILS
+bg_mails="#ffA7402a"
+fg_mails="#ffeddec9"
+
+# MISC
+fg_squares="#ff5C5541"
+fg_heart="#ff9D534A"
+bg_monocle="#ff62712C"
+fg_monocle="#ffded0b4"
+
+# MENU
+bg_menu="#ff62712C"
+fg_menu="#ffDED0B4"
+
+# CLIENT
+bg_client="#ff9D534A"
+fg_client="#ffDED0B4"
+fg_close="#ffDED0B4"
