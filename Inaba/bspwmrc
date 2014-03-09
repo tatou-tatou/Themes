@@ -1,5 +1,4 @@
 #! /bin/sh
-# Put the file in ~/.config/bspwm/
 
 bspc monitor -d 1 2 3 4
 
@@ -13,29 +12,33 @@ bspc config focus_follows_pointer  true
 
 
 #
-## COLOURS ##
+## COULEURS ##
 #
 
-bspc config focused_border_color "#5c5748"
-bspc config normal_border_color "#2D2D2D"
-bspc config presel_border_color "#878438"
+bspc config focused_border_color "#57544F"
+bspc config normal_border_color "#292825"
+bspc config presel_border_color "#3D444E"
 
 
 
 #
-## RULES ##
+## RÈGLES ##
 #
 
-# Float
-bspc rule -a wine floating=true
+# Flotter
+#bspc rule -a wine floating=true
+bspc rule -a nitrogen floating=true
 
-# Center floating windows
+# Centrer les fenêtres flottantes
 bspc rule -a \* center=true
 
+# Faire en sorte que le panel soit toujours par-dessus (pour éviter problèmes d'ombres)
+#bspc rule -a bar-aint-recursive manage=false  ## marche pas
+
 
 
 #
-## PANEL ##
+## PANEL
 #
 
 bspwmpanel &

@@ -22,7 +22,7 @@
 /* Color palette */
 #define BACKGROUND 0x1A1917
 #define COLOR0 0x201f1d          // BG color of MUSIC, NOTIFICATIONS and CLOCK (dark grey)
-#define COLOR1 0xA7402a          // BG color of TAGS and MAILS (red)
+#define COLOR1 0xA73E28          // BG color of TAGS and MAILS (red)
 #define COLOR2 0x878438          // FG color of the date (green)
 #define COLOR3 0x5C5541          // FG color of the squares before notifications, date and time (grey)
 #define COLOR4 0x3D444E          // BG color of the notifications ICONS (blue)
