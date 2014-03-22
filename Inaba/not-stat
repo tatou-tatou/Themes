@@ -43,7 +43,7 @@ while getopts ":mbBdrvVMh" flags; do
 	;;
 	b)
 		icon=""
-		message=" Backlight $(cat /sys/devices/virtual/backlight/apple_backlight/brightness)"
+		message=" Backlight $(cat /sys/devices/virtual/backlight/<...Your backlight...>/brightness)"
 	;;
 	B)
 		icon=""
