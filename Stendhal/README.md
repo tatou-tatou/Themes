@@ -1,4 +1,4 @@
-#Inaba
+#Stendhal
 
 ![Screenshot](https://raw.github.com/tatou-tatou/Themes/master/Stendhal/Stendhal.png)
 
@@ -46,7 +46,8 @@ The gtk font is Lucida Grande, the terminal font is Menlo.
 ##Misc
 * I use compton to draw very subtle shadows and to fade windows when opening/closing them or when switching between tags.
 * Gtk theme is tweaked from flatstudio.
-* I use dmenu2 and center it in the screen like this:
+
+I use dmenu2 and center it in the screen like this:
 
     dmenu_run -i -x 415 -y 330 -w 450 -h 20 -l 4 -fn 'Lucida Grande-8' -nb '#201F1D' -nf '#eddec9' -sb '#8F3724' -sf '#eddec9'
 
