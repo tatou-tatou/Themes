@@ -6,11 +6,11 @@ while read -r line ; do
             horloge="\\br\\fr${line#?}\\fr"
             ;;
 	m*)
-	    # music and notifications
+            # music and notifications
             musique="\br\fr${line#?}\\fr"
             ;;
 	M*)
-	    # mails
+            # mails
             mails="\br\fr${line#?}\\fr"
             ;;
         W*)

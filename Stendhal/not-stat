@@ -2,14 +2,13 @@
 #
 # not-stat OPTION ["STRING"]
 #
-# Kinda works like statnot, except it does not use libnotify and is not written in python:
+# Kinda works like statnot, except it does not use libnotify and it's not written in python:
 #  - Send a pre-defined notification to a fifo with a fitting icon. The fifo is meant to be read by lemonboy's bar (see bspwmpanel-bar).
-#  - Every notifications are temporary and get replaced by the current mpd song (or by nothing) after a certain amount of time (3s by default).
+#  - Every notifications are temporary and get replaced by the current mpd song (or by nothing) after a certain amount of time (3 seconds by default).
 #  - Currently, volume and battery icons change their shape according to the respective value of what they represent.
 #  - To be used with the modified MonteCarlo font on  (otherwise, you will not have any icons).
 #
-#
-# I wrote this to have fun and to waste time, I would not recommend anyone else to use it: if you want notifications in your panel, tweak statnot to work with something else than with dwm. t's easy to do and probably much better as it's a true, full featured, notification daemon.
+# I wrote this to have fun and to waste time, I would not recommend anyone else to use it. If you want notifications in your panel, tweak statnot to work with something else than with dwm. It's very easy to do and probably much better, as statnot is a true, full featured, notification daemon.
 #
 #
 
@@ -38,23 +37,28 @@ rst=$'\e[0m'
 while getopts ":mbBdrvVMh" flags; do
 	case $flags in
 	m)
+		## MUSIC ##
 		icon="$(mpc | grep -E 'playing|paused' | cut -d'[' -f2 | cut -d']' -f1 | sed 's/paused//g' | sed 's/playing//g')"
 		message=" $(mpc current -f %title%)"
 	;;
 	b)
+		## BACKLIGHT ##
 		icon=""
 		message=" Backlight $(cat /sys/devices/virtual/backlight/<...Your backlight...>/brightness)"
 	;;
 	B)
+		## KEYBOARD BACKLIGHT ##
 		icon=""
 		message=" Keyboard $(cat /sys/class/leds/smc::kbd_backlight/brightness)"
 	;;
 	d)
+		## DOWNLOAD ##
 		icon=""
 		message=$2
 	
 	;;
 	r)
+		## BATTERY ##
 		percent=$(acpi -b | cut -s -d' ' -f4 | cut -s -d'%' -f1)
 		message="$(acpi -b | cut -s -d',' -f3)"
 
@@ -82,6 +86,7 @@ while getopts ":mbBdrvVMh" flags; do
 
 	;;
 	v)
+		## PCM VOLUME ##
 		valeur_volume="$(amixer -q | grep -A5 PCM | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)"
 		if [ "$(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1)" == "off" ]
 		then
@@ -102,6 +107,7 @@ while getopts ":mbBdrvVMh" flags; do
 		message=" Volume $valeur_volume"
 	;;
 	V)
+		## MASTER VOLUME ##
 		valeur_volume="$(amixer -q | grep -A5 Master | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)"
 		if [ "$(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1)" == "off" ]
 		then
@@ -122,6 +128,7 @@ while getopts ":mbBdrvVMh" flags; do
 		message=" Master $valeur_volume"
 	;;
 	M)
+		## MUTE STATUS ##
 		icon="$(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1 | sed 's/on//g' | sed 's/off/ /g')"
 		message=" $(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1 | sed 's/on/Not /g' | sed 's/off//g')Muted"
 	;;
@@ -132,11 +139,11 @@ while getopts ":mbBdrvVMh" flags; do
 			echo "Display notifications on the top panel with various icons. After 3 seconds of inactivity, notifications get replaced by the current mpd song."
 			echo ""
 			echo -e "Options${rst}:"
-			echo -e "   ${bld}-m${rst}                 Currently played music."
+			echo -e "   ${bld}-m${rst}                 Currently played song with play/pause status."
 			echo -e "   ${bld}-b${rst}                 Screen backlight."
 			echo -e "   ${bld}-B${rst}                 Keyboard backlight."
 			echo -e "   ${bld}-d${rst}                 To use with a [MESSAGE]."
-			echo -e "   ${bld}-r${rst}                 Remaining battery time."
+			echo -e "   ${bld}-r${rst}                 Remaining battery time and a battery icon that fills itself."
 			echo -e "   ${bld}-v${rst}                 PCM volume in percent."
 			echo -e "   ${bld}-V${rst}                 Master volume in percent."
 			echo -e "   ${bld}-M${rst}                 Mute/Not mute."
