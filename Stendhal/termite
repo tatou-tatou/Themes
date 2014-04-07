@@ -10,11 +10,9 @@ dynamic_title = true
 urgent_on_bell = true
 clickable_url = true
 font = Menlo 8
-#font = MonteCarlo
 scrollback_lines = 1000
 search_wrap = true
 icon_name = terminal
-#geometry = 542x285
 geometry = 507x285
 
 # "system", "on" or "off"
@@ -34,13 +32,8 @@ browser = firefox-holly
 #size_hints = false
 
 [colors]
-#foreground = #eddec9
-#foreground = #cfc1a8
 foreground = #ded0b4
-#foreground_bold = #eddec9
 foreground_bold = #ded0b4
-#foreground_dim = #888888
-#background = #1A1917
 background = #201F1D
 cursor = #eddec9
 
@@ -50,10 +43,8 @@ highlight = #6b372C
 # colors from color0 to color254 can be set
 
 # Black
-color0 = #403A2E
-#color0 = #332F27
-color8 = #7A6F59
-#color8 = #615B52
+color0 = #302C23
+color8 = #403A2E
 
 # Red
 color1 = #A73E28
@@ -61,13 +52,11 @@ color9 = #85311E
 
 # Green
 color2 = #878438
-#color2 = #878438
 color10 = #62712C
 
 # Yellow
 color3 = #C4905E
 color11 = #C4A63B
-#color11 = #C9A62A
 
 # Blue
 color4 = #3D444E
@@ -88,12 +77,12 @@ color15 = #fafafa
 #256 colors
 color16 = #1A1917
 color17 = #201F1D
-color18 = #363431
-color19 = #C2AD9D
-color20 = #D59E71
-color21 = #7F2528
-color22 = #6B372C
-color23 = #7F3956
+color18 = #402929
+color19 = #D59E71
+color20 = #C2AD9D
+color21 = #C88981
+color22 = #7F3956
+color23 = #7F2528
 color24 = #36413C
 color25 = #403A2B
 

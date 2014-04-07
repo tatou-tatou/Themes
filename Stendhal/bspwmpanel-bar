@@ -1,17 +1,20 @@
 #! /bin/sh
+
+. bar_colors
+
 while read -r line ; do
     case $line in
         S*)
             # clock output
-            horloge="\\br\\fr${line#?}\\fr"
+            horloge="${line#?}"
             ;;
 	m*)
             # music and notifications
-            musique="\br\fr${line#?}\\fr"
+            musique="${line#?}"
             ;;
 	M*)
             # mails
-            mails="\br\fr${line#?}\\fr"
+            mails="${line#?}"
             ;;
         W*)
             # bspwm internal state
@@ -24,37 +27,37 @@ while read -r line ; do
                 case $item in
                     O*)
                         # focused occupied desktop
-                        wm_infos="$wm_infos  "
+                        wm_infos="$wm_infos  "
                         ;;
                     F*)
                         # focused free desktop
-                        wm_infos="$wm_infos  "
+                        wm_infos="$wm_infos  "
                         ;;
                     U*)
                         # focused urgent desktop
-                        wm_infos="$wm_infos\\b4  \\b1"
+                        wm_infos="$wm_infos%{B$bg_urgenttags}%{F$fg_urgenttags}  %{B$bg_tags}%{F$fg_tags}"
                         ;;
                     o*)
                         # occupied desktop
-                        wm_infos="$wm_infos  "
+                        wm_infos="$wm_infos  "
                         ;;
                     f*)
                         # free desktop
-                        wm_infos="$wm_infos  "
+                        wm_infos="$wm_infos  "
                         ;;
                     u*)
                         # urgent desktop
-                        wm_infos="$wm_infos\\b4  \\b1"
+                        wm_infos="$wm_infos%{B$bg_urgenttags}%{F$fg_urgenttags}  %{B$bg_tags}%{F$fg_tags}"
                         ;;
                     L*)
                         # layout
-			layout=$(printf "%s" "$(echo ${name} |sed 's/tiled//g' |sed 's/monocle/\\b6  Monocle \\br/g')")
-                        wm_infos="\\b1\\f9 $wm_infos \\fr\\br"
+			layout="%{B$bg_monocle}%{F$fg_monocle}$(printf "%s" "$(echo ${name} |sed 's/tiled//g' |sed 's/monocle/  Monocle /g')")%{B-}%{F-}"
+                        wm_infos="%{B$bg_tags}%{F$fg_tags} $wm_infos %{B-}%{F-}"
                         ;;
                 esac
                 shift
             done
             ;;
     esac
-    printf "%s\n" "\\l$wm_infos$musique $layout \\r $mails$horloge"
+    printf "%s\n" "$wm_infos$musique $layout %{r}%{A:mailbox_to_fifo:} $mails%{A}$horloge"
 done

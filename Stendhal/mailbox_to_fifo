@@ -1,5 +1,6 @@
 #!/bin/sh
 
+. bar_colors
 
 ### Settings ###
 
@@ -25,15 +26,14 @@ mails()
 			messages_mailbox2="$mailbox2 "
 	fi
 	if [ "$mailbox2" -gt "0" -o "$mailbox1" -gt "0" ]; then
-			messages="\\b1\\u1\\f9    "
-			endmail=" \\br\\ur\\fr"
+			messages="    "
+			endmail=" "
 	fi
 	if [ "$mailbox2" -gt "0" -a "$mailbox1" -gt "0" ]; then
-			middleand="\\f9+ "
+			middleand="+ "
 	fi
 
-echo "$messages$messages_mailbox2$middleand$messages_mailbox1$endmail"
+echo "%{B$bg_mails}%{F$fg_mails}$messages$message_mailbox2$middleand$message_mailbox1$endmail%{B-}%{F-}"
 }
-
 
 echo "M" "$(mails)" > /tmp/panel-fifo

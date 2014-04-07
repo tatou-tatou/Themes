@@ -7,11 +7,23 @@ I use [bspwm](https://github.com/baskerville/bspwm), with lemonboy's [bar](https
 Firefox+Vimperator, music player is ncmpcpp, terminal is termite, shell is zsh with a syntax highlighting plugin and the file manager is Thunar.
 
 ##Config files
+
+###To put in your $PATH
 *bspwmrc* goes into `~/.config/bspwm`
 
-*bspwmpanel* and *bspwmpanel-bar* generate the content of the panel. Put them in your $PATH.
+*bspwmpanel* and *bspwmpanel-bar* generate the content of the panel.
 
-I've also included the `config.h` I use for lemonboy's bar, and the termite config file. The firefox userchrome is there too, but not the 4chan css.
+*mailbox_to_fifo* is used to display the number of unread mails.
+
+*not-stat* makes the music notification. It also does a lot of other things, read the dedicated section.
+
+All the colors used by the above scripts are defined in *bar_colors*.
+
+
+###Misc.
+I've also included the termite config file. The firefox userchrome is there too, but not the 4chan css.
+
+For reference purpose, I added the `config.h` I used for the previous version of bar-aint-recursive (it needed recompiling to change the settings).
 
 ##Mails
 On my system, cron fetches mails every hours. I configured it to call `mailbox_to_fifo` after that.
@@ -43,11 +55,15 @@ In the panel, I'm using a modified MonteCarlo font with manually added icon glyp
 
 The gtk font is Lucida Grande, the terminal font is Menlo.
 
-##Misc
-* I use compton to draw very subtle shadows and to fade windows when opening/closing them or when switching between tags.
-* Gtk theme is tweaked from flatstudio.
 
+/!\ That's not true anymore, the new flavor of bar-aint-recursive is a retard when it comes to vertical alignment: MonteCarlo (and all of its icons) where displayed one pixel too low (which is a lot for a 18px panel).
+No idea how to fix that properly, I made a copy of the MonteCarlo font and I edited the .bdf file in vim to change the FONT_DESCENT property in order to move it by one pixel in the other direction. Kek.
+
+##Misc
 I use dmenu2 and center it in the screen like this:
 
     dmenu_run -i -x 415 -y 330 -w 450 -h 20 -l 4 -fn 'Lucida Grande-8' -nb '#201F1D' -nf '#eddec9' -sb '#8F3724' -sf '#eddec9'
 
+I use compton to draw very subtle shadows and to fade windows when opening/closing them or when switching between tags.
+
+Gtk theme is tweaked from flatstudio.
