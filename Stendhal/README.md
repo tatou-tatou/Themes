@@ -58,8 +58,8 @@ In the panel, I'm using a modified MonteCarlo font with manually added icon glyp
 The gtk font is Lucida Grande, the terminal font is Menlo.
 
 
-/!\ That's not true anymore, the new flavor of bar-aint-recursive is a retard when it comes to vertical alignment: MonteCarlo (and all of its icons) where displayed one pixel too low (which is a lot for a 18px panel).
-No idea how to fix that properly, I made a copy of the MonteCarlo font and I edited the .bdf file in vim to change the FONT_DESCENT property in order to move it by one pixel in the other direction. Kek.
+/!\ That's not true anymore, the new flavor of bar-aint-recursive is retarded when it comes to vertical alignment: MonteCarlo (and all of its icons) where displayed one pixel too low (which is a lot for a 18px panel).
+No idea how to fix that properly, I made a copy of the MonteCarlo font and edited the .bdf file in vim to change the SIZE, PIXEL_SIZE and FONT_DESCENT properties in order to move it by one pixel in the other direction.
 
 ##Misc
 I use dmenu2 and center it in the screen like this:
