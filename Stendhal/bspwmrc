@@ -4,7 +4,7 @@ bspc monitor -d 1 2 3 4
 
 bspc config border_width          1
 bspc config window_gap            0
-bspc config split_ratio           0.60
+bspc config split_ratio           0.50
 bspc config borderless_monocle    true
 bspc config gapless_monocle       true
 bspc config focus_follows_pointer  true
@@ -15,9 +15,10 @@ bspc config focus_follows_pointer  true
 ## COULEURS ##
 #
 
-bspc config focused_border_color "#363431"
+#bspc config focused_border_color "#45423E"
+bspc config focused_border_color "#524A3B"
 bspc config normal_border_color "#292825"
-bspc config presel_border_color "#3D444E"
+bspc config presel_border_color "#C2AD9D"
 
 
 
@@ -32,11 +33,6 @@ bspc rule -a nitrogen floating=true
 # Centrer les fenêtres flottantes
 bspc rule -a \* center=true
 
-# Faire en sorte que le panel soit toujours par-dessus (pour éviter problèmes d'ombres)
-#bspc rule -a bar-aint-recursive manage=false  ## marche pas
-
-
-
 #
 ## PANEL
 #
@@ -44,3 +40,4 @@ bspc rule -a \* center=true
 bspwmpanel &
 sleep 2
 mailbox_to_fifo &
+not-stat -m &

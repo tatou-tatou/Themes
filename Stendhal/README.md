@@ -4,7 +4,7 @@
 
 I use [bspwm](https://github.com/baskerville/bspwm), with lemonboy's [bar](https://github.com/LemonBoy/bar) (master branch).
 
-Firefox+Vimperator, music player is ncmpcpp, terminal is termite, shell is zsh with a syntax highlighting plugin and the file manager is Thunar.
+Firefox+Pentadactyl, music player is ncmpcpp, terminal is termite, shell is zsh with a syntax highlighting plugin and the file manager is Thunar.
 
 ##Config files
 
@@ -24,6 +24,8 @@ All the colors used by the above scripts are defined in *bar_colors*.
 I've also included the termite config file. The firefox userchrome is there too, but not the 4chan css.
 
 For reference purpose, I added the `config.h` I used for the previous version of bar-aint-recursive (it needed recompiling to change the settings).
+
+Pentadactyl can hide the scrollbars (both horizontal and vertical).
 
 ##Mails
 On my system, cron fetches mails every hours. I configured it to call `mailbox_to_fifo` after that.

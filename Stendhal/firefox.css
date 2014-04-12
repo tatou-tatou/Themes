@@ -1,11 +1,5 @@
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
-#content browser {
-    margin-right: -15px !important;
-	overflow-y: hidden !important;
-	overflow-x: hidden !important;
-}
-
 .tabbrowser-tab:not([pinned]) .tab-icon-image, .tab-throbber,
 #tabbrowser-tabs .scrollbutton-up,
 #tabbrowser-tabs .scrollbutton-down,
