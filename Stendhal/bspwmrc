@@ -10,6 +10,11 @@ bspc config gapless_monocle       true
 bspc config focus_follows_pointer  true
 
 
+# SHADOWS
+bspc config apply_floating_atom true
+bspc config history_aware_focus true
+bspc config ignore_ewmh_focus true
+
 
 #
 ## COULEURS ##
