@@ -1,6 +1,6 @@
 #! /bin/sh
 
-. bar_colors
+. panel-settings
 
 while read -r line ; do
     case $line in
@@ -8,9 +8,17 @@ while read -r line ; do
             # clock output
             horloge="${line#?}"
             ;;
+	c*)
+            # config
+            config="${line#?}"
+            ;;
 	m*)
-            # music and notifications
+            # not-stat
             musique="${line#?}"
+            ;;
+	n*)
+            # stat-not
+            stat="${line#?}"
             ;;
 	M*)
             # mails
@@ -27,37 +35,37 @@ while read -r line ; do
                 case $item in
                     O*)
                         # focused occupied desktop
-                        wm_infos="$wm_infos  "
+                        wm_infos="$wm_infos$occupied_focus"
                         ;;
                     F*)
                         # focused free desktop
-                        wm_infos="$wm_infos  "
+                        wm_infos="$wm_infos$empty_focus"
                         ;;
                     U*)
                         # focused urgent desktop
-                        wm_infos="$wm_infos%{B$bg_urgenttags}%{F$fg_urgenttags}  %{B$bg_tags}%{F$fg_tags}"
+                        wm_infos="$wm_infos%{B$bg_urgenttags}%{F$fg_urgenttags}$occupied_focus%{B$bg_tags}%{F$fg_tags}"
                         ;;
                     o*)
                         # occupied desktop
-                        wm_infos="$wm_infos  "
+                        wm_infos="$wm_infos%{A:bspc desktop -f ${name}:}$occupied%{A}"
                         ;;
                     f*)
                         # free desktop
-                        wm_infos="$wm_infos  "
+                        wm_infos="$wm_infos%{A:bspc desktop -f ${name}:}$empty%{A}"
                         ;;
                     u*)
                         # urgent desktop
-                        wm_infos="$wm_infos%{B$bg_urgenttags}%{F$fg_urgenttags}  %{B$bg_tags}%{F$fg_tags}"
+                        wm_infos="$wm_infos%{A:bspc desktop -f ${name}:}%{B$bg_urgenttags}%{F$fg_urgenttags}$occupied%{B$bg_tags}%{F$fg_tags}%{A}"
                         ;;
                     L*)
                         # layout
-			layout="%{B$bg_monocle}%{F$fg_monocle}$(printf "%s" "$(echo ${name} |sed 's/tiled//g' |sed 's/monocle/  Monocle /g')")%{B-}%{F-}"
-                        wm_infos="%{B$bg_tags}%{F$fg_tags} $wm_infos %{B-}%{F-}"
+			layout="%{B$bg_monocle}%{F$fg_monocle}$(printf "%s" "$(echo ${name} |sed 's/tiled//g' |sed 's/monocle/%{A:bspc desktop -l next:}  Monocle %{A}/g')")%{B-}%{F-}"
+                        wm_infos="%{B$bg_tags}%{F$fg_tags}%{A:mygtkmenu ~/.config/GTKmenu/StartMenu > /dev/null 2>&1:} %{A}$wm_infos %{B-}%{F-}"
                         ;;
                 esac
                 shift
             done
             ;;
     esac
-    printf "%s\n" "$wm_infos$musique $layout %{r}%{A:mailbox_to_fifo:} $mails%{A}$horloge"
+    printf "%s\n" "$wm_infos$config$musique $layout %{c}$stat %{r} $mails%{A:dzen-date &:}$horloge%{A}"
 done

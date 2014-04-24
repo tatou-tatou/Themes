@@ -1,5 +1,5 @@
 #! /bin/sh
-if [ $(pgrep -cx bspwmpanel) -gt 1 ] ; then
+if [ $(pgrep -cx panel) -gt 1 ] ; then
     printf "%s\n" "The panel is already running." >&2
     exit 1
 fi
@@ -9,13 +9,16 @@ trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 [ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
 mkfifo "$PANEL_FIFO"
 
-bspc config top_padding 18
+. panel-settings
 
-. bar_colors
+bspc config top_padding $height
 
 bspc control --subscribe > "$PANEL_FIFO" &
 clock -sf "S%{B$bg_clock}  %{F$fg_squares} %{F$fg_clockemph}%d %{F$fg_clock}%b  %{F$fg_squares}%{F$fg_clock} %H:%M %{B-}%{F-}" > "$PANEL_FIFO" &
 
-cat "$PANEL_FIFO" | bspwmpanel-bar | bar-aint-recursive -g 1280x18 -B $bg_global -F $fg_global -f "-windows-montecarlopanel-medium-r-normal--11-110-72-72-c-60-microsoft-cp1252" &
+cat "$PANEL_FIFO" | panel-skeleton | bar-aint-recursive -g 1280x$height -B $bg_global -F $fg_global -f "$font" | while read line; do eval "$line"; done &
+
+panel-mail &
+not-stat -m &
 
 wait

@@ -1,6 +1,10 @@
 #Stendhal
 
+I must rewrite this readme, it's outdated.
+
 ![Screenshot](https://raw.github.com/tatou-tatou/Themes/master/Stendhal/Stendhal.png)
+
+![Screenshot](https://raw.github.com/tatou-tatou/Themes/master/Stendhal/Stendhal.gif)
 
 I use [bspwm](https://github.com/baskerville/bspwm), with lemonboy's [bar](https://github.com/LemonBoy/bar) (master branch).
 

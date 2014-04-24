@@ -1,0 +1,60 @@
+#!/bin/bash
+
+. panel-settings
+
+monitor=""
+
+for B in Vp Vm Mu Kb Sc
+do
+	## For normal, unfocused, buttons
+	title=$B
+	message=" "
+	cmd_return="panel-monitor "
+	cmd_return+="$B"
+
+	## For the focused button
+	if [ "$1" == "$B" ]
+	then
+		case $B in
+		Mu) #music
+			cmd_return="panel-monitor"
+			message=" %{A:mpc prev:}%{A} %{A:mpc toggle:}%{A} %{A:mpc next:}%{A} %{A:coverart &:}%{A} %{A:panel-music_control:}%{A} "
+		;;
+		Sc) # backlight
+			cmd_return="panel-monitor"
+			down="sudo mbp_backlight down ; not-stat -b &"
+			up="sudo mbp_backlight up ; not-stat -b &"
+			message=" %{A:$down:}%{A}%{A:$up:}%{A} "
+		;;
+		Kb) # keyboard layout
+			cmd_return="panel-monitor"
+			down="setxkbmap -model macintosh -layout fr ; not-stat -d ' AZERTY' &"
+			up="setxkbmap -model macintosh -layout us ; not-stat -d ' QWERTY' &"
+			message=" $setting%{A:$down:}Fr%{A} %{A:$up:}Us%{A} "
+		;;
+		Vp) # PCM volume
+			cmd_return="panel-monitor"
+			setting="%{A:amixer set Master toggle ; not-stat -M &:}M%{A} "
+			down="amixer set PCM 1dB- > /dev/null ; not-stat -v &"
+			up="amixer set PCM 1dB+ > /dev/null ; not-stat -v &"
+			message=" $setting%{A:$down:}%{A}%{A:$up:}%{A} "
+		;;
+		Vm) # Master Volume
+			cmd_return="panel-monitor"
+			setting="%{A:amixer set Master toggle ; not-stat -M &:}M%{A} "
+			down="amixer set Master 1dB- ; not-stat -V &"
+			up="amixer set Master 1dB+ ; not-stat -V &"
+			message=" $setting%{A:$down:}%{A}%{A:$up:}%{A} "
+		;;
+		esac
+	fi
+
+	monitor+="%{A:$cmd_return:}%{B$bg_button}%{F$fg_button} $title %{A}%{B$bg_monitor}%{F$fg_monitor}$message%{B-}%{F-}"
+
+done
+
+# Add close button
+monitor+="%{B$bg_monitor}%{F$fg_close}%{A:echo c > /tmp/panel-fifo:}%{A} %{B-}%{F-}"
+
+# Send to panel
+echo "c" "$monitor" > /tmp/panel-fifo

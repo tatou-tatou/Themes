@@ -1,0 +1,45 @@
+#!/bin/sh
+
+. panel-settings
+
+mails()
+{
+	##Free
+	free=$(ls /home/tatou/Mail/free/Inbox/new | wc -l)
+	if [ "$free" -gt "0" ]
+		then
+			messagefree="$free "
+	fi
+	##Hotmail
+	hotmail=$(ls /home/tatou/Mail/hotmail/Inbox/new | wc -l)
+	if [ "$hotmail" -gt "0" ]
+		then
+			messagehotmail="$hotmail "
+	fi
+	if [ "$hotmail" -gt "0" -o "$free" -gt "0" ]; then
+			messages="    "
+			endmail=" "
+	fi
+	if [ "$hotmail" -gt "0" -a "$free" -gt "0" ]; then
+			middleand="+ "
+	fi
+
+echo "%{A:panel-mail reduced:}%{B$bg_mails}%{F$fg_mails}$messages$messagehotmail$middleand$messagefree$endmail%{B-}%{F-}%{A}"
+}
+
+mails_reduced()
+{
+echo "%{A:panel-mail full:}%{B$bg_mails}%{F$fg_mails}  %{B-}%{F-}%{A}"
+}
+
+case "$1" in
+	reduced)
+		echo "M" "$(mails_reduced)" > /tmp/panel-fifo
+	;;
+	full)
+		echo "M" "$(mails)" > /tmp/panel-fifo
+	;;
+	*)
+		echo "M" "$(mails)" > /tmp/panel-fifo
+	;;
+esac

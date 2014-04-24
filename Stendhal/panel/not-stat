@@ -8,13 +8,13 @@
 # to be read by lemonboy's bar (see bspwmpanel-bar).
 #  - Every notifications are temporary and get replaced by the current mpd song (or
 # by nothing) after a certain amount of time (3 seconds by default).
-#  - Currently, volume and battery icons change their shape according to the 
+#  - Currently, volume and battery icons change their shape according to the
 # respective value of what they represent.
-#  - To be used with the modified MonteCarlo font on  (otherwise, you will not 
+#  - To be used with the modified MonteCarlo font on  (otherwise, you will not
 # have any icons).
 #
 #  I wrote this to have fun and to waste time, I would not recommend anyone else to
-# use it. If you want notifications in your panel, tweak statnot to work with 
+# use it. If you want notifications in your panel, tweak statnot to work with
 # something else than with dwm. It's very easy to do and probably much better, as
 # statnot is a true, full featured, notification daemon.
 #
@@ -39,7 +39,10 @@ fifo="/tmp/panel-fifo"
 premessage="m"
 
 # Colors
-. bar_colors
+. panel-settings
+
+# What happens when you click on the icon
+execute="panel-monitor &"
 
 #####################
 
@@ -50,7 +53,8 @@ while getopts ":mbBdrvVMh" flags; do
 	case $flags in
 	m)
 		icon="$(mpc | grep -E 'playing|paused' | cut -d'[' -f2 | cut -d']' -f1 | sed 's/paused//g' | sed 's/playing//g')"
-		message=" $(mpc current -f %title%)"
+		message=" $(mpc current -f '%title%|%file%')"
+		text_execute="mpc toggle > /dev/null &"
 	;;
 	b)
 		icon=""
@@ -61,14 +65,11 @@ while getopts ":mbBdrvVMh" flags; do
 		message=" Clavier $(cat /sys/class/leds/smc::kbd_backlight/brightness)"
 	;;
 	d)
-		icon=""
+		icon=""
 		message=$2
 	
 	;;
 	r)
-		#icon=""
-		#message="$(acpi -b | cut -s -d',' -f3)"
-
 		percent=$(acpi -b | cut -s -d' ' -f4 | cut -s -d'%' -f1)
 		message="$(acpi -b | cut -s -d',' -f3)"
 
@@ -175,7 +176,7 @@ done
 #
 ###
 
-echo -E "$premessage" "%{B$bg_icons}%{F$fg_icons} $icon %{B$bg_notifications} %{F$fg_squares}%{F$fg_notifications}$message %{B-}%{F-}" > $fifo
+echo -E "$premessage" "%{B$bg_icons}%{F$fg_icons}%{A:$execute:} $icon %{A}%{B$bg_notifications}%{A:$text_execute:} %{F$fg_squares}%{F$fg_notifications}$message %{A}%{B-}%{F-}" > $fifo
 
 
 sleep $countdown
@@ -183,8 +184,9 @@ sleep $countdown
 if [ $mpd_replace == true ]
 then
 	icon="$(mpc | grep -E 'playing|paused' | cut -d'[' -f2 | cut -d']' -f1 | sed 's/paused//g' | sed 's/playing//g')"
-	message=" $(mpc current -f %title%)"
-	echo -E "$premessage" "%{B$bg_icons}%{F$fg_icons} $icon %{B$bg_notifications} %{F$fg_squares}%{F$fg_notifications}$message %{B-}%{F-}" > $fifo
+	message=" $(mpc current -f '%title%|%file%')"
+	text_execute="mpc toggle > /dev/null"
+	echo -E "$premessage" "%{B$bg_icons}%{F$fg_icons}%{A:$execute:} $icon %{A}%{B$bg_notifications}%{A:$text_execute:} %{F$fg_squares}%{F$fg_notifications}$message %{A}%{B-}%{F-}" > $fifo
 else
 	echo -E "$premessage" "" > $fifo
 fi
