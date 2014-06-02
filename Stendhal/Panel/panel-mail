@@ -6,6 +6,8 @@
 free=$(ls /home/tatou/Mail/free/Inbox/new | wc -l)
 hotmail=$(ls /home/tatou/Mail/hotmail/Inbox/new | wc -l)
 
+
+# Making the content
 mails()
 {
 	##Free

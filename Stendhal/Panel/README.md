@@ -132,5 +132,5 @@ For some reason, I cannot make it so that arrow keys can be used to navigate the
 ######To do
 - Use something else than xdg-open.
 - Make it work if the file is elsewhere than in the Torrents folder.
-- Arrow keys.
+- Navigating with arrow keys.
 - Clean the files.

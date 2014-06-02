@@ -1,4 +1,6 @@
 #! /bin/sh
+# Assuming you have a working setup, starting this "panel" script should start everything
+
 if [ $(pgrep -cx panel) -gt 1 ] ; then
     printf "%s\n" "The panel is already running." >&2
     exit 1

@@ -1,4 +1,5 @@
 #!/bin/bash
+# I should make this more readable
 
 . panel-settings
 

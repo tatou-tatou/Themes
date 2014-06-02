@@ -10,7 +10,7 @@
 # Close it if it's already opened
 pgrep -f "dzen2 -x 1076 -y 26 -h 20 -tw 196 -w 196 -l" > /dev/null && pkill -f "dzen2 -x 1076 -y 26 -h 20 -tw 196 -w 196 -l" && exit
 
-# 
+# Info 
 TODAY=$(expr `date +'%d'` + 0)
 MONTH=`date +'%m'`
 YEAR=`date +'%Y'`

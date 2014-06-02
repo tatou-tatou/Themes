@@ -37,7 +37,8 @@ countdown=3
 # FIFO
 fifo="/tmp/panel-fifo"
 
-# Character used by the bspwm panel script to know where to put the notification (see the bspwmpanel-bar script for more details)
+#  Character used by the bspwm panel script to know where to put the notification
+# (see the bspwmpanel-bar script for more details)
 premessage="m"
 
 # Colors

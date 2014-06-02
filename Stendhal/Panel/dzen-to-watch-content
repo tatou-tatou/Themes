@@ -1,12 +1,15 @@
 #!/bin/bash
+
+# Info
 file="/home/tatou/Documents/To_watch"
 lines="$1"
 lines_new=$(cat $file | wc -l)
 title="^bg(#3D444E)                    Recently downloaded torrents                    ^bg()"
 
+
+# Creating the list
 i=1
 
-#(echo "$title"
 (cat "$file" | while read line; do
 	echo "^bg(#9D534A) ^bg(#201F1D)^fg(#ABA08B) ^ca(1,sed -i '${i}d' $file ; dzen-to-watch-content $lines ; panel-torrents reduced)^ca() ^fg()^bg() $line"
 	i=$((i+1))

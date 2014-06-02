@@ -1,32 +1,5 @@
 #!/bin/sh
 
-#reduced() {
-#	echo "%{B#ff9B7046}%{A:dzen-to-watch:}  %{A}%{B-}"
-#}
-#
-#full() {
-#file="/home/tatou/Documents/To_watch"
-#lines=$(cat $file | wc -l)
-#
-#if [ "$lines" -ne "0" ]; then
-#	echo "%{B#ff9B7046}%{A:dzen-to-watch:}  $lines %{A}%{B-}"
-#else
-#	echo ""
-#fi
-#}
-#
-#case "$1" in
-#	reduced)
-#		echo "T$(reduced)" > /tmp/panel-fifo
-#	;;
-#	full)
-#		echo "T$(full)" > /tmp/panel-fifo
-#	;;
-#	*)
-#		echo "T$(full)" > /tmp/panel-fifo
-#	;;
-#esac
-
 file="/home/tatou/Documents/To_watch"
 lines=$(cat $file | wc -l)
 
