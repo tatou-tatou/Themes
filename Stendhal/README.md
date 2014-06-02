@@ -4,7 +4,7 @@
 I use [bspwm](https://github.com/baskerville/bspwm) with [bar-aint-recursive](https://github.com/LemonBoy/bar).
 
 ##Panel
-Browse the [appropriate folder](http://github.com/tatou-tatou/Themes/Stendhal/Panel), it has .gif of it in action.
+Browse the [appropriate folder](http://github.com/tatou-tatou/Themes/tree/master/Stendhal/Panel), it has .gif of it in action.
 
 It's clickable, even if I don't click on it often (except for the torrent list and sometimes for the standalone music control or the keyboard layout switcher).
 

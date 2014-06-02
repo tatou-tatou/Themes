@@ -5,19 +5,17 @@ You will need [bar-aint-recursive](https://github.com/LemonBoy/bar) (for the pan
 
 Put those files in your $PATH. Sometimes, it might need a script I put in `~/.bin`, so look for it in the appropriate [place](https://github.com/tatou-tatou/dotfiles/tree/master/.bin).
 
-The developper was lazy and haven't implemented a way to increase the number of clickable areas without recompiling: in the source code, there is a `define N 10` somewhere, increase that value to 20 for example.
+The developper was lazy and haven't implemented a way to increase the number of clickable areas without recompiling. In the source code, there is a `define N 10` somewhere, **increase** that value (to 20 for example).
 
 
 ##Panel
-To start everything, just launch `panel`, it will create the panel fifo and start bar.
-
-`panel-skeleton` interprets where to put each information that is piped to the fifo.
-
-`panel-settings` contains various settings, like the colors. It is loaded by the other scripts.
+- To start everything, just launch `panel`, it will create the panel fifo and start bar.
+- `panel-skeleton` interprets where to put each information that is piped to the fifo.
+- `panel-settings` contains various settings, like the colors. It is loaded by the other scripts.
 
 All the special characters (icons...) are custom made. You will need the *MonteCarloPanel* and *MonteCarloMedium* fonts from my Monégasque repo, or add the characters yourself to your font of choice.
 
-If you want to use your own font with your own glyphs, just know that I had some issues with vertical alignment. I fixed it by duplicating my font and changing some of its properties (namely SIZE, PIXEL_SIZE and FONT_DESCENT) to align it properly. That's why I have both a *MonteCarloMedium* font and a *MonteCarloPanel* font, the later being dedicated to the panel.
+If you want to use your own font with your own glyphs, just know that I had some issues with vertical alignment. I fixed it by duplicating my font and changing some of its properties (namely *SIZE*, *PIXEL_SIZE* and *FONT_DESCENT*) to align it properly. That's why I have both a *MonteCarloMedium* font and a *MonteCarloPanel* font, the later being dedicated to the panel.
 
 ##Notifications
 ![Screenshot](https://raw.github.com/tatou-tatou/Themes/master/Stendhal/Previews/notstat.gif)
@@ -71,17 +69,17 @@ You might want to change `mpc-script prev` by `mpc prev` (or just grab the curre
 
 **Do not forget** to create `~/.panel/PID/dzen-submenu.pid`, else a few things will not work (like closing it properly or moving the indicator through other means than clicking on the slider).
 
-###Sound
+####Sound
 Should work out of the box. I just use the CLI tools that come with ALSA to get and change the volume of the Master and PCM channels.
 
-###Brightness
+####Brightness
 To draw the slider, it reads the current screen brightness value in `/sys/<...>/backlight/<...>/brightness` and its max value in `/sys/<...>/backlight/<...>/max_brightness`.
 
 The path to those files probably won't be the same on our respective systems, so edit this in the `panel-settings`.
 
 The same for the script I use to change the backlight, you will need to adapt it to your system, so it changes the value of the right file.
 
-###Music
+####Music
 It provides shortcuts to launch [mpdviz](https://github.com/neeee/mpdviz), *ncmpcpp* and my [coverart](https://github.com/tatou-tatou/dotfiles/blob/master/.bin/coverart) script.
 
 The coverart script is not that good, but heh. Now that dunst is starting to support images I might stop using it anyway and write something else.
@@ -89,8 +87,7 @@ The coverart script is not that good, but heh. Now that dunst is starting to sup
 ##Start Menu
 The start menu was made with `mygtkmenu` configured to spawn at specific coordinates (and not just where the pointer is located).
 
-If Baskerville decides to re-implement the "click on root window" event in sxhkd, mygtkmenu could also be used exactly as the OpenBox or Awesome right-click menu, which would be very nice.
-
+If Baskerville decides to re-implement the "click on root window" event in sxhkd, then `mygtkmenu` could also be used exactly as the OpenBox or Awesome right-click menu, which would be very nice.
 It seems he removed it because it conflicted with "focus follows pointer". I guess it would be the same with other keybind daemons.
 
 Maybe it's possible to do it another way, like putting a transparent window underneath all the others, and code it so that clicking on it launch mygtkmenu. I don't really know.
@@ -115,28 +112,24 @@ If you click on the date in the panel, the calendar will pop. If you click again
 
 ##To-watch list
 ![Screenshot](https://raw.github.com/tatou-tatou/Themes/master/Stendhal/Previews/torrents.gif)
-`panel-torrents` displays the number of list items in the panel. Clicking on the area in the panel spawns the popup, clicking again closes it.
-
-`dzen-to-watch` creates the popup. Right clicking closes the popup.
-
-`dzen-to-watch-content` creates the content of the popup from a text file acting as a list.
-
-[This](https://github.com/tatou-tatou/dotfiles/blob/master/.bin/notify-torrent-done) script (called by transmission-daemon when a torrent is finished), will add the filename at the end of the text file.
+- `panel-torrents` displays the number of unwatched items in the panel. Clicking on that number spawns the popup, clicking again closes it.
+- `dzen-to-watch` creates the popup. Right clicking closes the popup.
+- `dzen-to-watch-content` creates the content of the popup from a text file acting as a list.
+- [This](https://github.com/tatou-tatou/dotfiles/blob/master/.bin/notify-torrent-done) script (called by transmission-daemon when a torrent is finished), will add the filename at the end of the text file.
 
 
 I use rssdler to automatically download torrents from rss feeds and to send me a notification when a new .torrent file will be downloaded.
-
 I know rssdler can be run as a daemon, but I use `cron` and `rssdler -r` instead.
 
 In the popup, clicking on the [X] will delete the associated line from the text file and make the new (shortened) list be displayed instead.
 
-Clicking on a file name will send it to xdg-open, so it should work with any file type. I chose to use xdg-open only out of lazyness, it would be nice to have more control, especially for things like compressed files (personnally I want to use mcomix if it's a comic, but if it's not then opening it in a file manager would be a better solution).
+Clicking on a file name will send it to `xdg-open`, so it should work with any file type. I chose to use xdg-open only out of lazyness, but it would be nice to have more control, especially for things like compressed files (personnally I want to use mcomix if it's a comic, but if it's not then opening it in a file manager would be a better solution).
 
 The script assumes the file is inside your Torrents folder, if it's anywhere else it won't work.
 
-For some reason, I cannot start dzen so that arrow keys can be used to navigate the list. If someone can make it work, I'm interested.
+For some reason, I cannot make it so that arrow keys can be used to navigate the list. If someone have a solution, I'm interested.
 
-*To do*
+######To do
 - Use something else than xdg-open.
 - Make it work if the file is elsewhere than in the Torrents folder.
 - Arrow keys.
