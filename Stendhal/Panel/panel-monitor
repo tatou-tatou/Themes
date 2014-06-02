@@ -1,0 +1,86 @@
+#!/bin/bash
+
+### Load color settings ###
+. panel-settings
+
+
+### Close the dzen popup if it exists ###
+dzenpid=$(cat $dzen_popup_path)
+dzenpid="${dzenpid:2}"
+
+[ -n "$dzenpid" ] && kill -10 $dzenpid ; echo '' > $dzen_popup_path
+
+
+### Create the menu ###
+# If there is no argument => Create just the pink buttons
+# If there is an argument => Create the pink buttons and expand the appropriate button
+
+monitor=""
+
+for B in Vp Vm Mu Kb Sc
+do
+	## For the focused button ##
+	if [ "$1" == "$B" ]
+	then
+		cmd_return="panel-monitor"
+
+		if [ "$2" == "popup" ]; then
+			arrow="%{F#ff878438}%{F$fg_monitor}"
+		else
+			arrow=""
+		fi
+
+		case $B in
+		Mu) #music
+			message=" %{A:mpc-script prev:}%{A} %{A:mpc toggle:}%{A} %{A:mpc next:}%{A} %{A:dzen-submenu-window Mu &:}$arrow%{A} "
+		;;
+		Sc) # backlight
+			down="sudo mbp_backlight down ; pkill not-stat ; not-stat -b &"
+			up="sudo mbp_backlight up ; pkill not-stat ; not-stat -b &"
+			message=" %{A:$down:}%{A}%{A:$up:}%{A}%{A:dzen-submenu-window Sc &:}$arrow%{A} "
+		;;
+		Kb) # keyboard layout
+			down="setxkbmap -model macintosh -layout fr ; pkill not-stat ; not-stat -d ' AZERTY' &"
+			up="setxkbmap -model macintosh -layout us ; pkill not-stat ; not-stat -d ' QWERTY' &"
+			message=" $setting%{A:$down:}Fr%{A} %{A:$up:}Us%{A} "
+		;;
+		Vp) # PCM volume
+			setting="%{A:amixer set Master toggle ; pkill not-stat ; not-stat -M &:}M%{A} "
+			down="amixer set PCM 1dB- > /dev/null ; pkill not-stat ; not-stat -v &"
+			up="amixer set PCM 1dB+ > /dev/null ; pkill not-stat ; not-stat -v &"
+			message=" $setting%{A:$down:}%{A}%{A:$up:}%{A}%{A:dzen-submenu-window Vp &:}$arrow%{A} "
+		;;
+		Vm) # Master Volume
+			setting="%{A:amixer set Master toggle ; pkill not-stat ; not-stat -M &:}M%{A} "
+			down="amixer set Master 1dB- ; pkill not-stat ; not-stat -V &"
+			up="amixer set Master 1dB+ ; pkill not-stat ; not-stat -V &"
+			message=" $setting%{A:$down:}%{A}%{A:$up:}%{A}%{A:dzen-submenu-window Vm &:}$arrow%{A} "
+		;;
+		esac
+
+		#title="$B"
+		title=""
+
+		bg_button_final="$bg_button_selected"
+		fg_button_final="$fg_button_selected"
+
+	else
+		## For normal, unfocused, buttons ##
+		title=$B
+		message=" "
+		cmd_return="panel-monitor "
+		cmd_return+="$B"
+
+		bg_button_final="$bg_button"
+		fg_button_final="$fg_button"
+	fi
+
+	monitor+="%{A:$cmd_return:}%{B$bg_button_final}%{F$fg_button_final} $title %{A}%{B$bg_monitor}%{F$fg_monitor}$message%{B-}%{F-}"
+
+done
+
+### Add close button ###
+monitor+="%{B$bg_monitor}%{F$fg_close}%{A:echo c > /tmp/panel-fifo:}%{A} %{B-}%{F-}"
+
+### Send to panel ###
+echo "c" "$monitor" > /tmp/panel-fifo

@@ -1,0 +1,126 @@
+#
+# GLOBAL
+#_________
+### Panel font
+font="-windows-montecarlopanel-medium-r-normal--11-110-72-72-c-60-microsoft-cp1252"
+
+### Panel height
+height="18"
+
+### Colors
+bg_global="#ff1A1917"
+fg_global="#ffded0b4"
+
+### Where to look for system info
+# For the screen brightness value
+brightness_path="/sys/devices/virtual/backlight/apple_backlight/brightness"
+maxbrightness_path="/sys/devices/virtual/backlight/apple_backlight/max_brightness"
+# For the keyboard brightness value
+keyboard_path="/sys/class/leds/smc::kbd_backlight/brightness"
+
+### Where to save process ID and other necessary things
+# Use the absolute path!
+dzen_popup_path="/home/tatou/.panel/PID/dzen-submenu.pid"
+
+
+#
+# START MENU
+#_____________
+# You will need mygtkmenu
+startmenu_cmd="mygtkmenu ~/.config/GTKmenu/StartMenu > /dev/null 2>&1"
+
+### Icon
+start_icon=" "
+#start_icon="  "
+#start_icon=" Menu "
+
+### Colors
+bg_startmenu="#ffA73E28"
+fg_startmenu="#ffeddec9"
+
+
+#
+# TAGS
+#______________
+### Icons
+occupied_focus="  "
+occupied="  "
+empty_focus="  "
+empty="  "
+
+### Colors
+bg_tags="#ffA73E28"
+fg_tags="#ffeddec9"
+bg_urgenttags="#ff402929"
+fg_urgenttags="#ffeddec9"
+
+
+#
+# NOTIFICATIONS (not-stat)
+#_______________
+### NOTIFICATION ICONS
+bg_icons="#ff3D444E"
+fg_icons="#ffded0b4"
+
+### NOTIFICATIONS
+bg_notifications="#ff201f1d"
+fg_notifications="#ffded0b4"
+bg_exclamation="#ffA73E28"
+
+
+#
+# Monitor (CLICK CLICK CLICK!)
+#______________________________
+### Colors
+bg_monitor="#ff201F1D"
+fg_monitor="#ffded0b4"
+bg_button="#ff9D534A"
+fg_button="#ffeddec9"
+bg_button_selected="#ffBA6258"
+fg_button_selected="#ffeddec9"
+fg_close="#ffABA08B"
+
+
+#
+# DZEN POPUP
+#____________
+### Slider
+empty_slider=""
+full_slider=""
+indicator_slider=""
+
+### Colors
+dzen_bg="#201F1D"
+dzen_fg="#DED0B4"
+dzen_full="#A73E28"
+dzen_empty="#403A2E"
+dzen_close="#ABA08B"
+
+
+#
+# LAYOUT
+#_________
+### Icons
+monocle=""
+
+### Colors
+fg_squares="#ff5C5541"
+bg_monocle="#ff62712C"
+fg_monocle="#ffded0b4"
+
+
+#
+# MAILS
+#________
+### Colors
+bg_mails="#ffA73E28"
+fg_mails="#ffeddec9"
+
+
+#
+# DATE AND CLOCK
+#______________
+### Colors
+bg_clock="#ff201f1d"
+fg_clock="#ffded0b4"
+fg_clockemph="#ff878438"

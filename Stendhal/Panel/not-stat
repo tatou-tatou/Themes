@@ -5,29 +5,31 @@
 #  Kinda works like statnot, except it does not use libnotify and it's not written in
 # python:
 #  - Send a pre-defined notification to a fifo with a fitting icon. The fifo is meant
-# to be read by lemonboy's bar (see bspwmpanel-bar).
-#  - Every notifications are temporary and get replaced by the current mpd song (or
-# by nothing) after a certain amount of time (3 seconds by default).
+# to be read by lemonboy's bar (see the panel-skeleton script).
+#  - Every notifications are temporary and get replaced by the current mpd song
+# after a certain amount of time (3 seconds by default).
 #  - Currently, volume and battery icons change their shape according to the
 # respective value of what they represent.
-#  - To be used with the modified MonteCarlo font on  (otherwise, you will not
-# have any icons).
+#  - To be used with the modified MonteCarlo font in my Monégasque repo (otherwise, you 
+# will not have any icons).
 #
 #  I wrote this to have fun and to waste time, I would not recommend anyone else to
 # use it. If you want notifications in your panel, tweak statnot to work with
 # something else than with dwm. It's very easy to do and probably much better, as
 # statnot is a true, full featured, notification daemon.
 #
+
+#
+# /!\ FOR THE COUNTDOWN TO WORK PROPERLY /!\
+#  Always use not-stat like this: 
+#
+#     pkill not-stat ; not-stat -<x> &
+#
+#  Else the countdown will keep going and the notification will get back to the music before the latest countdown is finished
 #
 
-kill $(cat ~/.notifier.pid)
-
-echo $$ > ~/.notifier.pid
 
 ##### Settings: #####
-
-# Replace by mpd song?
-mpd_replace=true
 
 # Countdown in seconds
 countdown=3
@@ -41,8 +43,9 @@ premessage="m"
 # Colors
 . panel-settings
 
-# What happens when you click on the icon
+# What happens when you click on the icon or on its label
 execute="panel-monitor &"
+text_execute="mpc toggle > /dev/null &"
 
 #####################
 
@@ -54,15 +57,24 @@ while getopts ":mbBdrvVMh" flags; do
 	m)
 		icon="$(mpc | grep -E 'playing|paused' | cut -d'[' -f2 | cut -d']' -f1 | sed 's/paused//g' | sed 's/playing//g')"
 		message=" $(mpc current -f '%title%|%file%')"
-		text_execute="mpc toggle > /dev/null &"
+		if [ "$message" = " " ];then
+			icon=""
+			message=" (Nothing is playing!)"
+		fi
 	;;
 	b)
+		dzenstatus=$(cat $dzen_popup_path)
+		dzenstatus="${dzenstatus:0:2}"
+		if [ "$dzenstatus" = "Sc" ]; then
+			dzen-submenu-content Sc &
+		fi
+
 		icon=""
-		message=" Luminosité $(cat /sys/devices/virtual/backlight/apple_backlight/brightness)"
+		message=" Backlight $(cat $brightness_path)"
 	;;
 	B)
 		icon=""
-		message=" Clavier $(cat /sys/class/leds/smc::kbd_backlight/brightness)"
+		message=" Keyboard $(cat $keyboard_path)"
 	;;
 	d)
 		icon=""
@@ -92,13 +104,16 @@ while getopts ":mbBdrvVMh" flags; do
 			fi
 		else
 			icon=""
-			message=" Chargé"
+			message=" Full"
 		fi
 
 	;;
 	v)
-		#icon="$(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1 | sed 's/on//g' | sed 's/off/ /g')"
-		#message="Volume $(amixer -q | grep -A5 PCM | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)"
+		dzenstatus=$(cat $dzen_popup_path)
+		dzenstatus="${dzenstatus:0:2}"
+		if [ "$dzenstatus" = "Vp" ]; then
+			dzen-submenu-content Vp &
+		fi
 
 		valeur_volume="$(amixer -q | grep -A5 PCM | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)"
 		if [ "$(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1)" == "off" ]
@@ -120,8 +135,11 @@ while getopts ":mbBdrvVMh" flags; do
 		message=" Volume $valeur_volume"
 	;;
 	V)
-		#icon="$(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1 | sed 's/on//g' | sed 's/off/ /g')"
-		#message="Master $(amixer -q | grep -A5 Master | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)"
+		dzenstatus=$(cat $dzen_popup_path)
+		dzenstatus="${dzenstatus:0:2}"
+		if [ "$dzenstatus" = "Vm" ]; then
+			dzen-submenu-content Vm &
+		fi
 
 		valeur_volume="$(amixer -q | grep -A5 Master | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)"
 		if [ "$(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1)" == "off" ]
@@ -181,14 +199,11 @@ echo -E "$premessage" "%{B$bg_icons}%{F$fg_icons}%{A:$execute:} $icon %{A}%{B$bg
 
 sleep $countdown
 
-if [ $mpd_replace == true ]
-then
-	icon="$(mpc | grep -E 'playing|paused' | cut -d'[' -f2 | cut -d']' -f1 | sed 's/paused//g' | sed 's/playing//g')"
-	message=" $(mpc current -f '%title%|%file%')"
-	text_execute="mpc toggle > /dev/null"
-	echo -E "$premessage" "%{B$bg_icons}%{F$fg_icons}%{A:$execute:} $icon %{A}%{B$bg_notifications}%{A:$text_execute:} %{F$fg_squares}%{F$fg_notifications}$message %{A}%{B-}%{F-}" > $fifo
-else
-	echo -E "$premessage" "" > $fifo
+icon="$(mpc | grep -E 'playing|paused' | cut -d'[' -f2 | cut -d']' -f1 | sed 's/paused//g' | sed 's/playing//g')"
+message=" $(mpc current -f '%title%|%file%')"
+if [ "$message" = " " ];then
+	icon=""
+	message=" (Nothing is playing!)"
 fi
 
-echo "" > ~/.notifier.pid
+echo -E "$premessage" "%{B$bg_icons}%{F$fg_icons}%{A:$execute:} $icon %{A}%{B$bg_notifications}%{A:$text_execute:} %{F$fg_squares}%{F$fg_notifications}$message %{A}%{B-}%{F-}" > $fifo

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+. panel-settings
+
+echo "c" "%{B$bg_button}%{F$fg_button}%{A:panel-monitor:} Mu %{A}%{B$bg_monitor}%{F$fg_monitor} %{A:mpc-script prev:}%{A} %{A:mpc toggle:}%{A} %{A:mpc next:}%{A} %{A:dzen-submenu-window Mc &:}%{A} %{F$fg_close}%{A:echo c > /tmp/panel-fifo:}%{A} %{B-}%{F-}" > /tmp/panel-fifo

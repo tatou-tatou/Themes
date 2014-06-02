@@ -1,0 +1,55 @@
+#! /bin/sh
+bspc monitor -d 1 2 3 4 # It needs to be numbers so the "click on tag to switch tag" feature works
+
+bspc config -m primary border_width 3
+bspc config window_gap              6
+bspc config split_ratio             0.50
+bspc config borderless_monocle      true
+bspc config gapless_monocle         true
+bspc config focus_follows_pointer   true
+bspc config history_aware_focus     false
+bspc config ignore_ewmh_focus       true
+bspc config auto_cancel             true
+bspc config auto_alternate          true
+
+
+# SHADOWS ONLY WHEN FLOATING
+# To use with shadow-exclude = [ "_BSPWM_FLOATING_WINDOW:32c = 0" ] in the compton.conf and with the richardgv-dev branch of compton
+bspc config apply_floating_atom true
+
+
+#
+## COLORS ##
+#
+
+bspc config focused_border_color "#A73E28"
+bspc config normal_border_color "#332F2C"
+bspc config presel_border_color "#C2AD9D"
+bspc config focused_sticky_border_color "#62712C"
+bspc config normal_sticky_border_color "#3D444E"
+bspc config focused_private_border_color "#9D534A"
+bspc config normal_private_border_color "#9B7046"
+
+
+
+
+
+#
+## RULES ##
+#
+
+# Floating windows
+bspc rule -a wine floating=true
+bspc rule -a nitrogen floating=true
+bspc rule -a fceux floating=true
+bspc rule -a pcsx2 floating=true
+
+# Center floating window
+bspc rule -a \* center=true
+
+
+#
+## PANEL
+#
+
+panel &
