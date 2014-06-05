@@ -1,0 +1,36 @@
+#!/bin/sh
+# Get the necessary info
+eval $(xdotool getmouselocation --shell)
+IFS=" " read -a window <<< $(xwinfo -g $(bspc query -W -w focused))
+
+# Distance to each side
+## X and Y are the cursor coordinates.
+## window[0] and window[1] are the window width and height
+## window[2] and window[3] are the window x and y top left corner coordinates
+up=$(expr "$Y" - "${window[3]}")
+down=$(expr "${window[3]}" + "${window[1]}" - "$Y" )
+left=$(expr "$X" - "${window[2]}")
+right=$(expr "${window[2]}" + "${window[0]}" - "$X" )
+
+# Find the minimal distance
+## If the cursor is inside the window, it will select the nearest side.
+## If the cursor is outside the window, it will select the side whom the cursor is the most far.
+dir_final="up"
+for dir in down left right; do
+if [ "${!dir}" -lt "${!dir_final}" ]; then
+	dir_final=$dir
+fi
+done
+
+# Send the presel signal
+bspc window -p cancel # Necessary if you have set auto_cancel to true
+bspc window -p $dir_final
+
+# Spawn a menu to launch a program afterward
+mygtkmenu ~/.config/GTKmenu/LaunchMenu > /dev/null
+
+
+##
+## TODO:  Find a way to cancel the presel if the menu is closed without opening
+##       anything
+##

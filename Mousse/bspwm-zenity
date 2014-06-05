@@ -1,0 +1,19 @@
+#!/bin/sh
+case $1 in
+desktop-add)
+	name="$(zenity --entry --text='Type the name of the new workspace:')"
+	bspc monitor -a "$name"
+;;
+desktop-remove)
+	name="$(bspc query -D | zenity --list --column Workspaces --text="Select the workspace you want to remove" --hide-header)"
+	bspc monitor -r "$name"
+;;
+move-to-desktop)
+	name="$(bspc query -D | zenity --list --column Workspaces --text="Move to workspace:" --hide-header)"
+	bspc window -d "$name"
+;;
+desktop-rename)
+	name="$(zenity --entry --text='Rename the current workspace to:')"
+	bspc desktop -n "$name"
+;;
+esac
