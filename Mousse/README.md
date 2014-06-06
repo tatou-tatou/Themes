@@ -4,6 +4,45 @@ A collection of scripts and ideas to make tiling window managers more accessible
 For more advanced users, a GUI menu could find its use too, not as a way to do basic operations, but as a way to call scripts to do custom window manipulations that are elaborate but too rare to deserve a specific accessible keybind or to let you remember it.
 
 
+#Scripts and menus
+##MouseLaunch
+*Original idea by Kamiru*
+
+![Screenshot](https://raw.github.com/tatou-tatou/Themes/master/Mousse/Previews/LaunchMenu.gif)
+
+The script split the window in the appropriate direction depending on where your cursor is located in the window. A menu will then spawn where your pointer is, asking you what program you want to launch there.
+
+That's probably the only way to make manual tiling work with a mouse.
+
+It forces you to use manual tiling though, so you lose the hybrid approach of bspwm, the consequence being that you are stuck more often in "annoying" layouts that can get tricky to get out.
+
+The `LaunchMenu` file here is an example menu, but you will have to edit the script for it to point to your own myGtkMenu file.
+
+It depends on `xdotool`, `xwinfo` and `mygtkmenu`.
+
+##BspwmMenu
+![Screenshot](https://raw.github.com/tatou-tatou/Themes/master/Mousse/Previews/BspwmMenu.png)
+
+A menu file for myGtkMenu. Make it spawn by binding a keybind (for example `super + Button2`) to `mygtkmenu /path/to/BspwmMenu`
+
+It contains what I consider to be the essential/most basic controls to manipulate the window layout in bspwm, organized in an ergonomic way.
+
+It being easier to do a mistake in a manual tiling environment than in a layout-based tiling environment due to its fundamental approach, I plan to add commands to automatically get out of "tricky" situations, in order not to frustrate the user.
+
+The "hybrid" tiling of bspwm solves that, but the `MouseLaunch` script forces to use manual tiling.
+
+##bspwm-zenity
+A script to do various actions like adding, removing or renaming workspaces through a GUI interface.
+
+It uses `zenity` and is called by `BspwmMenu`.
+
+
+##MouseCenter
+It centers the mouse in the focused window. If one depends on his mouse more, it might be useful to have.
+
+Depends on `xwinfo` and `xdotool`.
+
+
 #Tools
 ##MyGTKmenu
 The simplest way to put a lot of functionality in a mouse-driven interface is to use a menu. MyGTKmenu can appear where the cursor is, meaning it will be perfect for the task.
@@ -43,40 +82,3 @@ I think those settings are adapted for a right-handed person:
 - A combination of two modkeys on the left size of the keyboard and a left click to resize windows.
 
 With a multitouch touchpad, other things could be done too. For example switching to the next or previous workspace can be bound to a three-finger swipe. The same for up and down swipes that could trigger monocle or windows visibility.
-
-If you don't really like to do three finger taps, maybe you should bind the Middle Click to `<ModKey> + Left Click`. I guess the easiest way to do so would be to bind it to `xdotool click 2`. The above would need to be changed in accordance, obviously.
-
-
-#Scripts and menus
-##MouseLaunch
-*Original idea by Kamiru*
-
-The script split the window in the appropriate direction depending on where your cursor is located in the window. A menu will then spawn where your pointer is, asking you what program you want to launch there.
-
-That's probably the only way to make manual tiling work with a mouse.
-
-It forces you to use manual tiling though, so you lose the hybrid approach of bspwm, the consequence being that you are stuck more often in "annoying" layouts that can get tricky to get out.
-
-The `LaunchMenu` file here is an example menu, but you will have to edit the script for it to point to your own myGtkMenu file.
-
-It depends on `xdotool`, `xwinfo` and `mygtkmenu`.
-
-##BspwmMenu
-A menu file for myGtkMenu. Make it spawn by binding a keybind (for example `super + Button2`) to `mygtkmenu /path/to/BspwmMenu`
-
-It contains what I consider to be the essential/most basic controls to manipulate the window layout in bspwm, organized in an ergonomic way.
-
-It being easier to do a mistake in a manual tiling environment than in a layout-based tiling environment due to its fundamental approach, I plan to add commands to automatically get out of "tricky" situations, in order not to frustrate the user.
-
-The "hybrid" tiling of bspwm solves that, but the `MouseLaunch` script forces to use manual tiling.
-
-##bspwm-zenity
-A script to do various actions like adding, removing or renaming workspaces through a GUI interface.
-
-It uses `zenity` and is called by `BspwmMenu`.
-
-
-##MouseCenter
-It centers the mouse in the focused window. If one depends on his mouse more, it might be useful to have.
-
-Depends on `xwinfo` and `xdotool`.
