@@ -16,4 +16,8 @@ desktop-rename)
 	name="$(zenity --entry --text='Rename the current workspace to:')"
 	bspc desktop -n "$name"
 ;;
+desktop-swap)
+	name="$(bspc query -D | zenity --list --column Workspaces --text="Swap with:" --hide-header)"
+	bspc desktop -s "$name"
+;;
 esac
