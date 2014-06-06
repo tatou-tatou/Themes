@@ -1,7 +1,7 @@
 #Stendhal
 ![Screenshot](https://raw.github.com/tatou-tatou/Themes/master/Stendhal/Previews/scrot.png)
 
-I use [bspwm](https://github.com/baskerville/bspwm) with [bar-aint-recursive](https://github.com/LemonBoy/bar).
+I use [bspwm](https://github.com/baskerville/bspwm) with [bar-aint-recursive](https://github.com/LemonBoy/bar). Dzen (as a panel) has more interesting features than *bar*, but *bar* can do proper text alignement.
 
 ##Panel
 Browse the [appropriate folder](http://github.com/tatou-tatou/Themes/tree/master/Stendhal/Panel), it has .gif of it in action.
