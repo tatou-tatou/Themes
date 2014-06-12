@@ -3,9 +3,11 @@
 
 You will need [bar-aint-recursive](https://github.com/LemonBoy/bar) (for the panel) and [dzen](https://github.com/robm/dzen) (for the popups).
 
-Put those files in your $PATH. Sometimes, it might need a script I put in `~/.bin`, so look for it in the appropriate [place](https://github.com/tatou-tatou/dotfiles/tree/master/.bin).
+LemonBoy recently (june, 12th 2014) added support for other buttons than the left click. The way he did it was frustrating, so [I did it another way](https://github.com/tatou-tatou/bar) (read the commit [message](https://github.com/tatou-tatou/bar/commit/81861bcddcdb8ed30165d1913d2093fba6120b80)). The way I did it is bad, but less useless. I will use my fork until he does it properly.
 
-The developper was lazy and haven't implemented a way to increase the number of clickable areas without recompiling. In the source code, there is a `define N 10` somewhere, **increase** that value (to 20 for example).
+To have the same panel as me, put the files in your $PATH. Sometimes, it might need a script I put in `~/.bin`, so look for it in the appropriate [place](https://github.com/tatou-tatou/dotfiles/tree/master/.bin).
+
+The developper was lazy and haven't implemented a way to increase the maximum number of clickable areas without recompiling. In the source code, there is a `#define N 20` somewhere, **increase** that value if you need more.
 
 
 ##Panel

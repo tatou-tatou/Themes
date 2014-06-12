@@ -12,9 +12,8 @@ dzenpid="${dzenpid:2}"
 
 
 ### Create the menu ###
-#  If there is no argument => Create just the pink buttons
-#  If there is an argument => Create the pink buttons and expand the
-# appropriate button
+# If there is no argument => Create just the pink buttons
+# If there is an argument => Create the pink buttons and expand the appropriate button
 
 monitor=""
 
@@ -25,12 +24,11 @@ do
 	then
 		cmd_return="panel-monitor"
 
-		#if [ "$2" == "popup" ]; then
-		#	arrow="%{F#ff878438}%{F$fg_monitor}"
-		#else
-		#	arrow=""
-		#fi
-		arrow=""
+		if [ "$2" == "popup" ]; then
+			arrow="%{F#ff878438}%{F$fg_monitor}"
+		else
+			arrow=""
+		fi
 
 		case $B in
 		Mu) #music
@@ -60,10 +58,8 @@ do
 		;;
 		esac
 
-		#  If you want to have a custom name for the selected button,
-		# change it here. Else, use "$B"
-		title=""
 		#title="$B"
+		title=""
 
 		bg_button_final="$bg_button_selected"
 		fg_button_final="$fg_button_selected"

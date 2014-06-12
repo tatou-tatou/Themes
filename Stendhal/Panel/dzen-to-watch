@@ -18,7 +18,6 @@ clean_tail="pkill -f 'tail -f /tmp/dzen-watch-fifo' && panel-torrents full"
 pgrep -f "dzen2 -p -m -x 872 -y 18 -w 408 -h 20" > /dev/null && $(cleaning) && exit
 
 
-
 #
 # Make the submenu window
 #
