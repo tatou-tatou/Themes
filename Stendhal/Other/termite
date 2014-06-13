@@ -16,19 +16,7 @@ geometry = 507x285
 
 
 ## FONT ##
-# Bitmap
-#font = MonteCarlo
-#font = Berry
-#font = Profont
-#font = Tewi
-
-# Vector
-#font = Liberation Mono 8
-#font = Bitstream Vera Sans Mono 9
-font = Menlo 8
-#font = Consolas 10
-#font = Inconsolata 11
-#font = Ubuntu Mono bold 11
+font = Meslo LG M 8
 
 # "system", "on" or "off"
 cursor_blink = on
