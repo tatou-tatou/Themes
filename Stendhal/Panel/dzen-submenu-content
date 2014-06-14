@@ -4,29 +4,24 @@
 dzenpid=$(cat $dzen_popup_path)
 dzenpid="${dzenpid:2}"
 
-#I use sigusr1 since kill won't work if I use the "onexit" event in dzen. So I've configured dzen to close and clean the script processes if it receives the USR1 signal.
-closing="kill -10 $dzenpid ; echo '' > $dzen_popup_path" 
-
-# Production du contenu
-
 if [ $1 == "Mu" ]; then
 	title="Music "
-	message=" ^ca(1,coverart)^fg(#A73E28)^ca()^ca(1,termite -e 'mpdviz -i true')^fg(#99704A)^ca()^ca(1,termite -e ncmpcpp &)^fg(#878438)^ca()^ca(1,panel-music_control ; $closing)^fg(#53414A)^ca() "
+	message=" ^ca(1,coverart)^fg(#A73E28)^ca()^ca(1,termite -e 'mpdviz -i true')^fg(#99704A)^ca()^ca(1,termite -e ncmpcpp &)^fg(#878438)^ca()^ca(1,panel-music_control ; dzen-submenu-window close)^fg(#53414A)^ca() "
 elif [ $1 == "Mc" ]; then
 	title="Music "
-	message=" ^ca(1,coverart)^fg(#A73E28)^ca()^ca(1,termite -e 'mpdviz -i true')^fg(#99704A)^ca()^ca(1,termite -e ncmpcpp &)^fg(#878438)^ca()^ca(1,panel-monitor Mu ; $closing)^fg(#53414A)^ca() "
+	message=" ^ca(1,coverart)^fg(#A73E28)^ca()^ca(1,termite -e 'mpdviz -i true')^fg(#99704A)^ca()^ca(1,termite -e ncmpcpp &)^fg(#878438)^ca()   "
 else
 	## Slider type
 	case $1 in
 		Vm)
 			n=$(amixer -q | grep -A5 Master | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)
 			n=$(($n/10))
-			title="Master"
+			title="^ca(1,amixer set Master 0 ; pkill not-stat ; not-stat -V &)Master^ca()"
 			;;
 		Vp)
 			n=$(amixer -q | grep -A5 PCM | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)
 			n=$(($n/10))
-			title="Volume"
+			title="^ca(1,amixer set PCM 0 ; pkill not-stat ; not-stat -v &)Volume^ca()"
 			;;
 		Sc)
 			n="$(cat $brightness_path)"
@@ -71,4 +66,6 @@ else
 	slider+="^fg()"
 	message=$slider
 fi
-echo " $title $message  ^ca(1,$closing)^fg($dzen_close)^fg()^ca()" > /tmp/dzen-fifo
+
+# Send the message
+echo " $title $message  ^ca(1,dzen-submenu-window close)^fg($dzen_close)^fg()^ca()" > /tmp/dzen-fifo

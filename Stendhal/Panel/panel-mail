@@ -25,7 +25,7 @@ mails()
 			#extraspace=" "
 	fi
 	if [ "$hotmail" -gt "0" -o "$free" -gt "0" ]; then
-			messages=" %{B$bg_mails}%{F$fg_mails}%{A:panel-mail reduced:}$extraspace   "
+			messages=" %{B$bg_mails}%{F$fg_mails}%{A:panel-mail reduced:run-or-raise mutt &:}$extraspace   "
 			endmail="$extraspace%{B-}%{F-}%{A}"
 	fi
 
@@ -35,7 +35,7 @@ echo "$messages$messagehotmail$middleand$messagefree$endmail"
 mails_reduced()
 {
 	if [ "$hotmail" -gt "0" -o "$free" -gt "0" ]; then
-		echo " %{A:panel-mail full:}%{B$bg_mails}%{F$fg_mails}  %{B-}%{F-}%{A}"
+		echo " %{A:panel-mail full:run-or-raise mutt &:}%{B$bg_mails}%{F$fg_mails}  %{B-}%{F-}%{A}"
 	fi
 }
 

@@ -27,7 +27,7 @@
 #	;;
 #esac
 
-file="/home/tatou/Documents/To_watch"
+file="/home/tatou/.to_watch"
 lines=$(cat $file | wc -l)
 
 if [ "$lines" -ne "0" ]
@@ -44,7 +44,7 @@ then
 		icon=""
 	;;
 	esac
-	message=" %{B#ff9B7046}%{A:dzen-to-watch:} $icon $lines %{A}%{B-}"
+	message=" %{B#ff9B7046}%{A:dzen-to-watch:run-or-raise transmission &:} $icon $lines %{A}%{B-}"
 else
 	message=""
 fi

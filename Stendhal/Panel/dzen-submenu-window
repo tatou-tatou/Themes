@@ -1,11 +1,11 @@
 #!/bin/bash
 
+# Info
 . panel-settings
+xpos=$2
 
-#
-# Close and clean if a dzen submenu is already opened
-#
 
+# Close and clean if a dzen popup is already opened
 previouspid=$(cat $dzen_popup_path)
 previouspid="${previouspid:2}"
 
@@ -16,11 +16,11 @@ if [[ -n "$previouspid" && "$(ps -p $previouspid -o comm=)" = "dzen2" ]]; then
 	exit
 fi
 
-#
-# Clean when dzen closes
-# Executed when dzen closes, either by right clicking on the popup or when the popup receives the USR1 signal (which is sent by other scripts, for example when you click on the close button)
-# 
+# Exit now if it was asked to (that's how the close button work for example)
+[ "$1" == "close" ] && exit
 
+# Clean when dzen closes
+# Executed when dzen is closed by right clicking on the popup.
 closing="pkill -f 'tail -f /tmp/dzen-fifo' & echo '' > $dzen_popup_path"
 
 
@@ -28,24 +28,24 @@ closing="pkill -f 'tail -f /tmp/dzen-fifo' & echo '' > $dzen_popup_path"
 # Make the submenu window
 #
 
+case $1 in
+	Vm) xpos=$(($xpos - 42)) ;;
+	Vp) xpos=$(($xpos - 42)) ;;
+	Sc) xpos=$(($xpos - 30)) ;;
+	Mu) xpos=$(($xpos - 60)) ;;
+	Mc) xpos=$(($xpos - 60)) ;;
+	*)  exit ;;
+esac
+
 [ -e "/tmp/dzen-fifo" ] && rm "/tmp/dzen-fifo"
 mkfifo "/tmp/dzen-fifo"
 
-case $1 in
-	Vm) xpos=144 ;;
-	Vp) xpos=114 ;;
-	Sc) xpos=234 ;;
-	Mu) xpos=174 ;;
-	Mc) xpos=114 ;;
-	*)  xpos=144 ;;
-esac
-
-exec tail -f /tmp/dzen-fifo | dzen2 -p -w 156 -h 23 -y 18 -x $xpos -fn "MonteCarlo-8" -e "button3=exit,exec:$closing;sigusr1=exit,exec:$closing" & dzenpid=$!
+exec tail -f /tmp/dzen-fifo | dzen2 -p -w 156 -h 23 -y 18 -x $xpos -fn "MonteCarlo-8" -e "button3=exit,exec:$closing" & dzenpid=$!
 
 
 #
 # Save the PID of the dzen popup along with the nature of the opened popup (music, volume, screen...) so that other scripts can close it and update it depending on its nature
-# eg: if the "screen backlight" popup is opened, changing the backlight with kebinds should update the slider, but changing the volume should not
+# eg: if the "screen backlight" popup is opened, changing the backlight with keybinds should update the slider, but changing the volume should not
 #
 echo $1$dzenpid > $dzen_popup_path
 

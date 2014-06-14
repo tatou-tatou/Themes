@@ -5,12 +5,14 @@
 #
 # Modified by tatou so it can be toggled when clicking on the panel.
 #
+
+# Get the settings (color, etc)
 . panel-settings
 
 # Close it if it's already opened
 pgrep -f "dzen2 -x 1076 -y 26 -h 20 -tw 196 -w 196 -l" > /dev/null && pkill -f "dzen2 -x 1076 -y 26 -h 20 -tw 196 -w 196 -l" && exit
 
-# 
+# Necessary info
 TODAY=$(expr `date +'%d'` + 0)
 MONTH=`date +'%m'`
 YEAR=`date +'%Y'`

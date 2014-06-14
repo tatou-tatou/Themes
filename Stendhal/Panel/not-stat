@@ -44,8 +44,12 @@ premessage="m"
 . panel-settings
 
 # What happens when you click on the icon or on its label
-execute="panel-monitor &"
-text_execute="mpc toggle > /dev/null &"
+## If you want only one command:
+# execute="your command"
+## If you want two commands (the second one is executed with a right click)
+# execute="command1 : command2"
+execute="panel-monitor : panel-music_control"
+text_execute="mpc toggle > /dev/null & : run-or-raise ncmpcpp &"
 
 #####################
 
@@ -59,7 +63,7 @@ while getopts ":mbBdrvVMh" flags; do
 		message=" $(mpc current -f '%title%|%file%')"
 		if [ "$message" = " " ];then
 			icon=""
-			message=" (Nothing is playing!)"
+			message=" (Nothing is playing)"
 		fi
 	;;
 	b)

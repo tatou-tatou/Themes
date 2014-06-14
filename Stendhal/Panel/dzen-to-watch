@@ -8,14 +8,14 @@
 
 cleaning ()
 {
-	pkill -f "dzen2 -p -m -x 872 -y 18 -w 408 -h 20"
-	pkill -f 'tail -f /tmp/dzen-watch-fifo'
+	pkill -f "dzen2 -p -m -x -408 -y 18 -w 408 -h 20"
+	pkill -f 'tail -f /tmp/dzen-menu-fifo'
 	panel-torrents full
 }
 
-clean_tail="pkill -f 'tail -f /tmp/dzen-watch-fifo' && panel-torrents full"
+clean_tail="pkill -f 'tail -f /tmp/dzen-menu-fifo' && panel-torrents full"
 
-pgrep -f "dzen2 -p -m -x 872 -y 18 -w 408 -h 20" > /dev/null && $(cleaning) && exit
+pgrep -f "dzen2 -p -m -x -408 -y 18 -w 408 -h 20" > /dev/null && $(cleaning) && exit
 
 
 #
@@ -23,15 +23,14 @@ pgrep -f "dzen2 -p -m -x 872 -y 18 -w 408 -h 20" > /dev/null && $(cleaning) && e
 #
 
 # FIFO
-[ -e "/tmp/dzen-watch-fifo" ] && rm "/tmp/dzen-watch-fifo"
-mkfifo "/tmp/dzen-watch-fifo"
+[ -e "/tmp/dzen-menu-fifo" ] && rm "/tmp/dzen-menu-fifo"
+mkfifo "/tmp/dzen-menu-fifo"
 
 # PATH TO FILES AND FOLDERS
-file="/home/tatou/Documents/To_watch"
+file="/home/tatou/.to_watch"
 DIR="/home/tatou/Torrents/"
 
 # TITLE
-#title="^bg(#363126)^fg()                    Recently downloaded torrents                    ^fg()^bg()"
 title="^fg(#878438)To watch^fg() list:"
 
 # NUMBER OF LINES
@@ -43,13 +42,13 @@ lines=$(wc -l < $file)
 
 # CREATE THE POPUP
 (echo "$title"
-exec tail -f /tmp/dzen-watch-fifo) | dzen2 -p -m -x 872 -y 18 -w 408 -h 20 -fn 'MonteCarlo-8' -fg '#DED0B4' -bg '#1A1917' -l $lines -e "onstart=uncollapse;button1=menuprint,exit,exec:$clean_tail:panel-torrents full;button3=exit,exec:$clean_tail:panel-torrents full;button4=scrollup;button5=scrolldown" | while read FNAME; do
+exec tail -f /tmp/dzen-menu-fifo) | dzen2 -p -m -x -408 -y 18 -w 408 -h 20 -fn 'MonteCarlo-8' -fg '#DED0B4' -bg '#1A1917' -l $lines -e "onstart=uncollapse;button1=menuprint,exit,exec:$clean_tail:panel-torrents full;button3=exit,exec:$clean_tail:panel-torrents full;button4=scrollup;button5=scrolldown" | while read FNAME; do
 	FNAME=${FNAME:4}
 	xdg-open "$DIR$FNAME" &
 done &
 
-# REDUCED ICON
+# COLOR THE ARROW
 panel-torrents reduced
 
 # CREATE CONTENT FOR THE POPUP
-dzen-to-watch-content $lines
+dzen-menu-content $lines $file
