@@ -25,6 +25,7 @@ If you want to use your own font with your own glyphs, just know that I had some
 
 #Workspaces
 ![Screenshot](https://raw.github.com/tatou-tatou/Themes/master/Stendhal/Previews/workspaces.gif)
+
 The startmenu is made by mygtkmenu. It appears when clicking on the blank space on the left of the workspace list, but you can easily add an icon or more space by editing the appropriate line in `panel-settings`.
 
 The snippet that draws the appropriate icon according to the state of the workspace was made by Baskerville and is in panel-skeleton.
@@ -100,6 +101,7 @@ The same for the script I use to change the backlight, you will need to adapt it
 
 ####Music controls
 A **right** click on the blue icon will spawn `panel-music_control`:
+
 ![Right click](https://raw.github.com/tatou-tatou/Themes/master/Stendhal/Previews/icon-rightclick.gif)
 
 `panel-monitor` and `panel-music_control` use a script from my ~/.bin called `mpc-script`. You might want to replace the occurence of `mpc-script prev` by `mpc prev` (or just grab the currently unfinished `mpc-script` from my `~/.bin`).
