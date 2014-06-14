@@ -5,9 +5,9 @@ You will need [bar-aint-recursive](https://github.com/LemonBoy/bar) (for the pan
 
 LemonBoy recently (june, 12th 2014) added support for other buttons than the left click. The way he did it was frustrating, so [I did it another way](https://github.com/tatou-tatou/bar) (read the commit [message](https://github.com/tatou-tatou/bar/commit/81861bcddcdb8ed30165d1913d2093fba6120b80)). The way I did it is bad, but less useless. I will use my fork until he does it properly.
 
-I also added a patch made by [this guy](https://github.com/pentla/bar), that allows to print the current x coordinate of the clickable area.
+I also added a patch made by [this guy](https://github.com/pentla/bar), that allows to print the current x coordinate of the clickable area. Very useful.
 
-**My files won't work if you are using the vanilla bar.**
+**My setup won't work if you are using the vanilla bar.**
 
 To have the same panel as me, put all the scripts in your $PATH. Sometimes, it might need another script I put in `~/.bin`, so look for it in the appropriate [place](https://github.com/tatou-tatou/dotfiles/tree/master/.bin).
 
@@ -19,7 +19,7 @@ The developper was lazy and haven't implemented a way to increase the maximum nu
 - `panel-skeleton` interprets where to put each information that is piped to the fifo.
 - `panel-settings` contains various settings, like the colors. It is loaded by the other scripts.
 
-All the special characters (icons...) are custom made. You will need the *MonteCarloPanel* and *MonteCarloMedium* fonts from my Monégasque repo, or add the characters yourself to your font of choice.
+All the special characters (icons...) are custom made. You will need the *MonteCarloPanel* and *MonteCarloMedium* fonts from my [Monégasque](https://github.com/tatou-tatou/Monegasque) repo, or add the characters yourself to your font of choice.
 
 If you want to use your own font with your own glyphs, just know that I had some issues with vertical alignment. I fixed it by duplicating my font and changing some of its properties (namely *SIZE*, *PIXEL_SIZE* and *FONT_DESCENT*) to align it properly. That's why I have both a *MonteCarloMedium* font and a *MonteCarloPanel* font, the later being dedicated to the panel.
 
@@ -28,7 +28,7 @@ If you want to use your own font with your own glyphs, just know that I had some
 
 The startmenu is made by mygtkmenu. It appears when clicking on the blank space on the left of the workspace list, but you can easily add an icon or more space by editing the appropriate line in `panel-settings`.
 
-The snippet that draws the appropriate icon according to the state of the workspace was made by Baskerville and is in panel-skeleton.
+The code that draws the appropriate icon according to the state of the workspace was written by Baskerville and is in panel-skeleton.
 
 #Music and system events
 ![Screenshot](https://raw.github.com/tatou-tatou/Themes/master/Stendhal/Previews/notstat.gif)
@@ -41,7 +41,7 @@ You call it like this:
 
     pkill not-stat ; not-stat -<x>
 
-**Do not forget** to kill the *not-stat* process before calling it, else the three seconds wait will not work properly.
+**/!\ Do not forget** to kill the *not-stat* process before calling it, else the three seconds wait will not work properly.
 
 ##Simple music controls
 ![Label](https://raw.github.com/tatou-tatou/Themes/master/Stendhal/Previews/label-leftclick.gif)
@@ -79,36 +79,38 @@ The script is also called when clicking on various buttons or when using the dif
 
 For bar-aint-recursive itself,
 - `panel-monitor` spawn settings for brightness, volume, keyboard layout, music... As shown in the gif above, they appear when you click on the blue icon.
-- `panel-music_control` is a simplified panel-monitor, dedicated to music controls. Those appears when you *right* click on the blue icon.
+- `panel-music_control` is a simplified panel-monitor, dedicated to music controls. Those appears when you **right** click on the blue icon.
 
 For the popups and their sliders,
 - `dzen-submenu-window`creates the dzen popup and the fifo used by the sliders.
 - `dzen-submenu-content` creates the actual content of the popup, like the sliders.
 
-**Do not forget to create `~/.panel/PID/dzen-submenu.pid`**, else a few things will not work (like moving the indicator through other means than clicking on the slider).
+`not-stat` updates the slider indicator position when the popup is opened and if you are using *keybinds* to change the volume/brightness (and not just clicking on the slider).
 
-*Note: this makes use of both left and right clicking, so it's* **not** *usable with vanilla bar! Refer to the first section.*
+**/!\ Do not forget** to create `~/.panel/PID/dzen-submenu.pid`, else a few things will not work (like moving the indicator through other means than clicking on the slider).
 
-####Sound controls
+*Note: this makes use of both left and right clicking, so it's* **not** *usable with vanilla bar. Refer to the first section.*
+
+###Volume controls
 Should work out of the box. I just use the CLI tools that come with ALSA to get and change the volume of the Master and PCM channels.
 
-####Brightness controls
+###Brightness controls
 To draw the slider, it reads the current screen brightness value in `/sys/<...>/backlight/<...>/brightness` and its max value in `/sys/<...>/backlight/<...>/max_brightness`.
 
 The path to those files probably won't be the same on our respective systems, so edit this in the `panel-settings`.
 
 The same for the script I use to change the backlight, you will need to adapt it to your system, so it changes the value of the right file.
 
-####Music controls
+###Music controls
 A **right** click on the blue icon will spawn `panel-music_control`:
 
 ![Right click](https://raw.github.com/tatou-tatou/Themes/master/Stendhal/Previews/icon-rightclick.gif)
 
-`panel-monitor` and `panel-music_control` use a script from my ~/.bin called `mpc-script`. You might want to replace the occurence of `mpc-script prev` by `mpc prev` (or just grab the currently unfinished `mpc-script` from my `~/.bin`).
+`panel-monitor` and `panel-music_control` use a script from my ~/.bin called `mpc-script`. You might want to replace the occurences of `mpc-script prev` by `mpc prev` (or just grab the currently unfinished `mpc-script` from my `~/.bin`).
 
 The dzen popup provides shortcuts to launch [mpdviz](https://github.com/neeee/mpdviz), *ncmpcpp* and my [coverart](https://github.com/tatou-tatou/dotfiles/blob/master/.bin/coverart) script.
 
-The coverart script is not that good, but who cares. Now that dunst is starting to support images I might stop using it anyway and write something else.
+The coverart script is not that good. 
 
 #Mails
 `panel-mail` is called by cron after it fetches mails:
@@ -119,7 +121,7 @@ You should also make an alias so it's called when you close mutt:
 
     alias mutt='mutt ; panel-mail'
 
-In the panel, you can **click** on the icon to hide the number of unread mails. A **right** click will open mutt.
+In the panel, you can **click** on the icon to hide the number of unread mails. A **right** click will open mutt (or focus it if it's already opened) through my `run-or-raise` script (it's in my ~/.bin).
 
 #Calendar
 Found it on Twily's [website](http://www.twily.info), tweaked it a little.

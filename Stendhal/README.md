@@ -8,7 +8,7 @@ Browse the [appropriate folder](http://github.com/tatou-tatou/Themes/tree/master
 
 It's clickable, even if I don't click on it often (except for the torrent list and sometimes for the standalone music control or the keyboard layout switcher).
 
-It clearly lacks ergonomy, as you currently need three to four clicks to change the volume or the brightness. I will try to improve that while keeping the same general idea if I can.
+I greatly improved its ergonomy recently, so I may use it more often starting from now.
 
 ##Dock
 It's [plank](https://launchpad.net/plank) with a [custom theme](https://github.com/tatou-tatou/dotfiles/blob/master/.local/share/plank/themes/Tatou/dock.theme) and [patched](https://github.com/tatou-tatou/dotfiles/blob/master/Sources/plank-indicator.patch) to change the shape of the indicators.
