@@ -2,7 +2,8 @@
 # GLOBAL
 #_________
 ### Panel font
-font="-windows-montecarlopanel-medium-r-normal--11-110-72-72-c-60-microsoft-cp1252"
+font="-freetype-kochi gothic-medium-r-normal--11-80-100-100-p-86-iso10646-1"
+font2=",-windows-montecarlopanel-medium-r-normal--11-110-72-72-c-60-microsoft-cp1252"
 
 ### Panel height
 height="18"

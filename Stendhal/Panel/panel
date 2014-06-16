@@ -18,7 +18,7 @@ bspc control --subscribe > "$PANEL_FIFO" &
 clock -i 60 -sf "S%{B$bg_clock}  %{F$fg_squares} %{F$fg_clockemph}%d %{F$fg_clock}%b  %{F$fg_squares}%{F$fg_clock} %H:%M %{B-}%{F-}" > "$PANEL_FIFO" &
 
 # Make the panel
-cat "$PANEL_FIFO" | panel-skeleton | bar-aint-recursive -g 1280x$height -B $bg_global -F $fg_global -f "$font" | while read line; do eval "$line"; done &
+cat "$PANEL_FIFO" | panel-skeleton | bar-aint-recursive -g 1280x$height -B $bg_global -F $fg_global -f "$font$font2" | while read line; do eval "$line"; done &
 
 # Mails and notifications
 panel-mail &
