@@ -20,7 +20,7 @@ The `LaunchMenu` file here is an example menu, but you will have to edit the scr
 
 It depends on `xdotool`, `xwinfo` and `mygtkmenu`.
 
-*Note:* if you close the menu without opening anything, the presel signal will remain. I solved that by patching mygtkmenu to send a non-zero return code if it's closed without launching anything. I suggest you to do the same.
+*Note:* if you close the menu without opening anything, the presel signal will remain. I solved that by patching mygtkmenu to send a non-zero return code if it's closed without launching anything. **I suggest you to do the same.**
 
 ##BspwmMenu
 ![Screenshot](https://raw.github.com/tatou-tatou/Themes/master/Mousse/Previews/BspwmMenu.png)
