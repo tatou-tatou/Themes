@@ -44,8 +44,11 @@ exec tail -f /tmp/dzen-fifo | dzen2 -p -w 156 -h 23 -y 18 -x $xpos -fn "MonteCar
 
 
 #
-# Save the PID of the dzen popup along with the nature of the opened popup (music, volume, screen...) so that other scripts can close it and update it depending on its nature
-# eg: if the "screen backlight" popup is opened, changing the backlight with keybinds should update the slider, but changing the volume should not
+#  Save the PID of the dzen popup along with the nature of the opened popup (music,
+# volume, screen...) so that other scripts can close it and update it depending on
+# its nature
+#  eg: if the "screen backlight" popup is opened, changing the backlight with
+# keybinds should update the slider, but changing the volume should not
 #
 echo $1$dzenpid > $dzen_popup_path
 

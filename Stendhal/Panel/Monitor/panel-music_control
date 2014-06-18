@@ -1,5 +1,0 @@
-#!/bin/bash
-
-. panel-settings
-
-echo "y" "%{B$bg_button}%{F$fg_button}%{A:panel-monitor:} Mu %{A}%{B$bg_monitor}%{F$fg_monitor} %{A:mpc-script prev:}%{A} %{A:mpc toggle:}%{A} %{A:mpc next:}%{A} %{AW:dslider Mc:}%{A} %{F$fg_close}%{A:echo y > /tmp/panel-fifo ; dslider close:}%{A} %{B-}%{F-}" > /tmp/panel-fifo

@@ -6,7 +6,7 @@ dzenpid="${dzenpid:2}"
 
 if [ $1 == "Mu" ]; then
     title="Music "
-    message=" ^ca(1,coverart)^fg(#A73E28)^ca()^ca(1,termite -e 'mpdviz -i true')^fg(#99704A)^ca()^ca(1,termite -e ncmpcpp &)^fg(#878438)^ca()^ca(1,panel-music_control ; dslider close)^fg(#53414A)^ca() "
+    message=" ^ca(1,coverart)^fg(#A73E28)^ca()^ca(1,termite -e 'mpdviz -i true')^fg(#99704A)^ca()^ca(1,termite -e ncmpcpp &)^fg(#878438)^ca()^ca(1,panel-music ; dslider close)^fg(#53414A)^ca() "
 elif [ $1 == "Mc" ]; then
     title="Music "
     message=" ^ca(1,coverart)^fg(#A73E28)^ca()^ca(1,termite -e 'mpdviz -i true')^fg(#99704A)^ca()^ca(1,termite -e ncmpcpp &)^fg(#878438)^ca()   "

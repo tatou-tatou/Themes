@@ -7,11 +7,11 @@ LemonBoy recently (june, 12th 2014) added support for other buttons than the lef
 
 I also added a patch made by [this guy](https://github.com/pentla/bar), that allows to print the current x coordinate of the clickable area. Very useful.
 
-**My setup won't work if you are using the vanilla bar.**
+**/!\ I make extensive use of those changes, so my setup won't work if you are using the vanilla bar. /!\**
 
 To have the same panel as me, put all the scripts in your $PATH. Sometimes, it might need another script I put in `~/.bin`, so look for it in the appropriate [place](https://github.com/tatou-tatou/dotfiles/tree/master/.bin).
 
-The developper was lazy and haven't implemented a way to increase the maximum number of clickable areas without recompiling. In the source code, there is a `#define N 20` somewhere, **increase** that value if you need more (if you use everything I did, you will). If you use my fork, that value is already increased.
+*Note:* The developper was lazy and haven't implemented a way to increase the maximum number of clickable areas without recompiling. In the source code, there is a `#define N 20` somewhere, **increase** that value if you need more (if you use everything I did, the highest possible number of clickable areas at the same time is above twenty).
 
 
 #Panel
@@ -23,12 +23,14 @@ All the special characters (icons...) are custom made. You will need the *MonteC
 
 If you want to use your own font with your own glyphs, just know that I had some issues with vertical alignment. I fixed it by duplicating my font and changing some of its properties (namely *SIZE*, *PIXEL_SIZE* and *FONT_DESCENT*) to align it properly. That's why I have both a *MonteCarloMedium* font and a *MonteCarloPanel* font, the later being dedicated to the panel.
 
+There are a lot of scripts, so to keep things organized, I suggest you to make a dedicated location (`~/.panel` for example) where you would put all the panel related scripts. Of course, that location must be added to your $PATH.
+
 #Workspaces
 ![Screenshot](https://raw.github.com/tatou-tatou/Themes/master/Stendhal/Previews/workspaces.gif)
 
 The startmenu is made by mygtkmenu. It appears when clicking on the blank space on the left of the workspace list, but you can easily add an icon or more space by editing the appropriate line in `panel-settings`.
 
-The code that draws the appropriate icon according to the state of the workspace was written by Baskerville and is in panel-skeleton.
+The code that draws the appropriate icon according to the state of the workspace was written by Baskerville and slightly modified to show icons instead of the desktop names. If you would rather have the desktop names instead, modify panel-skeleton accordingly (the original is in the bspwm sources). Since the desktop names can be changed on the fly, it might be preferable if you intent to make use of that WM feature.
 
 #Music and system events
 ![Screenshot](https://raw.github.com/tatou-tatou/Themes/master/Stendhal/Previews/notstat.gif)
@@ -79,17 +81,17 @@ The script is also called when clicking on various buttons or when using the dif
 
 For bar-aint-recursive itself,
 - `panel-monitor` spawn settings for brightness, volume, keyboard layout, music... As shown in the gif above, they appear when you click on the blue icon.
-- `panel-music_control` is a simplified panel-monitor, dedicated to music controls. Those appears when you **right** click on the blue icon.
-
-For the popups and their sliders,
-- `dzen-submenu-window`creates the dzen popup and the fifo used by the sliders.
-- `dzen-submenu-content` creates the actual content of the popup, like the sliders.
-
-`not-stat` updates the slider indicator position when the popup is opened and if you are using *keybinds* to change the volume/brightness (and not just clicking on the slider).
-
-**/!\ Do not forget** to create `~/.panel/PID/dzen-submenu.pid`, else a few things will not work (like moving the indicator through other means than clicking on the slider).
+- `panel-music` is a simplified panel-monitor, dedicated to music controls. Those appears when you **right** click on the blue icon.
 
 *Note: this makes use of both left and right clicking, so it's* **not** *usable with vanilla bar. Refer to the first section.*
+
+For the popups and their sliders,
+- `dslider`creates the dzen popup and the fifo used by the sliders.
+- `dslider-content` creates the actual content of the popup, like the sliders.
+
+`not-stat` also updates the slider indicator position when the popup is opened and if you are using *keybinds* to change the volume/brightness (and not just clicking on the slider).
+
+**IMPORTANT** You must create a file called `~/.panel/PID/dzen-submenu.pid` (see the panel-settings). Else, the slider popup will have very strange behavior (not closing, won't update if you use keybinds to change the volume...)
 
 ###Volume controls
 Should work out of the box. I just use the CLI tools that come with ALSA to get and change the volume of the Master and PCM channels.
@@ -102,36 +104,46 @@ The path to those files probably won't be the same on our respective systems, so
 The same for the script I use to change the backlight, you will need to adapt it to your system, so it changes the value of the right file.
 
 ###Music controls
-A **right** click on the blue icon will spawn `panel-music_control`:
+A **right** click on the blue icon will spawn `panel-music`:
 
 ![Right click](https://raw.github.com/tatou-tatou/Themes/master/Stendhal/Previews/icon-rightclick.gif)
 
-`panel-monitor` and `panel-music_control` use a script from my ~/.bin called `mpc-script`. You might want to replace the occurences of `mpc-script prev` by `mpc prev` (or just grab the currently unfinished `mpc-script` from my `~/.bin`).
+`panel-monitor` and `panel-music` use a script from my ~/.bin called `mpc-script`. You might want to replace the occurences of `mpc-script prev` by `mpc prev` (or just grab the currently unfinished `mpc-script` from my `~/.bin`).
 
 The dzen popup provides shortcuts to launch [mpdviz](https://github.com/neeee/mpdviz), *ncmpcpp* and my [coverart](https://github.com/tatou-tatou/dotfiles/blob/master/.bin/coverart) script.
 
 The coverart script is not that good. 
+
+###Keyboard layouts
+![Keyboard](https://raw.github.com/tatou-tatou/Themes/master/Stendhal/Previews/keyboard.gif)
+
+Adjust the layouts you can choose from and the keyboard layout changing command in `panel-monitor`. It uses `setxkbmap`.
+
 
 #Mails
 `panel-mail` is called by cron after it fetches mails:
 
     0 * * * * /usr/bin/getmail --rcfile mailbox1 --rcfile mailbox2 ; /home/tatou/.bin/panel-mail
 
-You should also make an alias so it's called when you close mutt:
+You could also make an alias so it's called when you close mutt:
 
     alias mutt='mutt ; panel-mail'
 
-In the panel, you can **click** on the icon to hide the number of unread mails. A **right** click will open mutt (or focus it if it's already opened) through my `run-or-raise` script (it's in my ~/.bin).
+Alternatively, you can make a very small script like [this one](https://github.com/tatou-tatou/dotfiles/blob/master/.bin/mutt-panel) and call it instead of mutt when you want to open your mail client (I combine both methods, the script is only used by my run-or-raise script).
+
+In the panel, you can **click** on the icon to hide the number of unread mails. A **right** click will open mutt (or focus it if it's already opened) through my `run-or-raise` script (it's in my [~/.bin](https://github.com/tatou-tatou/dotfiles/blob/master/.bin/run-or-raise)).
+
+Technically, you are not forced to use mutt, the above script would work with any mail client that supports the maildir format.
 
 #Calendar
-Found it on Twily's [website](http://www.twily.info), tweaked it a little.
+Found it on Twily's [website](http://www.twily.info), tweaked it a little. It's the `dcal` script.
 
 If you click on the date in the panel, the calendar will pop. If you click **again** on the date, it will disappear.
 
 #To-watch list
 ![Screenshot](https://raw.github.com/tatou-tatou/Themes/master/Stendhal/Previews/torrents.gif)
 - `panel-torrents` displays the number of unwatched items in the panel. Clicking on that number spawns the popup, clicking again closes it.
-- `dzen-to-watch` creates the popup. Right clicking closes the popup.
+- `dzen-menu` creates the popup. Right clicking closes the popup.
 - `dzen-menu-content` creates the content of the popup from a text file acting as a list.
 - [This](https://github.com/tatou-tatou/dotfiles/blob/master/.bin/notify-torrent-done) script (called by transmission-daemon when a torrent is finished), will add the filename at the end of the text file.
 
@@ -161,4 +173,6 @@ Appears when you do a right click on the date. It lists mounted devices and clic
 It uses `udevil`.
 
 #Todo list
-It works exactly like the to watch list and the mounted devices list. I haven't included it either (yet). It uses `remind` to automatically add new tasks, or automatically remove the tasks that are out-of-date and cannot be done anymore.
+It works exactly like the to watch list and the mounted devices list. It's unfinished and I haven't included it fully (yet), but it uses `dzen-menu` and `dzen-menu-content` (like the to watch list).
+
+It depends on `remind` to automatically add new tasks, or automatically remove the tasks that are out-of-date and cannot be done anymore.

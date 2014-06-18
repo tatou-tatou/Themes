@@ -48,7 +48,7 @@ premessage="m"
 # execute="your command"
 ## If you want two commands (the second one is executed with a right click)
 # execute="command1 : command2"
-execute="panel-monitor : panel-music_control"
+execute="panel-monitor : panel-music"
 text_execute="mpc toggle > /dev/null & : run-or-raise ncmpcpp &"
 
 #####################
