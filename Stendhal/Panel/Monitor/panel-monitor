@@ -36,14 +36,14 @@ do
             currentLayout=$(setxkbmap -print -v 7 | grep layout)
             currentLayout=${currentLayout: -2}
             
-            fr="AZERTY"
-            us="QWERTY"
+            Fr="AZERTY"
+            Us="QWERTY"
             
             message=" "
-            for layout in fr us
+            for layout in Fr Us
             do
-                layoutCmd="setxkbmap -model macintosh -layout $layout ; panel-monitor Kb ; pkill not-stat ; not-stat -d ' ${!layout}' &"
-                if [ "$layout" = "$currentLayout" ]; then
+                layoutCmd="setxkbmap -model macintosh -layout ${layout,,} ; panel-monitor Kb ; pkill not-stat ; not-stat -d ' ${!layout}' &"
+                if [ "${layout,,}" = "$currentLayout" ]; then
                     button="$layout"
                 else
                     button="%{F$inactive_kb}%{A:$layoutCmd:}$layout%{A}%{F$fg_monitor}"
