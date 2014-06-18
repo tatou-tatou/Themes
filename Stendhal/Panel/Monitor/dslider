@@ -10,10 +10,10 @@ previouspid=$(cat $dzen_popup_path)
 previouspid="${previouspid:2}"
 
 if [[ -n "$previouspid" && "$(ps -p $previouspid -o comm=)" = "dzen2" ]]; then
-	pkill $previouspid
-	pkill -f 'tail -f /tmp/dzen-fifo'
-	echo "" > $dzen_popup_path
-	exit
+    pkill $previouspid
+    pkill -f 'tail -f /tmp/dzen-fifo'
+    echo "" > $dzen_popup_path
+    exit
 fi
 
 # Exit now if it was asked to (that's how the close button work for example)
@@ -29,12 +29,12 @@ closing="pkill -f 'tail -f /tmp/dzen-fifo' & echo '' > $dzen_popup_path"
 #
 
 case $1 in
-	Vm) xpos=$(($xpos - 42)) ;;
-	Vp) xpos=$(($xpos - 42)) ;;
-	Sc) xpos=$(($xpos - 30)) ;;
-	Mu) xpos=$(($xpos - 60)) ;;
-	Mc) xpos=$(($xpos - 60)) ;;
-	*)  exit ;;
+    Vm) xpos=$(($xpos - 42)) ;;
+    Vp) xpos=$(($xpos - 42)) ;;
+    Sc) xpos=$(($xpos - 30)) ;;
+    Mu) xpos=$(($xpos - 60)) ;;
+    Mc) xpos=$(($xpos - 60)) ;;
+    *)  exit ;;
 esac
 
 [ -e "/tmp/dzen-fifo" ] && rm "/tmp/dzen-fifo"
@@ -52,4 +52,4 @@ echo $1$dzenpid > $dzen_popup_path
 #
 # Create content for the popup
 #
-dzen-submenu-content "$1"
+dslider-content "$1"

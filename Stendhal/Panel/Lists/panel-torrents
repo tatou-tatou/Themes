@@ -1,52 +1,25 @@
 #!/bin/sh
 
-#reduced() {
-#	echo "%{B#ff9B7046}%{A:dzen-to-watch:}  %{A}%{B-}"
-#}
-#
-#full() {
-#file="/home/tatou/Documents/To_watch"
-#lines=$(cat $file | wc -l)
-#
-#if [ "$lines" -ne "0" ]; then
-#	echo "%{B#ff9B7046}%{A:dzen-to-watch:}  $lines %{A}%{B-}"
-#else
-#	echo ""
-#fi
-#}
-#
-#case "$1" in
-#	reduced)
-#		echo "T$(reduced)" > /tmp/panel-fifo
-#	;;
-#	full)
-#		echo "T$(full)" > /tmp/panel-fifo
-#	;;
-#	*)
-#		echo "T$(full)" > /tmp/panel-fifo
-#	;;
-#esac
-
 file="/home/tatou/.to_watch"
 lines=$(cat $file | wc -l)
 
 if [ "$lines" -ne "0" ]
 then
-	message=""
-	case "$1" in
-	reduced)
-		icon="%{F#ff35332D}%{F-}"
-	;;
-	full)
-		icon=""
-	;;
-	*)
-		icon=""
-	;;
-	esac
-	message=" %{B#ff9B7046}%{A:dzen-to-watch:run-or-raise transmission &:} $icon $lines %{A}%{B-}"
+    message=""
+    case "$1" in
+    reduced)
+        icon="%{F#ff35332D}%{F-}"
+    ;;
+    full)
+        icon=""
+    ;;
+    *)
+        icon=""
+    ;;
+    esac
+    message=" %{B#ff9B7046}%{A:dzen-menu towatch:run-or-raise transmission &:} $icon $lines %{A}%{B-}"
 else
-	message=""
+    message=""
 fi
 
 echo "T$message" > /tmp/panel-fifo

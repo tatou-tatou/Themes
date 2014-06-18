@@ -57,137 +57,137 @@ bld=$'\e[1m'
 rst=$'\e[0m'
 
 while getopts ":mbBdrvVMh" flags; do
-	case $flags in
-	m)
-		icon="$(mpc | grep -E 'playing|paused' | cut -d'[' -f2 | cut -d']' -f1 | sed 's/paused//g' | sed 's/playing//g')"
-		message=" $(mpc current -f '%title%|%file%')"
-		if [ "$message" = " " ];then
-			icon=""
-			message=" (Nothing is playing)"
-		fi
-	;;
-	b)
-		dzenstatus=$(cat $dzen_popup_path)
-		dzenstatus="${dzenstatus:0:2}"
-		if [ "$dzenstatus" = "Sc" ]; then
-			dzen-submenu-content Sc &
-		fi
+    case $flags in
+    m)
+        icon="$(mpc | grep -E 'playing|paused' | cut -d'[' -f2 | cut -d']' -f1 | sed 's/paused//g' | sed 's/playing//g')"
+        message=" $(mpc current -f '%title%|%file%')"
+        if [ "$message" = " " ];then
+            icon=""
+            message=" (Nothing is playing)"
+        fi
+    ;;
+    b)
+        dzenstatus=$(cat $dzen_popup_path)
+        dzenstatus="${dzenstatus:0:2}"
+        if [ "$dzenstatus" = "Sc" ]; then
+            dslider-content Sc &
+        fi
 
-		icon=""
-		message=" Backlight $(cat $brightness_path)"
-	;;
-	B)
-		icon=""
-		message=" Keyboard $(cat $keyboard_path)"
-	;;
-	d)
-		icon=""
-		message=$2
-	
-	;;
-	r)
-		percent=$(acpi -b | cut -s -d' ' -f4 | cut -s -d'%' -f1)
-		message="$(acpi -b | cut -s -d',' -f3)"
+        icon=""
+        message=" Backlight $(cat $brightness_path)"
+    ;;
+    B)
+        icon=""
+        message=" Keyboard $(cat $keyboard_path)"
+    ;;
+    d)
+        icon=""
+        message=$2
+    
+    ;;
+    r)
+        percent=$(acpi -b | cut -s -d' ' -f4 | cut -s -d'%' -f1)
+        message="$(acpi -b | cut -s -d',' -f3)"
 
-		if [ ! -z "$message" ]
-		then
-			if [ $(echo "$percent > 89" | bc) == 1 ]
-			then
-				icon=""
-			elif [ $(echo "$percent > 74" | bc) == 1 ]
-			then
-				icon=""
-			elif [ $(echo "$percent > 49" | bc) == 1 ]
-			then
-				icon=""
-			elif [ $(echo "$percent > 24" | bc) == 1 ]
-			then
-				icon=""
-			else
-				icon=""
-			fi
-		else
-			icon=""
-			message=" Full"
-		fi
+        if [ ! -z "$message" ]
+        then
+            if [ $(echo "$percent > 89" | bc) == 1 ]
+            then
+                icon=""
+            elif [ $(echo "$percent > 74" | bc) == 1 ]
+            then
+                icon=""
+            elif [ $(echo "$percent > 49" | bc) == 1 ]
+            then
+                icon=""
+            elif [ $(echo "$percent > 24" | bc) == 1 ]
+            then
+                icon=""
+            else
+                icon=""
+            fi
+        else
+            icon=""
+            message=" Full"
+        fi
 
-	;;
-	v)
-		dzenstatus=$(cat $dzen_popup_path)
-		dzenstatus="${dzenstatus:0:2}"
-		if [ "$dzenstatus" = "Vp" ]; then
-			dzen-submenu-content Vp &
-		fi
+    ;;
+    v)
+        dzenstatus=$(cat $dzen_popup_path)
+        dzenstatus="${dzenstatus:0:2}"
+        if [ "$dzenstatus" = "Vp" ]; then
+            dslider-content Vp &
+        fi
 
-		valeur_volume="$(amixer -q | grep -A5 PCM | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)"
-		if [ "$(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1)" == "off" ]
-		then
-			icon=" "
-		elif [ $valeur_volume -eq 0 ]
-		then
-			icon=" "
-		elif [ $valeur_volume -eq 100 ]
-		then
-			icon=""
-		elif [ $(echo "$valeur_volume > 49" | bc) == 1 ]
-		then
-			icon=""
-		else
-			icon=""
-		fi
+        valeur_volume="$(amixer -q | grep -A5 PCM | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)"
+        if [ "$(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1)" == "off" ]
+        then
+            icon=" "
+        elif [ $valeur_volume -eq 0 ]
+        then
+            icon=" "
+        elif [ $valeur_volume -eq 100 ]
+        then
+            icon=""
+        elif [ $(echo "$valeur_volume > 49" | bc) == 1 ]
+        then
+            icon=""
+        else
+            icon=""
+        fi
 
-		message=" Volume $valeur_volume"
-	;;
-	V)
-		dzenstatus=$(cat $dzen_popup_path)
-		dzenstatus="${dzenstatus:0:2}"
-		if [ "$dzenstatus" = "Vm" ]; then
-			dzen-submenu-content Vm &
-		fi
+        message=" Volume $valeur_volume"
+    ;;
+    V)
+        dzenstatus=$(cat $dzen_popup_path)
+        dzenstatus="${dzenstatus:0:2}"
+        if [ "$dzenstatus" = "Vm" ]; then
+            dslider-content Vm &
+        fi
 
-		valeur_volume="$(amixer -q | grep -A5 Master | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)"
-		if [ "$(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1)" == "off" ]
-		then
-			icon=" "
-		elif [ $valeur_volume -eq 0 ]
-		then
-			icon=" "
-		elif [ $valeur_volume -eq 100 ]
-		then
-			icon=""
-		elif [ $(echo "$valeur_volume > 49" | bc) == 1 ]
-		then
-			icon=""
-		else
-			icon=""
-		fi
+        valeur_volume="$(amixer -q | grep -A5 Master | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)"
+        if [ "$(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1)" == "off" ]
+        then
+            icon=" "
+        elif [ $valeur_volume -eq 0 ]
+        then
+            icon=" "
+        elif [ $valeur_volume -eq 100 ]
+        then
+            icon=""
+        elif [ $(echo "$valeur_volume > 49" | bc) == 1 ]
+        then
+            icon=""
+        else
+            icon=""
+        fi
 
-		message=" Master $valeur_volume"
-	;;
-	M)
-		icon="$(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1 | sed 's/on//g' | sed 's/off/ /g')"
-		message=" $(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1 | sed 's/on/Not /g' | sed 's/off//g')Muted"
-	;;
-	h) #help
-			echo -e "Usage:"
-			echo -e "  not-stat [OPTION] [MESSAGE]"
-			echo ""
-			echo "Display notifications on the top panel with various icons. After 3 seconds of inactivity, notifications get replaced by the current mpd song."
-			echo ""
-			echo -e "Options${rst}:"
-			echo -e "   ${bld}-m${rst}                 Currently played music."
-			echo -e "   ${bld}-b${rst}                 Screen backlight."
-			echo -e "   ${bld}-B${rst}                 Keyboard backlight."
-			echo -e "   ${bld}-d${rst}                 To use with a [MESSAGE]."
-			echo -e "   ${bld}-r${rst}                 Remaining battery time."
-			echo -e "   ${bld}-v${rst}                 PCM volume in percent."
-			echo -e "   ${bld}-V${rst}                 Master volume in percent."
-			echo -e "   ${bld}-M${rst}                 Mute/Not mute."
-			echo -e "   ${bld}-h${rst}                 Display this help."
+        message=" Master $valeur_volume"
+    ;;
+    M)
+        icon="$(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1 | sed 's/on//g' | sed 's/off/ /g')"
+        message=" $(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1 | sed 's/on/Not /g' | sed 's/off//g')Muted"
+    ;;
+    h) #help
+            echo -e "Usage:"
+            echo -e "  not-stat [OPTION] [MESSAGE]"
+            echo ""
+            echo "Display notifications on the top panel with various icons. After 3 seconds of inactivity, notifications get replaced by the current mpd song."
+            echo ""
+            echo -e "Options${rst}:"
+            echo -e "   ${bld}-m${rst}                 Currently played music."
+            echo -e "   ${bld}-b${rst}                 Screen backlight."
+            echo -e "   ${bld}-B${rst}                 Keyboard backlight."
+            echo -e "   ${bld}-d${rst}                 To use with a [MESSAGE]."
+            echo -e "   ${bld}-r${rst}                 Remaining battery time."
+            echo -e "   ${bld}-v${rst}                 PCM volume in percent."
+            echo -e "   ${bld}-V${rst}                 Master volume in percent."
+            echo -e "   ${bld}-M${rst}                 Mute/Not mute."
+            echo -e "   ${bld}-h${rst}                 Display this help."
 
-			exit
-        ;;	
-	esac
+            exit
+        ;;  
+    esac
 done
 
 
@@ -206,8 +206,8 @@ sleep $countdown
 icon="$(mpc | grep -E 'playing|paused' | cut -d'[' -f2 | cut -d']' -f1 | sed 's/paused//g' | sed 's/playing//g')"
 message=" $(mpc current -f '%title%|%file%')"
 if [ "$message" = " " ];then
-	icon=""
-	message=" (Nothing is playing!)"
+    icon=""
+    message=" (Nothing is playing!)"
 fi
 
 echo -E "$premessage" "%{B$bg_icons}%{F$fg_icons}%{A:$execute:} $icon %{A}%{B$bg_notifications}%{A:$text_execute:} %{F$fg_squares}%{F$fg_notifications}$message %{A}%{B-}%{F-}" > $fifo

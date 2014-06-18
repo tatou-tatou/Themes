@@ -1,9 +1,11 @@
 #
 # GLOBAL
 #_________
-### Panel font
+### Panel fonts
+# You MUST configure two fonts! You need a X font, check their names with xlsfonts
+# I have instructions on how to add a new font in my Monégasque repo.
 font="-freetype-kochi gothic-medium-r-normal--11-80-100-100-p-86-iso10646-1"
-font2=",-windows-montecarlopanel-medium-r-normal--11-110-72-72-c-60-microsoft-cp1252"
+font2="-windows-montecarlopanel-medium-r-normal--11-110-72-72-c-60-microsoft-cp1252"
 
 ### Panel height
 height="18"
@@ -28,7 +30,7 @@ dzen_popup_path="/home/tatou/.panel/PID/dzen-submenu.pid"
 # START MENU
 #_____________
 # You will need mygtkmenu
-startmenu_cmd="mygtkmenu ~/.config/GTKmenu/StartMenu > /dev/null 2>&1"
+startmenu_cmd="mygtkmenu ~/.config/GTKmenu/StartMenu > /dev/null"
 
 ### Icon
 start_icon=" "
@@ -80,11 +82,14 @@ fg_button="#ffeddec9"
 bg_button_selected="#ffBA6258"
 fg_button_selected="#ffeddec9"
 fg_close="#ffABA08B"
+inactive_kb="#ff383428"
 
 
 #
-# DZEN POPUP
+# DZEN POPUPS AND MENU
 #____________
+dzen_font="MonteCarlo-8"
+
 ### Slider
 empty_slider=""
 full_slider=""
@@ -92,10 +97,12 @@ indicator_slider=""
 
 ### Colors
 dzen_bg="#201F1D"
+dzen_bg2="#1A1917"
 dzen_fg="#DED0B4"
-dzen_full="#A73E28"
+dzen_sel="#A73E28"
 dzen_empty="#403A2E"
 dzen_close="#ABA08B"
+dzen_sideline="#9D534A"
 
 
 #

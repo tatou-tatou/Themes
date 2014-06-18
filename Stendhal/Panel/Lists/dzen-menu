@@ -1,0 +1,63 @@
+#!/bin/bash
+
+. panel-settings
+content="$1"
+
+# Confirm that an argument was given
+if [ -z $content ]; then
+    echo "No menu type specified!"
+    exit
+fi
+
+case $content in
+    towatch)
+        file="/home/tatou/.to_watch"
+        title="^fg(#878438)To watch^fg() list:"
+        ;;
+    todo)
+        file="/home/tatou/.todo"
+        updatepanel=
+        title="^fg(#878438)To do^fg() list:"
+        ;;
+esac
+
+
+# Close and clean if a dzen submenu is already opened
+
+cleaning ()
+{
+    pkill -f "dzen2 -p -m -x -408 -y 18 -w 408 -h 20"
+    pkill -f 'tail -f /tmp/dzen-menu-fifo'
+    panel-torrents full
+    panel-remind
+}
+
+clean_tail="pkill -f 'tail -f /tmp/dzen-menu-fifo' && panel-torrents full && panel-remind"
+
+pgrep -f "dzen2 -p -m -x -408 -y 18 -w 408 -h 20" > /dev/null && $(cleaning) && exit
+
+
+#
+# Make the submenu window
+#
+
+# FIFO
+[ -e "/tmp/dzen-menu-fifo" ] && rm "/tmp/dzen-menu-fifo"
+mkfifo "/tmp/dzen-menu-fifo"
+
+# NUMBER OF LINES
+lines=$(wc -l < $file)
+#if [ "$lines" -gt 6 ]
+#then
+#   lines=6
+#fi
+
+# CREATE THE POPUP
+(echo "$title"
+exec tail -f /tmp/dzen-menu-fifo) | dzen2 -p -m -x -408 -y 18 -w 408 -h 20 -fn "$dzen_font" -fg "$dzen_fg" -bg "$dzen_bg2" -l $lines -e "onstart=uncollapse;button1=menuprint,exit,exec:$clean_tail:panel-torrents full;button3=exit,exec:$clean_tail:panel-torrents full;button4=scrollup;button5=scrolldown" | while read FNAME; do
+    FNAME=${FNAME:4}
+    xdg-open "/home/tatou/Torrents/$FNAME" &
+done &
+
+# CREATE CONTENT FOR THE POPUP
+dzen-menu-content $content $lines

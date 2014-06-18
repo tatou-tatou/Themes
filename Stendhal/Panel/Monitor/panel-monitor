@@ -4,7 +4,7 @@
 . panel-settings
 
 ### Close the dzen popup if it exists ###
-dzen-submenu-window close
+dslider close
 
 ### Create the menu ###
 # If there is no argument => Create just the pink buttons
@@ -14,69 +14,86 @@ monitor=""
 
 for B in Vp Vm Mu Kb Sc
 do
-	## For the focused button ##
-	if [ "$1" == "$B" ]
-	then
-		cmd_return="panel-monitor"
-		arrow=""
+    ## For the focused button ##
+    if [ "$1" == "$B" ]
+    then
+        cmd_return="panel-monitor"
+        arrow=""
 
-		case $B in
-		Mu) #music
-			message=" %{A:mpc-script prev:}%{A} %{A:mpc toggle:}%{A} %{A:mpc next:}%{A} %{AW:dzen-submenu-window Mu:}$arrow%{A} "
-			xpos="234"
-		;;
-		Sc) # backlight
-			down="sudo mbp_backlight down ; pkill not-stat ; not-stat -b &"
-			up="sudo mbp_backlight up ; pkill not-stat ; not-stat -b &"
-			message=" %{A:$down:}%{A}%{A:$up:}%{A}%{AW:dzen-submenu-window Sc:}$arrow%{A} "
-			xpos="264"
-		;;
-		Kb) # keyboard layout
-			down="setxkbmap -model macintosh -layout fr ; pkill not-stat ; not-stat -d ' AZERTY' &"
-			up="setxkbmap -model macintosh -layout us ; pkill not-stat ; not-stat -d ' QWERTY' &"
-			message=" $setting%{A:$down:}Fr%{A} %{A:$up:}Us%{A} "
-		;;
-		Vp) # PCM volume
-			setting="%{A:amixer set Master toggle ; pkill not-stat ; not-stat -M &:}M%{A} "
-			down="amixer set PCM 1dB- > /dev/null ; pkill not-stat ; not-stat -v &"
-			up="amixer set PCM 1dB+ > /dev/null ; pkill not-stat ; not-stat -v &"
-			message=" $setting%{A:$down:}%{A}%{A:$up:}%{A}%{AW:dzen-submenu-window Vp:}$arrow%{A} "
-			xpos="156"
-		;;
-		Vm) # Master Volume
-			setting="%{A:amixer set Master toggle ; pkill not-stat ; not-stat -M &:}M%{A} "
-			down="amixer set Master 1dB- ; pkill not-stat ; not-stat -V &"
-			up="amixer set Master 1dB+ ; pkill not-stat ; not-stat -V &"
-			message=" $setting%{A:$down:}%{A}%{A:$up:}%{A}%{AW:dzen-submenu-window Vm:}$arrow%{A} "
-			xpos="186"
-		;;
-		esac
+        case $B in
+        Mu) #music
+            message=" %{A:mpc-script prev:}%{A} %{A:mpc toggle:}%{A} %{A:mpc next:}%{A} %{AW:dslider Mu:}$arrow%{A} "
+            xpos="234"
+        ;;
+        Sc) # backlight
+            down="sudo mbp_backlight down ; pkill not-stat ; not-stat -b &"
+            up="sudo mbp_backlight up ; pkill not-stat ; not-stat -b &"
 
-		#title="$B"
-		title=""
+            message=" %{A:$down:}%{A}%{A:$up:}%{A}%{AW:dslider Sc:}$arrow%{A} "
+            xpos="264"
+        ;;
+        Kb) # keyboard layout
+            currentLayout=$(setxkbmap -print -v 7 | grep layout)
+            currentLayout=${currentLayout: -2}
+            
+            fr="AZERTY"
+            us="QWERTY"
+            
+            message=" "
+            for layout in fr us
+            do
+                layoutCmd="setxkbmap -model macintosh -layout $layout ; panel-monitor Kb ; pkill not-stat ; not-stat -d ' ${!layout}' &"
+                if [ "$layout" = "$currentLayout" ]; then
+                    button="$layout"
+                else
+                    button="%{F$inactive_kb}%{A:$layoutCmd:}$layout%{A}%{F$fg_monitor}"
+                fi
+                message+="$button "
+            done
+        ;;
+        Vp) # PCM volume
+            setting="%{A:amixer set Master toggle ; pkill not-stat ; not-stat -M &:}M%{A} "
+            down="amixer set PCM 1dB- > /dev/null ; pkill not-stat ; not-stat -v &"
+            up="amixer set PCM 1dB+ > /dev/null ; pkill not-stat ; not-stat -v &"
 
-		bg_button_final="$bg_button_selected"
-		fg_button_final="$fg_button_selected"
+            message=" $setting%{A:$down:}%{A}%{A:$up:}%{A}%{AW:dslider Vp:}$arrow%{A} "
+            xpos="156"
+        ;;
+        Vm) # Master Volume
+            setting="%{A:amixer set Master toggle ; pkill not-stat ; not-stat -M &:}M%{A} "
+            down="amixer set Master 1dB- ; pkill not-stat ; not-stat -V &"
+            up="amixer set Master 1dB+ ; pkill not-stat ; not-stat -V &"
 
-		dzen-submenu-window $B $xpos
+            message=" $setting%{A:$down:}%{A}%{A:$up:}%{A}%{AW:dslider Vm:}$arrow%{A} "
+            xpos="186"
+        ;;
+        esac
 
-	else
-		## For normal, unfocused, buttons ##
-		title=$B
-		message=" "
-		cmd_return="panel-monitor "
-		cmd_return+="$B"
+        #title="$B"
+        title=""
 
-		bg_button_final="$bg_button"
-		fg_button_final="$fg_button"
-	fi
+        bg_button_final="$bg_button_selected"
+        fg_button_final="$fg_button_selected"
 
-	monitor+="%{AW:$cmd_return:}%{B$bg_button_final}%{F$fg_button_final} $title %{A}%{B$bg_monitor}%{F$fg_monitor}$message%{B-}%{F-}"
+        dslider $B $xpos
+
+    else
+        ## For normal, unfocused, buttons ##
+        title=$B
+        message=" "
+        cmd_return="panel-monitor "
+        cmd_return+="$B"
+
+        bg_button_final="$bg_button"
+        fg_button_final="$fg_button"
+    fi
+
+    monitor+="%{AW:$cmd_return:}%{B$bg_button_final}%{F$fg_button_final} $title %{A}%{B$bg_monitor}%{F$fg_monitor}$message%{B-}%{F-}"
 
 done
 
 ### Add close button ###
-monitor+="%{B$bg_monitor}%{F$fg_close}%{A:echo c > /tmp/panel-fifo ; dzen-submenu-window close:}%{A} %{B-}%{F-}"
+monitor+="%{B$bg_monitor}%{F$fg_close}%{A:echo c > /tmp/panel-fifo ; dslider close:}%{A} %{B-}%{F-}"
 
 ### Send to panel ###
 echo "c" "$monitor" > /tmp/panel-fifo

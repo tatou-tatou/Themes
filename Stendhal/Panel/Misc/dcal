@@ -20,4 +20,4 @@ LINES=$(cal -m | wc -l)
 
 # Create the popup
 (date +'%A %d %B'
-cal -m | sed -r -e "1,2 s/.*/^fg(#A73E28)&^fg()/"  -e "s/(^| )($TODAY)($| )/\1^bg(#A73E28)^fg(#eddec9)\2^fg()^bg()\3/") | dzen2 -x 1076 -y 26 -h 20 -tw 196 -w 196 -l $LINES -sa c -ta c -p -e 'onstart=uncollapse;button1=exit;button3=exit' -fn 'MonteCarlo-8' -fg '#eddec9' -bg '#1A1917' & new_calendarpid=$!
+cal -m | sed -r -e "1,2 s/.*/^fg(#A73E28)&^fg()/"  -e "s/(^| )($TODAY)($| )/\1^bg($dzen_sel)^fg($dzen_fg)\2^fg()^bg()\3/") | dzen2 -x 1076 -y 26 -h 20 -tw 196 -w 196 -l $LINES -sa c -ta c -p -e 'onstart=uncollapse;button1=exit;button3=exit' -fn "$dzen_font" -fg "$dzen_fg" -bg "$dzen_bg2" & new_calendarpid=$!

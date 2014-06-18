@@ -8,45 +8,45 @@ hotmail=$(ls /home/tatou/Mail/hotmail/Inbox/new | wc -l)
 
 mails()
 {
-	##Free
-	if [ "$free" -gt "0" ]
-		then
-			messagefree="$free "
-	fi
-	##Hotmail
-	if [ "$hotmail" -gt "0" ]
-		then
-			messagehotmail="$hotmail "
-	fi
+    ##Free
+    if [ "$free" -gt "0" ]
+        then
+            messagefree="$free "
+    fi
+    ##Hotmail
+    if [ "$hotmail" -gt "0" ]
+        then
+            messagehotmail="$hotmail "
+    fi
 
-	##Both
-	if [ "$hotmail" -gt "0" -a "$free" -gt "0" ]; then
-			middleand="+ "
-			#extraspace=" "
-	fi
-	if [ "$hotmail" -gt "0" -o "$free" -gt "0" ]; then
-			messages=" %{B$bg_mails}%{F$fg_mails}%{A:panel-mail reduced:run-or-raise mutt &:}$extraspace   "
-			endmail="$extraspace%{B-}%{F-}%{A}"
-	fi
+    ##Both
+    if [ "$hotmail" -gt "0" -a "$free" -gt "0" ]; then
+            middleand="+ "
+            #extraspace=" "
+    fi
+    if [ "$hotmail" -gt "0" -o "$free" -gt "0" ]; then
+            messages=" %{B$bg_mails}%{F$fg_mails}%{A:panel-mail small:run-or-raise mutt &:}$extraspace   "
+            endmail="$extraspace%{B-}%{F-}%{A}"
+    fi
 
 echo "$messages$messagehotmail$middleand$messagefree$endmail"
 }
 
 mails_reduced()
 {
-	if [ "$hotmail" -gt "0" -o "$free" -gt "0" ]; then
-		echo " %{A:panel-mail full:run-or-raise mutt &:}%{B$bg_mails}%{F$fg_mails}  %{B-}%{F-}%{A}"
-	fi
+    if [ "$hotmail" -gt "0" -o "$free" -gt "0" ]; then
+        echo " %{A:panel-mail:run-or-raise mutt &:}%{B$bg_mails}%{F$fg_mails}  %{B-}%{F-}%{A}"
+    fi
 }
 
 case "$1" in
-	reduced)
-		echo "M$(mails_reduced)" > /tmp/panel-fifo
-	;;
-	full)
-		echo "M$(mails)" > /tmp/panel-fifo
-	;;
-	*)
-		echo "M$(mails)" > /tmp/panel-fifo
-	;;
+    small)
+        echo "M$(mails_reduced)" > /tmp/panel-fifo
+    ;;
+    full)
+        echo "M$(mails)" > /tmp/panel-fifo
+    ;;
+    *)
+        echo "M$(mails)" > /tmp/panel-fifo
+    ;;
 esac
