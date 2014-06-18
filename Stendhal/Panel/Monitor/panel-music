@@ -1,5 +1,77 @@
-#!/bin/bash
-
+#!/bin/sh
 . panel-settings
 
-echo "y" "%{B$bg_button}%{F$fg_button}%{A:panel-monitor:} Mu %{A}%{B$bg_monitor}%{F$fg_monitor} %{A:mpc-script prev:}%{A} %{A:mpc toggle:}%{A} %{A:mpc next:}%{A} %{AW:dslider Mc:}%{A} %{F$fg_close}%{A:echo y > /tmp/panel-fifo ; dslider close:}%{A} %{B-}%{F-}" > /tmp/panel-fifo
+# Normal controls (prev, play/pause, next)
+normal() {
+    beginning="%{B$bg_button}%{F$fg_button}%{A:panel-monitor:panel-music 2:} Mu %{A}%{B$bg_monitor}%{F$fg_monitor}"
+    controls="%{A:mpc-script prev:}%{A} %{A:mpc toggle:}%{A} %{A:mpc next:}%{A} %{AW:dslider Mc:}%{A}"
+    echo "$beginning $controls"
+}
+
+# Additional controls (repeat, random, single, consume)
+alternate() {
+    pgrep -x "mpd" > /dev/null && eval $(mpc | grep "volume: " | tail -n 1 | cut -d'%' -f 2 | sed 's/: /=/g') || mpdstate="OFFLINE"
+ 
+    updateCmd="panel-music 2"
+
+    if [ "$mpdstate" != "OFFLINE" ]; then
+        # Creating the mpdstate
+
+        # Repeat
+        icon=""
+        iconCmd="mpc repeat > /dev/null"
+        icon="%{A:$iconCmd ; $updateCmd:}$icon%{A}"
+        if [ "$repeat" = "on" ]; then
+            mpdstate="$icon "
+        else
+            mpdstate="%{F$inactive}$icon%{F$fg_monitor} "
+        fi
+
+        # Random
+        icon=""
+        iconCmd="mpc random > /dev/null"
+        icon="%{A:$iconCmd ; $updateCmd:}$icon%{A}"
+        if [ "$random" = "on" ]; then
+            mpdstate+="$icon "
+        else
+            mpdstate+="%{F$inactive}$icon%{F$fg_monitor} "
+        fi
+
+        # Single
+        icon=""
+        iconCmd="mpc single > /dev/null"
+        icon="%{A:$iconCmd ; $updateCmd:}$icon%{A}"
+        if [ "$single" = "on" ]; then
+            mpdstate+="$icon "
+        else
+            mpdstate+="%{F$inactive}$icon%{F$fg_monitor} "
+        fi
+
+        # Consume
+        icon=""
+        iconCmd="mpc consume > /dev/null"
+        icon="%{A:$iconCmd ; $updateCmd:}$icon%{A}"
+        if [ "$consume" = "on" ]; then
+            mpdstate+="$icon"
+        else
+            mpdstate+="%{F$inactive}$icon%{F$fg_monitor}"
+        fi
+    fi
+
+    beginning="%{B$bg_button}%{F$fg_button}%{A:panel-monitor:panel-music:} Mu %{A}%{B$bg_monitor}%{F$fg_monitor}"
+    echo "$beginning $mpdstate"
+}
+
+
+
+# Print the widget in the panel
+case $1 in
+2)
+    message=$(alternate)
+    ;;
+*)
+    message=$(normal)
+    ;;
+esac
+
+echo "y" "$message %{F$fg_close}%{A:echo y > /tmp/panel-fifo ; dslider close:}%{A} %{B-}%{F-}" > /tmp/panel-fifo

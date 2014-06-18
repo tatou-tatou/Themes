@@ -82,7 +82,7 @@ fg_button="#ffeddec9"
 bg_button_selected="#ffBA6258"
 fg_button_selected="#ffeddec9"
 fg_close="#ffABA08B"
-inactive_kb="#ff383428"
+inactive="#ff383428"
 
 
 #

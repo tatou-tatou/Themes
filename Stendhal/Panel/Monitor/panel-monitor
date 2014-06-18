@@ -12,7 +12,7 @@ dslider close
 
 monitor=""
 
-for B in Vp Vm Mu Kb Sc
+for B in Vp Vm Kb Sc
 do
     ## For the focused button ##
     if [ "$1" == "$B" ]
@@ -21,16 +21,11 @@ do
         arrow=""
 
         case $B in
-        Mu) #music
-            message=" %{A:mpc-script prev:}%{A} %{A:mpc toggle:}%{A} %{A:mpc next:}%{A} %{AW:dslider Mu:}$arrow%{A} "
-            xpos="234"
-        ;;
         Sc) # backlight
             down="sudo mbp_backlight down ; pkill not-stat ; not-stat -b &"
             up="sudo mbp_backlight up ; pkill not-stat ; not-stat -b &"
 
             message=" %{A:$down:}%{A}%{A:$up:}%{A}%{AW:dslider Sc:}$arrow%{A} "
-            xpos="264"
         ;;
         Kb) # keyboard layout
             currentLayout=$(setxkbmap -print -v 7 | grep layout)
@@ -46,7 +41,7 @@ do
                 if [ "${layout,,}" = "$currentLayout" ]; then
                     button="$layout"
                 else
-                    button="%{F$inactive_kb}%{A:$layoutCmd:}$layout%{A}%{F$fg_monitor}"
+                    button="%{F$inactive}%{A:$layoutCmd:}$layout%{A}%{F$fg_monitor}"
                 fi
                 message+="$button "
             done
@@ -57,7 +52,6 @@ do
             up="amixer set PCM 1dB+ > /dev/null ; pkill not-stat ; not-stat -v &"
 
             message=" $setting%{A:$down:}%{A}%{A:$up:}%{A}%{AW:dslider Vp:}$arrow%{A} "
-            xpos="156"
         ;;
         Vm) # Master Volume
             setting="%{A:amixer set Master toggle ; pkill not-stat ; not-stat -M &:}M%{A} "
@@ -65,17 +59,16 @@ do
             up="amixer set Master 1dB+ ; pkill not-stat ; not-stat -V &"
 
             message=" $setting%{A:$down:}%{A}%{A:$up:}%{A}%{AW:dslider Vm:}$arrow%{A} "
-            xpos="186"
         ;;
         esac
 
         #title="$B"
         title=""
 
+        opened=$B
+
         bg_button_final="$bg_button_selected"
         fg_button_final="$fg_button_selected"
-
-        dslider $B $xpos
 
     else
         ## For normal, unfocused, buttons ##
@@ -83,6 +76,7 @@ do
         message=" "
         cmd_return="panel-monitor "
         cmd_return+="$B"
+        [ "$B" != "Kb" ] && cmd_return+="; dslider $opened${B}i"
 
         bg_button_final="$bg_button"
         fg_button_final="$fg_button"

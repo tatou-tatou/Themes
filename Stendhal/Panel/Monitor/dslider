@@ -2,8 +2,6 @@
 
 # Info
 . panel-settings
-xpos=$2
-
 
 # Close and clean if a dzen popup is already opened
 previouspid=$(cat $dzen_popup_path)
@@ -25,17 +23,45 @@ closing="pkill -f 'tail -f /tmp/dzen-fifo' & echo '' > $dzen_popup_path"
 
 
 #
-# Make the submenu window
+# Calculate where to draw the popup
 #
+Current=${1//[i]/}
+Current=${Current: -2}
+Opened=${1:0:2}
+
+xpos=$2
+
+if [ "$Opened" = "$Current" ]; then
+    Opened="NA"
+fi
 
 case $1 in
-    Vm) xpos=$(($xpos - 42)) ;;
-    Vp) xpos=$(($xpos - 42)) ;;
-    Sc) xpos=$(($xpos - 30)) ;;
-    Mu) xpos=$(($xpos - 60)) ;;
-    Mc) xpos=$(($xpos - 60)) ;;
-    *)  exit ;;
+    *i) # When you make the popup by clicking on the button
+        xpos=$(($xpos + 24))
+        case $Opened in
+            Vp) xpos=$(($xpos - 54)) ;;
+            Vm) xpos=$(($xpos - 54)) ;;
+            Kb) xpos=$(($xpos - 36)) ;;
+            NA) ;;
+            *) exit ;;
+        esac
+        ;;
+    *) # When you make the popup by clicking on the arrow
+        case $Current in
+            Vm) xpos=$(($xpos - 42)) ;;
+            Vp) xpos=$(($xpos - 42)) ;;
+            Sc) xpos=$(($xpos - 30)) ;;
+            Mc) xpos=$(($xpos - 60)) ;;
+            *)  exit ;;
+        esac
+        ;;
 esac
+
+
+
+#
+# Create the fifo and the popup
+#
 
 [ -e "/tmp/dzen-fifo" ] && rm "/tmp/dzen-fifo"
 mkfifo "/tmp/dzen-fifo"
@@ -50,9 +76,9 @@ exec tail -f /tmp/dzen-fifo | dzen2 -p -w 156 -h 23 -y 18 -x $xpos -fn "MonteCar
 #  eg: if the "screen backlight" popup is opened, changing the backlight with
 # keybinds should update the slider, but changing the volume should not
 #
-echo $1$dzenpid > $dzen_popup_path
+echo $Current$dzenpid > $dzen_popup_path
 
 #
 # Create content for the popup
 #
-dslider-content "$1"
+dslider-content $Current
