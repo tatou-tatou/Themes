@@ -65,7 +65,7 @@ Bspwm does have a few problems with user-friendliness though:
 - Non-Arch users seem to have difficulties installing it.
 
 ##Sxhkd
-Sxhkd is the recommended keybind daemon for Bspwm. Written by the same developper, it allows some very interesting keybinds (like chains or vim-like "modes") and the use of mouse buttons.
+Sxhkd is the recommended keybind daemon for Bspwm. Written by the same developer, it allows some very interesting keybinds (like chains or vim-like "modes") and the use of mouse buttons.
 
 If the interface becomes mouse driven, the program-launcher menu and the window-manipulation menu become more important than resizing windows. In order of importance, I would suggest:
 - `<ModKey> + Left Click` to move the windows.
@@ -81,6 +81,6 @@ I think those settings are adapted for a right-handed person:
 - `<ModKey> + Left Click` to move the windows (the same).
 - `Mod5 + Left Click` to launch programs. `Mod5` (Alt_gr) is on the right side of the keyboard, making it easy for a right-handed person to keep it pressed while doing a single tap on the touchpad with the same hand.
 - `Mod5 + <the ModKey next to it> + Left Click` to spawn the window-manipulation menu.
-- A combination of two modkeys on the left size of the keyboard and a left click to resize windows.
+- A combination of two modkeys on the left side of the keyboard and a left click to resize windows.
 
 With a multitouch touchpad, other things could be done too. For example switching to the next or previous workspace can be bound to a three-finger swipe. The same for up and down swipes that could trigger monocle or windows visibility.
