@@ -9,7 +9,7 @@ while read -r line ; do
             horloge="${line#?}"
             ;;
         c*)
-            # buttons
+            # panel-monitor
             config="${line#?}"
             ;;
         m*)
@@ -17,19 +17,19 @@ while read -r line ; do
             notstat="${line#?}"
             ;;
         y*)
-            # Stand alone music player
+            # panel-music
             music="${line#?}"
             ;;
         n*)
-            # reminders
+            # panel-remind
             remind="${line#?}"
             ;;
         T*)
-            # torrents
+            # panel-torrents
             torrents="${line#?}"
             ;;
         M*)
-            # mails
+            # panel-mails
             mails="${line#?}"
             ;;
         W*)

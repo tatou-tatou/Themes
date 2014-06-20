@@ -14,15 +14,14 @@ height="18"
 bg_global="#ff1A1917"
 fg_global="#ffded0b4"
 
-### Where to look for system info
-# For the screen brightness value
+# Where to look for the screen brightness value
 brightness_path="/sys/devices/virtual/backlight/apple_backlight/brightness"
 maxbrightness_path="/sys/devices/virtual/backlight/apple_backlight/max_brightness"
-# For the keyboard brightness value
+# And for the keyboard brightness value
 keyboard_path="/sys/class/leds/smc::kbd_backlight/brightness"
 
 ### Where to save process ID and other necessary things
-# Use the absolute path!
+# Use the ABSOLUTE path!
 dzen_popup_path="/home/tatou/.panel/PID/dzen-submenu.pid"
 
 
@@ -43,7 +42,7 @@ fg_startmenu="#ffeddec9"
 
 
 #
-# TAGS
+# WORKSPACES
 #______________
 ### Icons
 occupied_focus="  "
@@ -59,8 +58,8 @@ fg_urgenttags="#ffeddec9"
 
 
 #
-# NOTIFICATIONS (not-stat)
-#_______________
+# not-stat
+#__________
 ### NOTIFICATION ICONS
 bg_icons="#ff3D444E"
 fg_icons="#ffded0b4"
@@ -72,7 +71,7 @@ bg_exclamation="#ffA73E28"
 
 
 #
-# Monitor (CLICK CLICK CLICK!)
+# panel-monitor and panel-music
 #______________________________
 ### Colors
 bg_monitor="#ff201F1D"
@@ -86,7 +85,7 @@ inactive="#ff383428"
 
 
 #
-# DZEN POPUPS AND MENU
+# DZEN POPUPS
 #____________
 dzen_font="MonteCarlo-8"
 
@@ -106,7 +105,7 @@ dzen_sideline="#9D534A"
 
 
 #
-# LAYOUT
+# LAYOUTS
 #_________
 ### Icons
 monocle=""

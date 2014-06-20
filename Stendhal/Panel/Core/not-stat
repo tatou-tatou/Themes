@@ -2,30 +2,13 @@
 #
 # not-stat OPTION ["STRING"]
 #
-#  Kinda works like statnot, except it does not use libnotify and it's not written in
-# python:
-#  - Send a pre-defined notification to a fifo with a fitting icon. The fifo is meant
-# to be read by lemonboy's bar (see the panel-skeleton script).
-#  - Every notifications are temporary and get replaced by the current mpd song
-# after a certain amount of time (3 seconds by default).
-#  - Currently, volume and battery icons change their shape according to the
-# respective value of what they represent.
-#  - To be used with the modified MonteCarlo font in my Monégasque repo (otherwise, you 
-# will not have any icons).
-#
-#  I wrote this to have fun and to waste time, I would not recommend anyone else to
-# use it. If you want notifications in your panel, tweak statnot to work with
-# something else than with dwm. It's very easy to do and probably much better, as
-# statnot is a true, full featured, notification daemon.
-#
-
-#
 # /!\ FOR THE COUNTDOWN TO WORK PROPERLY /!\
 #  Always use not-stat like this: 
 #
 #     pkill not-stat ; not-stat -<x> &
 #
-#  Else the countdown will keep going and the notification will get back to the music before the latest countdown is finished
+#  Else the countdown will keep going and the notification will get back to the
+# music before the latest countdown is finished
 #
 
 
@@ -37,7 +20,7 @@ countdown=3
 # FIFO
 fifo="/tmp/panel-fifo"
 
-# Character used by the bspwm panel script to know where to put the notification (see the bspwmpanel-bar script for more details)
+# Character used by the panel-skeleton script to know where to put the notification
 premessage="m"
 
 # Colors
@@ -63,7 +46,7 @@ while getopts ":mbBdrvVMh" flags; do
         message=" $(mpc current -f '%title%|%file%')"
         if [ "$message" = " " ];then
             icon=""
-            message=" (Nothing is playing)"
+            message=" (Nothing!)"
         fi
     ;;
     b)
@@ -207,7 +190,7 @@ icon="$(mpc | grep -E 'playing|paused' | cut -d'[' -f2 | cut -d']' -f1 | sed 's/
 message=" $(mpc current -f '%title%|%file%')"
 if [ "$message" = " " ];then
     icon=""
-    message=" (Nothing is playing!)"
+    message=" (Nothing!)"
 fi
 
 echo -E "$premessage" "%{B$bg_icons}%{F$fg_icons}%{A:$execute:} $icon %{A}%{B$bg_notifications}%{A:$text_execute:} %{F$fg_squares}%{F$fg_notifications}$message %{A}%{B-}%{F-}" > $fifo

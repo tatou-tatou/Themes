@@ -4,68 +4,64 @@
 dzenpid=$(cat $dzen_popup_path)
 dzenpid="${dzenpid:2}"
 
-if [ $1 == "Mu" ]; then
-    title="Music "
-    message=" ^ca(1,coverart)^fg(#A73E28)^ca()^ca(1,termite -e 'mpdviz -i true')^fg(#99704A)^ca()^ca(1,termite -e ncmpcpp &)^fg(#878438)^ca()^ca(1,panel-music ; dslider close)^fg(#53414A)^ca() "
-elif [ $1 == "Mc" ]; then
+if [ $1 == "Mu" ]; then # The music popup is NOT a slider, so it must be treated separately
     title="Music "
     message=" ^ca(1,coverart)^fg(#A73E28)^ca()^ca(1,termite -e 'mpdviz -i true')^fg(#99704A)^ca()^ca(1,termite -e ncmpcpp &)^fg(#878438)^ca()   "
 else
-    ## Slider type
     case $1 in
-        Vm)
-            n=$(amixer -q | grep -A5 Master | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)
-            n=$(($n/10))
+        Vm) # PCM channel volume
+            currentValue=$(amixer -q | grep -A5 Master | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)
+            maxValue=100
             title="^ca(1,amixer set Master 0 ; pkill not-stat ; not-stat -V &)Master^ca()"
             ;;
-        Vp)
-            n=$(amixer -q | grep -A5 PCM | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)
-            n=$(($n/10))
+        Vp) # Master channel volume
+            currentValue=$(amixer -q | grep -A5 PCM | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)
+            maxValue=100
             title="^ca(1,amixer set PCM 0 ; pkill not-stat ; not-stat -v &)Volume^ca()"
             ;;
-        Sc)
-            n="$(cat $brightness_path)"
-            max="$(cat $maxbrightness_path)"
-            n=$(($n*10/$max))
+        Sc) # Screen brightness
+            currentValue="$(cat $brightness_path)"
+            maxValue="$(cat $maxbrightness_path)"
             title="Screen"
-            ;;
-        *)
-            n=$(amixer -q | grep -A5 Master | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)
-            n=$(($n/10))
-            title="Master"
             ;;
     esac
 
+    currentValue=$(($currentValue*10/$maxValue))
+
+    ## MAKE THE SLIDER ##
     slider="^fg($dzen_sel)"
     for i in {1..10}
     do
+        # Add the command to change the value
         case $1 in
-            Vm)
+            Vm) # PCM channel volume
                 slider+="^ca(1,amixer set Master $(($i*10))% > /dev/null ; dslider-content Vm ; pkill not-stat ; not-stat -V &)"
                 ;;
-            Vp)
+            Vp) # Master channel volume
                 slider+="^ca(1,amixer set PCM $(($i*10))% > /dev/null ; dslider-content Vp ; pkill not-stat ; not-stat -v &)"
                 ;;
-            Sc)
+            Sc) # Screen brightness
                 slider+="^ca(1,sudo mbp_backlight $(($i*15/10)) ; dslider-content Sc ; pkill not-stat ; not-stat -b &)"
-                ;;
-            *)
                 ;;
         esac
 
-
-        if [ "$i" -gt "$n" ]; then
+        # Draw the slider
+        # The special characters $full_slider, $indicator_slider and $empty_slider are configured in panel-settings
+        if [ "$i" -gt "$currentValue" ]; then
             slider+="$empty_slider"
-        elif [ "$i" -eq "$n" ]; then
+        elif [ "$i" -eq "$currentValue" ]; then
             slider+="$indicator_slider^fg($dzen_empty)"
         else
             slider+="$full_slider"
         fi
+
+        # Finish the value changing command
         slider+="^ca()"
     done
     slider+="^fg()"
+
     message=$slider
 fi
 
-# Send the message
+# Add close button and send the message to the fifo read by dzen
 echo " $title $message  ^ca(1,dslider close)^fg($dzen_close)^fg()^ca()" > /tmp/dzen-fifo

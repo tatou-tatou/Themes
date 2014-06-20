@@ -6,7 +6,7 @@
 # Modified by tatou so it can be toggled when clicking on the panel.
 #
 
-# Get the settings (color, etc)
+# Load the settings (color, etc)
 . panel-settings
 
 # Close it if it's already opened

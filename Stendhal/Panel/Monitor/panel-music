@@ -4,7 +4,7 @@
 # Normal controls (prev, play/pause, next)
 normal() {
     beginning="%{B$bg_button}%{F$fg_button}%{A:panel-monitor:panel-music 2:} Mu %{A}%{B$bg_monitor}%{F$fg_monitor}"
-    controls="%{A:mpc-script prev:}%{A} %{A:mpc toggle:}%{A} %{A:mpc next:}%{A} %{AW:dslider Mc:}%{A}"
+    controls="%{A:mpc-script prev:}%{A} %{A:mpc toggle:}%{A} %{A:mpc next:}%{A} %{AW:dslider Mu:}%{A}"
     echo "$beginning $controls"
 }
 

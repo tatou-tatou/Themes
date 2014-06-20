@@ -12,15 +12,18 @@ dslider close
 
 monitor=""
 
-for B in Vp Vm Kb Sc
+## If the button has a slider, add its name here
+sliderlist="Vp Vm Sc"
+
+for Button in Vp Vm Kb Sc
 do
     ## For the focused button ##
-    if [ "$1" == "$B" ]
+    if [ "$1" == "$Button" ]
     then
         cmd_return="panel-monitor"
         arrow=""
 
-        case $B in
+        case $Button in
         Sc) # backlight
             down="sudo mbp_backlight down ; pkill not-stat ; not-stat -b &"
             up="sudo mbp_backlight up ; pkill not-stat ; not-stat -b &"
@@ -47,36 +50,44 @@ do
             done
         ;;
         Vp) # PCM volume
-            setting="%{A:amixer set Master toggle ; pkill not-stat ; not-stat -M &:}M%{A} "
+            mute="%{A:amixer set Master toggle ; pkill not-stat ; not-stat -M &:}M%{A} "
             down="amixer set PCM 1dB- > /dev/null ; pkill not-stat ; not-stat -v &"
             up="amixer set PCM 1dB+ > /dev/null ; pkill not-stat ; not-stat -v &"
 
-            message=" $setting%{A:$down:}%{A}%{A:$up:}%{A}%{AW:dslider Vp:}$arrow%{A} "
+            message=" $mute%{A:$down:}%{A}%{A:$up:}%{A}%{AW:dslider Vp:}$arrow%{A} "
         ;;
-        Vm) # Master Volume
-            setting="%{A:amixer set Master toggle ; pkill not-stat ; not-stat -M &:}M%{A} "
+        Vm) # Master volume
+            mute="%{A:amixer set Master toggle ; pkill not-stat ; not-stat -M &:}M%{A} "
             down="amixer set Master 1dB- ; pkill not-stat ; not-stat -V &"
             up="amixer set Master 1dB+ ; pkill not-stat ; not-stat -V &"
 
-            message=" $setting%{A:$down:}%{A}%{A:$up:}%{A}%{AW:dslider Vm:}$arrow%{A} "
+            message=" $mute%{A:$down:}%{A}%{A:$up:}%{A}%{AW:dslider Vm:}$arrow%{A} "
         ;;
         esac
 
-        #title="$B"
+        ## If a button is already opened, it's needed to be taken into account to calculate where to draw the popup
+        opened=$Button
+
+        ## Title of the focused button
+        #title="$Button"
         title=""
 
-        opened=$B
-
+        ## Colors of the focused button
         bg_button_final="$bg_button_selected"
         fg_button_final="$fg_button_selected"
 
     else
         ## For normal, unfocused, buttons ##
-        title=$B
+        title=$Button
         message=" "
         cmd_return="panel-monitor "
-        cmd_return+="$B"
-        [ "$B" != "Kb" ] && cmd_return+="; dslider $opened${B}i"
+        cmd_return+="$Button"
+
+        # If the button has a slider, make the slider appear if you click on the button
+        if [[ $sliderlist == *$Button* ]]
+        then
+            cmd_return+="; dslider $opened${Button}i"
+        fi
 
         bg_button_final="$bg_button"
         fg_button_final="$fg_button"
