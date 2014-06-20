@@ -58,7 +58,7 @@ alternate() {
         fi
     fi
 
-    beginning="%{B$bg_button}%{F$fg_button}%{A:panel-monitor:panel-music:} Mu %{A}%{B$bg_monitor}%{F$fg_monitor}"
+    beginning="%{B$bg_button}%{F$fg_button}%{A:panel-music:} Mu %{A}%{B$bg_monitor}%{F$fg_monitor}"
     echo "$beginning $mpdstate"
 }
 
