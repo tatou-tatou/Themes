@@ -25,8 +25,8 @@ do
 
         case $Button in
         Sc) # backlight
-            down="sudo mbp_backlight down ; pkill not-stat ; not-stat -b &"
-            up="sudo mbp_backlight up ; pkill not-stat ; not-stat -b &"
+            down="sudo mbp_backlight down ; pkill not-stat ; not-stat $Button &"
+            up="sudo mbp_backlight up ; pkill not-stat ; not-stat $Button &"
 
             message=" %{A:$down:}%{A}%{A:$up:}%{A}%{AW:dslider Sc:}$arrow%{A} "
         ;;
@@ -34,13 +34,10 @@ do
             currentLayout=$(setxkbmap -print -v 7 | grep layout)
             currentLayout=${currentLayout: -2}
             
-            Fr="AZERTY"
-            Us="QWERTY"
-            
             message=" "
             for layout in Fr Us
             do
-                layoutCmd="setxkbmap -model macintosh -layout ${layout,,} ; panel-monitor Kb ; pkill not-stat ; not-stat -d ' ${!layout}' &"
+                layoutCmd="setxkbmap -model macintosh -layout ${layout,,} ; panel-monitor $Button ; pkill not-stat ; not-stat $Button &"
                 if [ "${layout,,}" = "$currentLayout" ]; then
                     button="$layout"
                 else
@@ -50,16 +47,16 @@ do
             done
         ;;
         Vp) # PCM volume
-            mute="%{A:amixer set Master toggle ; pkill not-stat ; not-stat -M &:}M%{A} "
-            down="amixer set PCM 1dB- > /dev/null ; pkill not-stat ; not-stat -v &"
-            up="amixer set PCM 1dB+ > /dev/null ; pkill not-stat ; not-stat -v &"
+            mute="%{A:amixer set Master toggle ; pkill not-stat ; not-stat Mt &:}M%{A} "
+            down="amixer set PCM 1dB- > /dev/null ; pkill not-stat ; not-stat $Button &"
+            up="amixer set PCM 1dB+ > /dev/null ; pkill not-stat ; not-stat $Button &"
 
             message=" $mute%{A:$down:}%{A}%{A:$up:}%{A}%{AW:dslider Vp:}$arrow%{A} "
         ;;
         Vm) # Master volume
-            mute="%{A:amixer set Master toggle ; pkill not-stat ; not-stat -M &:}M%{A} "
-            down="amixer set Master 1dB- ; pkill not-stat ; not-stat -V &"
-            up="amixer set Master 1dB+ ; pkill not-stat ; not-stat -V &"
+            mute="%{A:amixer set Master toggle ; pkill not-stat ; not-stat Mt &:}M%{A} "
+            down="amixer set Master 1dB- ; pkill not-stat ; not-stat $Button &"
+            up="amixer set Master 1dB+ ; pkill not-stat ; not-stat $Button &"
 
             message=" $mute%{A:$down:}%{A}%{A:$up:}%{A}%{AW:dslider Vm:}$arrow%{A} "
         ;;

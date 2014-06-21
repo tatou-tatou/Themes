@@ -23,6 +23,6 @@ cat "$PANEL_FIFO" | panel-skeleton | bar-aint-recursive -g 1280x$height -B $bg_g
 # Mails and notifications
 panel-mail &
 panel-torrents &
-not-stat -m &
+not-stat Mu &
 
 wait

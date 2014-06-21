@@ -5,14 +5,14 @@
 # /!\ FOR THE COUNTDOWN TO WORK PROPERLY /!\
 #  Always use not-stat like this: 
 #
-#     pkill not-stat ; not-stat -<x> &
+#     pkill not-stat ; not-stat <Xx> &
 #
 #  Else the countdown will keep going and the notification will get back to the
 # music before the latest countdown is finished
 #
 
 
-##### Settings: #####
+######## Settings: ########
 
 # Countdown in seconds
 countdown=3
@@ -34,14 +34,13 @@ premessage="m"
 execute="panel-monitor : panel-music"
 text_execute="mpc toggle > /dev/null & : run-or-raise ncmpcpp &"
 
-#####################
+###########################
 
 bld=$'\e[1m'
 rst=$'\e[0m'
 
-while getopts ":mbBdrvVMh" flags; do
-    case $flags in
-    m)
+case $1 in
+    Mu) ## Music ##
         icon="$(mpc | grep -E 'playing|paused' | cut -d'[' -f2 | cut -d']' -f1 | sed 's/paused//g' | sed 's/playing//g')"
         message=" $(mpc current -f '%title%|%file%')"
         if [ "$message" = " " ];then
@@ -49,26 +48,38 @@ while getopts ":mbBdrvVMh" flags; do
             message=" (Nothing!)"
         fi
     ;;
-    b)
+    Sc) ## Screen brightness ##
+
+        # Check if the slider popup is opened and update its content
         dzenstatus=$(cat $dzen_popup_path)
         dzenstatus="${dzenstatus:0:2}"
-        if [ "$dzenstatus" = "Sc" ]; then
-            dslider-content Sc &
+        if [ "$dzenstatus" = "$1" ]; then
+            dslider-content $1 &
         fi
 
         icon=""
-        message=" Backlight $(cat $brightness_path)"
+        message=" Brightness $(cat $brightness_path)"
     ;;
-    B)
+    Kb) ## Keyboard layout ##
+        currentLayout=$(setxkbmap -print -v 7 | grep layout)
+        currentLayout=${currentLayout: -2}
+        
+        # Message to send depending on the current layout
+        fr="AZERTY"
+        us="QWERTY"
+
+        icon=""
+        message=" ${!currentLayout}"
+    ;;
+    Kl) ## Keyboard brightness ##
         icon=""
         message=" Keyboard $(cat $keyboard_path)"
     ;;
-    d)
+    Me) ## Message ##
         icon=""
         message=$2
-    
     ;;
-    r)
+    Ba) ## Remaining battery time ##
         percent=$(acpi -b | cut -s -d' ' -f4 | cut -s -d'%' -f1)
         message="$(acpi -b | cut -s -d',' -f3)"
 
@@ -93,93 +104,79 @@ while getopts ":mbBdrvVMh" flags; do
             icon=""
             message=" Full"
         fi
-
     ;;
-    v)
+    Vp) ## PCM channel volume ##
+
+        # Check if the slider popup is opened and update its content
         dzenstatus=$(cat $dzen_popup_path)
         dzenstatus="${dzenstatus:0:2}"
-        if [ "$dzenstatus" = "Vp" ]; then
-            dslider-content Vp &
+        if [ "$dzenstatus" = "$1" ]; then
+            dslider-content $1 &
         fi
 
-        valeur_volume="$(amixer -q | grep -A5 PCM | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)"
+        volumeValue="$(amixer -q | grep -A5 PCM | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)"
         if [ "$(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1)" == "off" ]
         then
             icon=" "
-        elif [ $valeur_volume -eq 0 ]
+        elif [ $volumeValue -eq 0 ]
         then
             icon=" "
-        elif [ $valeur_volume -eq 100 ]
+        elif [ $volumeValue -eq 100 ]
         then
             icon=""
-        elif [ $(echo "$valeur_volume > 49" | bc) == 1 ]
+        elif [ $(echo "$volumeValue > 49" | bc) == 1 ]
         then
             icon=""
         else
             icon=""
         fi
 
-        message=" Volume $valeur_volume"
+        message=" Volume $volumeValue"
     ;;
-    V)
+    Vm) ## Master channel volume ##
+
+        # Check if the slider popup is opened and update its content
         dzenstatus=$(cat $dzen_popup_path)
         dzenstatus="${dzenstatus:0:2}"
-        if [ "$dzenstatus" = "Vm" ]; then
-            dslider-content Vm &
+        if [ "$dzenstatus" = "$1" ]; then
+            dslider-content $1 &
         fi
 
-        valeur_volume="$(amixer -q | grep -A5 Master | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)"
+        volumeValue="$(amixer -q | grep -A5 Master | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)"
         if [ "$(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1)" == "off" ]
         then
             icon=" "
-        elif [ $valeur_volume -eq 0 ]
+        elif [ $volumeValue -eq 0 ]
         then
             icon=" "
-        elif [ $valeur_volume -eq 100 ]
+        elif [ $volumeValue -eq 100 ]
         then
             icon=""
-        elif [ $(echo "$valeur_volume > 49" | bc) == 1 ]
+        elif [ $(echo "$volumeValue > 49" | bc) == 1 ]
         then
             icon=""
         else
             icon=""
         fi
 
-        message=" Master $valeur_volume"
+        message=" Master $volumeValue"
     ;;
-    M)
+    Mt) ## Muted ##
         icon="$(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1 | sed 's/on//g' | sed 's/off/ /g')"
         message=" $(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1 | sed 's/on/Not /g' | sed 's/off//g')Muted"
     ;;
-    h) #help
-            echo -e "Usage:"
-            echo -e "  not-stat [OPTION] [MESSAGE]"
-            echo ""
-            echo "Display notifications on the top panel with various icons. After 3 seconds of inactivity, notifications get replaced by the current mpd song."
-            echo ""
-            echo -e "Options${rst}:"
-            echo -e "   ${bld}-m${rst}                 Currently played music."
-            echo -e "   ${bld}-b${rst}                 Screen backlight."
-            echo -e "   ${bld}-B${rst}                 Keyboard backlight."
-            echo -e "   ${bld}-d${rst}                 To use with a [MESSAGE]."
-            echo -e "   ${bld}-r${rst}                 Remaining battery time."
-            echo -e "   ${bld}-v${rst}                 PCM volume in percent."
-            echo -e "   ${bld}-V${rst}                 Master volume in percent."
-            echo -e "   ${bld}-M${rst}                 Mute/Not mute."
-            echo -e "   ${bld}-h${rst}                 Display this help."
+    *) ## Error message ##
+        icon="  "
+        message=" Wrong not-stat command."
+        countdown=10
+    ;;
+esac
 
-            exit
-        ;;  
-    esac
-done
+###########################
 
-
-
-###
 #
 # Send the message to the panel.
 #
-###
 
 echo -E "$premessage" "%{B$bg_icons}%{F$fg_icons}%{A:$execute:} $icon %{A}%{B$bg_notifications}%{A:$text_execute:} %{F$fg_squares}%{F$fg_notifications}$message %{A}%{B-}%{F-}" > $fifo
 

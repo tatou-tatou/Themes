@@ -23,7 +23,7 @@ My dunstrc is [here](https://github.com/tatou-tatou/dotfiles/blob/master/.config
 ##Icons
 I only make new ones as I need them. Because of that, the theme is really incomplete.
 
-I will upload it eventually, but maybe not on github as it's only binary files.
+I will upload them eventually, but maybe not on github as they are binary files.
 
 ##Gtk theme
 [201F](https://github.com/tatou-tatou/201F)
@@ -33,11 +33,11 @@ I use dmenu2 and center it like this:
 
     dmenu_run -i -x 415 -y 330 -w 450 -h 20 -l 4 -fn 'Lucida Grande-8' -nb '#201F1D' -nf '#eddec9' -sb '#8F3724' -sf '#eddec9'
 
-I use the same centering trick for every script I use involving dmenu.
+I use the same centering trick for every scripts I use involving dmenu.
 
 If you think dmenu2 is bloat, you can always achieve the same exact look with vanilla dmenu, you will just need to patch it for custom width, x and y positioning and xft or pango.
 
-**Edit** I don't use dmenu2 anymore, now I'm using vanilla dmenu patched for pango (font fallbacks are bliss), x, y, width, height, quiet and mouse. The command is the same, except it's `Lucida Grande 8` (no dash).
+**Edit** I don't use dmenu2 anymore, now I'm using vanilla dmenu patched for pango (font fallbacks are bliss), x, y, width, height, quiet and mouse. The command is the same, except it for the `Lucida Grande 8` (no dash).
 
 ##Compositor
 I use the richardgv-dev branch of compton and apart from preventing tearing, I use it to make fade effects when opening/closing clients and to draw very light shadows on floating windows (not on tiled ones).
