@@ -119,9 +119,7 @@ For the dzen popups and their sliders,
 
 `not-stat` is required to update the slider indicator position when the popup is opened and if you are using *keybinds* to change the volume/brightness (and not just clicking on the slider). If you want to know why, look at what happens when you call `not-stat` with the -d, -v or -V argument.
 
-*Note: You* **must** *create a file called `~/.panel/PID/dzen-submenu.pid` (see the panel-settings). Else, the slider popup will have very strange behavior (not closing, won't update if you use keybinds to change the volume...)*
-
-*Note 2: All of the above scripts rely heavily on the x-position patch to calculate where the popup should appear. They also use both left and right clicking. For those two reasons they are* **not** *usable with vanilla bar. Refer to the first section.*
+*Note: All of the above scripts rely heavily on the x-position patch to calculate where the popup should appear. They also use both left and right clicking. For those two reasons they are* **not** *usable with vanilla bar. Refer to the first section.*
 
 ##Panel-monitor
 ![Left click](https://raw.github.com/tatou-tatou/Themes/master/Stendhal/Previews/icon-leftclick.gif)
@@ -222,6 +220,7 @@ Edit `dslider-content` to actually create your own slider. You have to provide:
 - A way to get the *current* value.
 - The *max* value or a way to get it.
 - A command to *change* the current value to a specific value.
+
 Where/how to add those in `dslider-content` will be obvious.
 
 

@@ -24,6 +24,4 @@ bspc window -p $dir_final
 # Spawn a menu to launch a program
 mygtkmenu ~/.config/GTKmenu/LaunchMenu > /dev/null || bspc window -p cancel
 
-## WARNING: The last line is only possible if you apply my patch to mygtkmenu!
-## If you haven't done so, comment the line above and uncomment the next one.
-#mygtkmenu ~/.config/GTKmenu/LaunchMenu > /dev/null
+## WARNING: The "||" only males sense if you apply my patch to mygtkmenu!

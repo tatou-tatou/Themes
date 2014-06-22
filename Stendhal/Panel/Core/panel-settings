@@ -21,8 +21,7 @@ maxbrightness_path="/sys/devices/virtual/backlight/apple_backlight/max_brightnes
 keyboard_path="/sys/class/leds/smc::kbd_backlight/brightness"
 
 ### Where to save process ID and other necessary things
-# Use the ABSOLUTE path!
-dzen_popup_path="/home/tatou/.panel/PID/dzen-submenu.pid"
+dzen_popup_path="/tmp/dslider.pid"
 
 
 #
