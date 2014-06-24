@@ -192,12 +192,14 @@ In `panel-monitor`, you have this at the beginning:
 
 The syntax is simply `<Button variable>="<Title that will be displayed>"`. Edit the title to your heart content, it can be as long as you want. You can use icon glyphs too, of course.
 
+The (displayed) button title can be as long as you want, but if you use something mlonger than two characters, you will have to adjust how `dslider` calculates the popup position.
+
 ###Adding a button
 Create a variable like explained above:
 
     <Variable name>="<Title displayed in the panel>"
 
-**IMPORTANT:** The variable name must be **two characters long**!
+**IMPORTANT:** Contrary to the button title, the variable name *must* be **two characters long**!
 
 Then just add the two character variable name to
 

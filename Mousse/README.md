@@ -40,7 +40,7 @@ For those who disable `focus_follows_pointer`, it could be interesting to add th
 
 ![Screenshot](https://raw.github.com/tatou-tatou/Themes/master/Mousse/Previews/apple-like-menu.png)
 
-Additionally, the above would let you close clients in an OSX-like manner. That's how my mother have always closed programs on OSX by the way: she *never* uses `Cmd+Q`, she uses her mouse and navigates the top menu to click on `Quit <Application name>` instead. If she ever used a tiling WM, for that option to be in such a place would seem very natural to her.
+Additionally, the above would let you close clients in an OSX-like manner. That's how my mother has always closed programs on OSX by the way: she *never* uses `Cmd+Q`, she uses her mouse and navigates the top menu to click on `Quit <Application name>` instead. If she ever used a tiling WM, for that option to be in such a place would seem very natural to her.
 
 
 
