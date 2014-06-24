@@ -105,35 +105,7 @@ case $1 in
             message=" Full"
         fi
     ;;
-    Vp) ## PCM channel volume ##
-
-        # Check if the slider popup is opened and update its content
-        dzenstatus=$(cat $dzen_popup_path)
-        dzenstatus="${dzenstatus:0:2}"
-        if [ "$dzenstatus" = "$1" ]; then
-            dslider-content $1 &
-        fi
-
-        volumeValue="$(amixer -q | grep -A5 PCM | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)"
-        if [ "$(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1)" == "off" ]
-        then
-            icon=" "
-        elif [ $volumeValue -eq 0 ]
-        then
-            icon=" "
-        elif [ $volumeValue -eq 100 ]
-        then
-            icon=""
-        elif [ $(echo "$volumeValue > 49" | bc) == 1 ]
-        then
-            icon=""
-        else
-            icon=""
-        fi
-
-        message=" Volume $volumeValue"
-    ;;
-    Vm) ## Master channel volume ##
+    Vm) ## Master volume ##
 
         # Check if the slider popup is opened and update its content
         dzenstatus=$(cat $dzen_popup_path)
@@ -159,11 +131,11 @@ case $1 in
             icon=""
         fi
 
-        message=" Master $volumeValue"
+        message=" Volume ${volumeValue}"
     ;;
     Mt) ## Muted ##
-        icon="$(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1 | sed 's/on//g' | sed 's/off/ /g')"
-        message=" $(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1 | sed 's/on/Not /g' | sed 's/off//g')Muted"
+        icon="$(amixer -q | grep "\[on\]\|\[off\]" | head -n 1 | cut -sd'[' -f3 | cut -d']' -f1 | sed 's/on//g' | sed 's/off/ /g')"
+        message=" $(amixer -q | grep "\[on\]\|\[off\]" | head -n 1 | cut -sd'[' -f3 | cut -d']' -f1 | sed 's/on/Not /g' | sed 's/off//g')Muted"
     ;;
     *) ## Error message ##
         icon="  "
@@ -190,4 +162,4 @@ if [ "$message" = " " ];then
     message=" (Nothing!)"
 fi
 
-echo -E "$premessage" "%{B$bg_icons}%{F$fg_icons}%{A:$execute:} $icon %{A}%{B$bg_notifications}%{A:$text_execute:} %{F$fg_squares}%{F$fg_notifications}$message %{A}%{B-}%{F-}" > $fifo
+echo "$premessage" "%{B$bg_icons}%{F$fg_icons}%{A:$execute:} $icon %{A}%{B$bg_notifications}%{A:$text_execute:} %{F$fg_squares}%{F$fg_notifications}$message %{A}%{B-}%{F-}" > $fifo

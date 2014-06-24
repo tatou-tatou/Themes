@@ -13,9 +13,9 @@ dslider close
 monitor=""
 
 ## If the button has a slider, add its name here
-sliderlist="Vp Vm Sc"
+sliderlist="Vm Sc"
 
-for Button in Vp Vm Kb Sc
+for Button in Vm Kb Sc
 do
     ## For the focused button ##
     if [ "$1" == "$Button" ]
@@ -46,17 +46,10 @@ do
                 message+="$button "
             done
         ;;
-        Vp) # PCM volume
-            mute="%{A:amixer set Master toggle ; pkill not-stat ; not-stat Mt &:}M%{A} "
-            down="amixer set PCM 1dB- > /dev/null ; pkill not-stat ; not-stat $Button &"
-            up="amixer set PCM 1dB+ > /dev/null ; pkill not-stat ; not-stat $Button &"
-
-            message=" $mute%{A:$down:}%{A}%{A:$up:}%{A}%{AW:dslider Vp:}$arrow%{A} "
-        ;;
         Vm) # Master volume
             mute="%{A:amixer set Master toggle ; pkill not-stat ; not-stat Mt &:}M%{A} "
-            down="amixer set Master 1dB- ; pkill not-stat ; not-stat $Button &"
-            up="amixer set Master 1dB+ ; pkill not-stat ; not-stat $Button &"
+            down="amixer set Master 1%- ; pkill not-stat ; not-stat $Button &"
+            up="amixer set Master 1%+ ; pkill not-stat ; not-stat $Button &"
 
             message=" $mute%{A:$down:}%{A}%{A:$up:}%{A}%{AW:dslider Vm:}$arrow%{A} "
         ;;
