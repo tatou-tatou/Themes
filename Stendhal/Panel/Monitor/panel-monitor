@@ -12,10 +12,21 @@ dslider close
 
 monitor=""
 
-## If the button has a slider, add its name here
-sliderlist="Vm Sc"
+## Configure each button title (the name that will be displayed in the panel)
+#  If your button title is longer than two characters, you will have to do some
+# adjustments in dslider-content
+#  The button title can be as long as you want, but the button variable must
+# be *TWO CHARACTERS LONG*!
+#    Xx="<Button title>"
+Vl="Vl"
+Kb="Kb"
+Sc="Sc"
 
-for Button in Vm Kb Sc
+## If the button has a slider, add the variable here
+sliderlist="Vl Sc"
+
+## Create each button (to add a button, add the two characters variable here and some stuff in the case statement)
+for Button in Vl Kb Sc
 do
     ## For the focused button ##
     if [ "$1" == "$Button" ]
@@ -46,21 +57,21 @@ do
                 message+="$button "
             done
         ;;
-        Vm) # Master volume
+        Vl) # Master volume
             mute="%{A:amixer set Master toggle ; pkill not-stat ; not-stat Mt &:}M%{A} "
             down="amixer set Master 1%- ; pkill not-stat ; not-stat $Button &"
             up="amixer set Master 1%+ ; pkill not-stat ; not-stat $Button &"
 
-            message=" $mute%{A:$down:}%{A}%{A:$up:}%{A}%{AW:dslider Vm:}$arrow%{A} "
+            message=" $mute%{A:$down:}%{A}%{A:$up:}%{A}%{AW:dslider Vl:}$arrow%{A} "
         ;;
         esac
 
         ## If a button is already opened, it's needed to be taken into account to calculate where to draw the popup
         opened=$Button
 
-        ## Title of the focused button
-        #title="$Button"
-        title=""
+        ## Title of the *focused* button
+        #title="${!Button}"
+        title="" # Print an arrow instead of the button title if it's focused
 
         ## Colors of the focused button
         bg_button_final="$bg_button_selected"
@@ -68,7 +79,7 @@ do
 
     else
         ## For normal, unfocused, buttons ##
-        title=$Button
+        title=${!Button}
         message=" "
         cmd_return="panel-monitor "
         cmd_return+="$Button"
@@ -79,6 +90,7 @@ do
             cmd_return+="; dslider $opened${Button}i"
         fi
 
+        ## Colors of normal buttons
         bg_button_final="$bg_button"
         fg_button_final="$fg_button"
     fi

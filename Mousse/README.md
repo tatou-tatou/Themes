@@ -20,7 +20,9 @@ The `LaunchMenu` file here is an example menu, but you will have to edit the scr
 
 It depends on `xdotool`, `xwinfo` and `mygtkmenu`.
 
-*Note:* if you close the menu without opening anything, the presel signal will remain. I solved that by patching mygtkmenu to send a non-zero return code if it's closed without launching anything. **I suggest you to do the same.**
+*Note:* if you close the menu without opening anything, the presel signal will remain. I solved that by **patching mygtkmenu** to send a non-zero return code if it's closed without launching anything. **I suggest you to do the same.**
+
+*TODO: Make that script work if one disables `focus_follows_pointer`.*
 
 ##BspwmMenu
 ![Screenshot](https://raw.github.com/tatou-tatou/Themes/master/Mousse/Previews/BspwmMenu.png)
@@ -32,6 +34,15 @@ It contains what I consider to be the essential/most basic controls to manipulat
 It being easier to do a mistake in a manual tiling environment than in a layout-based tiling environment due to its fundamental approach, I plan to add commands to automatically get out of "tricky" situations, in order not to frustrate the user.
 
 The "hybrid" tiling of bspwm solves that, but the `MouseLaunch` script forces to use manual tiling.
+
+####Alternate use
+For those who disable `focus_follows_pointer`, it could be interesting to add the layout changing commands to some sort of Start Menu:
+
+![Screenshot](https://raw.github.com/tatou-tatou/Themes/master/Mousse/Previews/apple-like-menu.png)
+
+Additionally, the above would let you close clients in an OSX-like manner. That's how my mother have always closed programs on OSX by the way: she *never* uses `Cmd+Q`, she uses her mouse and navigates the top menu to click on `Quit <Application name>` instead. If she ever used a tiling WM, for that option to be in such a place would seem very natural to her.
+
+
 
 ##bspwm-zenity
 A script to do various actions like adding, removing or renaming workspaces through a GUI interface.

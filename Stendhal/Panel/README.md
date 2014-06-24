@@ -48,9 +48,11 @@ If you want to use your own font with your own glyphs, just know that I had some
 
 The start menu is made by mygtkmenu. It appears when clicking on the blank space on the left of the workspace list.
 
-You can easily add an icon or more space by editing the `start_icon` variable in `panel-settings`.
+You can easily add an icon or more space by editing the `start_icon` variable in `panel-settings`:
 
-*Note: If you use bspwm and want to use a menu, you may want to take a look at [this](https://github.com/tatou-tatou/Themes/blob/master/Mousse/MouseLaunch).*
+![Screenshot](https://raw.github.com/tatou-tatou/Themes/master/Stendhal/Previews/alternate_icon.png)
+
+*Note: If you use bspwm and want to use a menu, you may want to take a look at [this](https://github.com/tatou-tatou/Themes/blob/master/Mousse)*
 
 ##Songs and system events
 ![Screenshot](https://raw.github.com/tatou-tatou/Themes/master/Stendhal/Previews/notstat.gif)
@@ -173,35 +175,37 @@ I tried to make the code as easy to edit as possible. Unless otherwise specified
 ###Removing a button
 If you think a button is useless, just remove it from the
 
-    for Button in Vp Vm Kb Sc
+    for Button in Vl Kb Sc
 
-You can then remove the associated code from the `case` statement.
+You can then remove the associated code from the `case` statement and the `Vl="<button title>"`-like variable.
 
 You may also want to remove the unused lines from `dslider` and `dslider-content`.
 
 If you removed a button that has a slider, you may want to edit `not-stat` as well.
 
 ###Changing a button name
-Edit the item(s) in the 
+In `panel-monitor`, you have this at the beginning:
 
-    for Button in Vp Vm Kb Sc
+    Vl="Vl"
+    Kb="Kb"
+    Sc="Sc"
 
-Then make the appropiate change(s) in the `case` statement.
-
-**IMPORTANT:** You must make the same edits to `dslider` and `dslider-content`!
-
-Note: if you edited a button that spawn a slider, you will have to edit `not-stat` too, else the slider indicator won't move anymore when you use your keyboard to change the volume or the screen brightness.
+The syntax is simply `<Button variable>="<Title that will be displayed>"`. Edit the title to your heart content, it can be as long as you want. You can use icon glyphs too, of course.
 
 ###Adding a button
-Just add an item to
+Create a variable like explained above:
 
-    for Button in Vp Vm Kb Sc
+    <Variable name>="<Title displayed in the panel>"
 
-**IMPORTANT:** The name must be **two characters long**.
+**IMPORTANT:** The variable name must be **two characters long**!
 
-To set what appears when you click on it, add a condition to the `case`. That condition must create content for the `message` variable.
+Then just add the two character variable name to
 
-If your button has a slider, do not forget to **add** its name to the `sliderlist` variable (the order does not matter).
+    for Button in Vl Kb Sc
+
+To configure what appears when you click on it, add another condition to the `case`. That condition must create content for the `message` variable.
+
+If your button has a slider, do not forget to **add** its name to the `sliderlist` variable (the order does not matter)!
 
 ###Creating your own sliders
 The most important part is to understand how the popup calculates where it should appear.

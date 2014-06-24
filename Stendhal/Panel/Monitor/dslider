@@ -42,7 +42,7 @@ case $1 in
         xpos=$(($xpos + 24)) #width of the pink button
         case $Opened in
             Sc) xpos=$(($xpos - 42)) ;; #
-            Vm) xpos=$(($xpos - 54)) ;; # width of the already opened button label
+            Vl) xpos=$(($xpos - 54)) ;; # width of the already opened button label
             Kb) xpos=$(($xpos - 36)) ;; #
             NA) ;;
             *) exit ;;
@@ -50,7 +50,7 @@ case $1 in
         ;;
     *) # When you make the popup by clicking on the arrow
         case $Current in
-            Vm) xpos=$(($xpos - 42)) ;; # Distance between the arrow
+            Vl) xpos=$(($xpos - 42)) ;; # Distance between the arrow
             Sc) xpos=$(($xpos - 30)) ;; # and the start of the label
             Mu) xpos=$(($xpos - 60)) ;; #
             *)  exit ;;

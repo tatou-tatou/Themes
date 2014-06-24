@@ -28,7 +28,7 @@ dzen_popup_path="/tmp/dslider.pid"
 # START MENU
 #_____________
 # You will need mygtkmenu
-startmenu_cmd="mygtkmenu ~/.config/GTKmenu/StartMenu > /dev/null"
+startmenu_cmd="mygtkmenu ~/.config/GTKmenu/AppleMenu > /dev/null"
 
 ### Icon
 start_icon=" "
