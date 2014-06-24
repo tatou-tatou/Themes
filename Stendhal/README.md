@@ -37,7 +37,7 @@ I use the same centering trick for every scripts I use involving dmenu.
 
 If you think dmenu2 is bloat, you can always achieve the same exact look with vanilla dmenu, you will just need to patch it for custom width, x and y positioning and xft or pango.
 
-**Edit** I don't use dmenu2 anymore, now I'm using vanilla dmenu patched for pango (font fallbacks are bliss), x, y, width, height, quiet and mouse. The command is the same, except it for the `Lucida Grande 8` (no dash).
+**Edit** I don't use dmenu2 anymore, now I'm using vanilla dmenu patched for pango (font fallbacks are bliss), x, y, width, height, quiet and mouse. The command is the same, except for `Lucida Grande 8` (no dash with pango).
 
 ##Compositor
 I use the richardgv-dev branch of compton and apart from preventing tearing, I use it to make fade effects when opening/closing clients and to draw very light shadows on floating windows (not on tiled ones).
