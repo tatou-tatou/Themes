@@ -44,6 +44,7 @@ case $1 in
             Sc) xpos=$(($xpos - 42)) ;; #
             Vl) xpos=$(($xpos - 54)) ;; # width of the already opened button label
             Kb) xpos=$(($xpos - 36)) ;; #
+            Wm) xpos=$(($xpos - 72)) ;;
             NA) ;;
             *) exit ;;
         esac

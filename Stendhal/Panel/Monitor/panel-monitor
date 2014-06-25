@@ -20,13 +20,14 @@ monitor=""
 #    Xx="<Button title>"
 Vl="Vl"
 Kb="Kb"
+Wm="Wm"
 Sc="Sc"
 
 ## If the button has a slider, add the variable here
 sliderlist="Vl Sc"
 
 ## Create each button (to add a button, add the two characters variable here and some stuff in the case statement)
-for Button in Vl Kb Sc
+for Button in Wm Vl Kb Sc
 do
     ## For the focused button ##
     if [ "$1" == "$Button" ]
@@ -63,6 +64,14 @@ do
             up="amixer set Master 1%+ ; pkill not-stat ; not-stat $Button &"
 
             message=" $mute%{A:$down:}%{A}%{A:$up:}%{A}%{AW:dslider Vl:}$arrow%{A} "
+        ;;
+        Wm)
+            rotateLeft="%{A:bspc desktop -R -90:}%{A}"
+            rotateRight="%{A:bspc desktop -R 90:}%{A}"
+            flipHor="%{A:bspc desktop -F vertical:}%{A}"
+            flipVer="%{A:bspc desktop -F horizontal:}%{A}"
+
+            message=" $rotateLeft $flipHor $flipVer $rotateRight "
         ;;
         esac
 

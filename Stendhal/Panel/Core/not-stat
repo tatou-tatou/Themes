@@ -105,7 +105,7 @@ case $1 in
             message=" Full"
         fi
     ;;
-    Vm) ## Master volume ##
+    Vl) ## Master volume ##
 
         # Check if the slider popup is opened and update its content
         dzenstatus=$(cat $dzen_popup_path)

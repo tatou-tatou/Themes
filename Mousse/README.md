@@ -35,18 +35,13 @@ It being easier to do a mistake in a manual tiling environment than in a layout-
 
 The "hybrid" tiling of bspwm solves that, but the `MouseLaunch` script forces to use manual tiling.
 
-####Alternate use
-For those who disable `focus_follows_pointer`, it could be interesting to add the layout changing commands to some sort of Start Menu:
-
-![Screenshot](https://raw.github.com/tatou-tatou/Themes/master/Mousse/Previews/apple-like-menu.png)
-
-Additionally, the above would let you close clients in an OSX-like manner. That's how my mother has always closed programs on OSX by the way: she *never* uses `Cmd+Q`, she uses her mouse and navigates the top menu to click on `Quit <Application name>` instead. If she ever used a tiling WM, for that option to be in such a place would seem very natural to her.
-
 ####Potential improvements
-The current menu is too long and cluttered, it should *only* contain **window** related commands:
+The current menu is too long and cluttered, it should *only* contain **window**-related commands:
 - Closing windows.
 - Changing window state (floating, etc...)
 - Moving to other desktops.
+
+![Screenshot](https://raw.github.com/tatou-tatou/Themes/master/Mousse/Previews/apple-like-menu.png)
 
 Anything global should be in a "Start Menu" near the workspace list (like above) or have a dedicated button or menu accessible from the panel:
 - Adding/renaming/removing/swapping desktops or moving them to another monitor.
@@ -56,6 +51,14 @@ Anything global should be in a "Start Menu" near the workspace list (like above)
 - Balance/Equalize desktops.
 
 Flip and rotate desktops are *very* important actions in a manual tiling WM, they should be given special importance. Maybe dedicated icons in the panel, kinda like how Awesome has a layout changer in its panel.
+
+Here's an example of how it could be done (from my Stendhal Theme):
+
+![Desktop](https://raw.github.com/tatou-tatou/Themes/master/Mousse/Previews/desktop-controls.png)
+
+Whenever they are used, rotate and flip are often done in succession, you rotate one time, you flip... A menu would be frustratingly slow.
+
+In my opinion, rotate and flip are the only commands that are critical enough to warrant a semi-permanent shortcut in the panel. All others are punctual and should therefore stay in a global menu.
 
 
 ##bspwm-zenity
