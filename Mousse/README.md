@@ -3,11 +3,15 @@ A collection of scripts and ideas to make tiling window managers more accessible
 
 As most tiling WM don't even let you do "advanced" window manipulation with a mouse, a lot of "experienced" tiling WM users convinced themselves that mouses were for baby-duck retards and that they never need one in the first place. I agree that keyboard is faster for everything (as long as the said keyboard is already under your fingers), but you *should* be given the option to use your mouse if you ever want to.
 
-For example, if you already have a hand on your mouse, why should you move it away to do a keybind or a chain of keybind needing your mouse hand to be really efficient? Especially if your hand will go back to the mouse as soon as the keybind is done.
+For example, if you already have a hand on your mouse, why should you move it away to do a keybind that depends on your mouse hand to be really efficient? Something that feel clumsy when done with the other hand for example, or something that needs both of your hands if you don't want to do gymnastic with your fingers. *Especially* if you will go back to the mouse as soon as the keybind is done. If you use a touchpad it's more understandable since they are only a few centimeters away, but a mouse can be pretty far from it. It would break your workflow.
 
-And what if you are showing your current work to a few people and you are not near the keyboard? A mouse is easy to grab, asking for people to move so you can access the keyboard and change the window layout or close something is dumb. You should always be given the option to use a mouse.
+And what if you are showing your current work to a few people and you are not near the keyboard? A mouse is easy to grab, asking for people to move so you can access the keyboard and change the window layout or close something is dumb. You should *always* be given the option to use a mouse.
 
-[I made a screencast of a potential tiling WM mouse-centric workflow.](http://a.pomf.se/axlqcn.webm) *(webm)*
+**TL,DR:** To the hardcore guys out there, making your tiling WM usable with a mouse won't make it unusable with a keyboard, nor take away your mad hacker keyboard skills. It just gives you the freedom to get away from your keyboard and still be able to use your computer.
+
+[I made a screencast of a potential manual tiling WM mouse-centric workflow.](http://a.pomf.se/axlqcn.webm) *(webm)*
+
+I use bspwm, but AwesomeWM is a very good choice if you want to use your mouse. Bspwm is mostly a manual tiling WM while Awesome uses layouts. The *Tools* section of this readme gives a brief overview of both, advantages and defaults.
 
 #Scripts and menus
 ##MouseLaunch
@@ -113,6 +117,9 @@ If the interface becomes mouse driven, the program-launcher menu and the window-
 
 Maybe, `ModKey + Scroll` to switch workspaces.
 
+I know `<ModKey> + Click` is not ideal, but it's the least possible amount of keyboard interaction, unless your mouse has more than two buttons and a wheel. Old OS X users shouldn't feel too disturbed by the way, before the MagicMouse, `cmd + click` was the only way to do a right click while using the infamous one-button Apple mouse.
+
+####Touchpad
 For multitouch touchpads it's a bit different. Since the `Middle Click` is (in my opinion) long to do and not very precise (three finger tap), those menus should be bound on more appropriate buttons, like the `Left Click` (one-finger tap).
 
 I think those settings are adapted for a right-handed person:
