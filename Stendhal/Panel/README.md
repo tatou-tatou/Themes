@@ -1,5 +1,5 @@
 #Panel scripts
-![Left click](https://raw.github.com/tatou-tatou/Themes/master/Stendhal/Previews/icon-leftclick.gif)
+![Preview](https://raw.github.com/tatou-tatou/Themes/master/Stendhal/Previews/panel.gif)
 
 You will need [bar-aint-recursive](https://github.com/LemonBoy/bar) (for the panel) and [dzen](https://github.com/robm/dzen) (for the popups). Bspwm is *not* required, but you will have to rewrite chunks of the `panel` and `panel-monitor` scripts if you don't use it.
 
@@ -196,11 +196,12 @@ In `panel-monitor`, you have this at the beginning:
 
     Vl="Vl"
     Kb="Kb"
+    Wm="Wm"
     Sc="Sc"
 
 The syntax is simply `<Button variable>="<Title that will be displayed>"`. Edit the title to your heart content, it can be as long as you want. You can use icon glyphs too, of course.
 
-The (displayed) button title can be as long as you want, but if you use something mlonger than two characters, you will have to adjust how `dslider` calculates the popup position.
+The (displayed) button title can be as long as you want, but if you use something longer than two characters, you will have to adjust how `dslider` calculates the popup position.
 
 ###Adding a button
 Create a variable like explained above:
@@ -211,7 +212,7 @@ Create a variable like explained above:
 
 Then just add the two character variable name to
 
-    for Button in Vl Kb Sc
+    for Button in Wm Vl Kb Sc
 
 To configure what appears when you click on it, add another condition to the `case`. That condition must create content for the `message` variable.
 
@@ -284,14 +285,16 @@ Appears when you do a right click on the date. It lists mounted devices:
 - Clicking on their name will open their mountpoint in the file manager.
 - Clicking on the [X] next to their name will unmount them.
 
-It uses `udevil` and I use devmon to automount. I like devmon a lot, but udevil and it don't blend well with other programs (except [those written by the same dev](http://ignorantguru.github.io/spacefm/), obviously).
+It uses `udevil`.
+
+I use devmon to automount. I like devmon a lot, but udevil and it don't blend well with other programs (except [those written by the same dev](http://ignorantguru.github.io/spacefm/), obviously). I'm happy with devmon, so I don't really care though.
 
 *Note:* This is the functional equivalent of one of my [dmenu scripts](https://github.com/tatou-tatou/dotfiles/blob/master/.bin/dmenu_umount), except the dmenu script is obviously much simpler and cleaner.
 
 ##Hidden windows list
 ![Hiddenlist](https://raw.github.com/tatou-tatou/Themes/master/Stendhal/Previews/hide.gif)
 
-I made the rough (but working) sketch of a "**minimize**" script. It's called `whid` and can be used with dmenu or dzen. It's nothing but a draft, it needs more ricing to look good and works seamlessly.
+I made the rough (but working) sketch of a "**minimize**" script. It's called `whid` and can be used with dmenu or dzen. It's nothing but a draft, it needs more ricing to look good and work seamlessly.
 
 It can integrate itself with the panel too:
 - The number of currently hidden windows is displayed in the top right corner.
@@ -312,6 +315,8 @@ or
 Bind `whid dmenu` to sxhkd. `whid dzen` is only to provide a list for the panel.
 
 *Note: I do not actually minimize the windows, I map and unmap them!*
+
+*Note 2: if you just want the map/unmap without the panel integration, a LARGE part of the script can be edited out. A simpler version is in my ~/.bin (it's called `whid-nopanel`)*
 
 
 

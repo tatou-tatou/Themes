@@ -1,8 +1,13 @@
 #Overview
 A collection of scripts and ideas to make tiling window managers more accessible (read more mouse-friendly), hopefully giving less "hobbyist" people the chance to experiment with tiling and the will to go further, such as learning, creating and tweaking keybinds.
 
-For more advanced users, a GUI menu could find its use too, not as a way to do basic operations, but as a way to call scripts to do custom window manipulations that are elaborate but too rare to deserve a specific accessible keybind or to let you remember it.
+As most tiling WM don't even let you do "advanced" window manipulation with a mouse, a lot of "experienced" tiling WM users convinced themselves that mouses were for baby-duck retards and that they never need one in the first place. I agree that keyboard is faster for everything (as long as the said keyboard is already under your fingers), but you *should* be given the option to use your mouse if you ever want to.
 
+For example, if you already have a hand on your mouse, why should you move it away to do a keybind or a chain of keybind needing your mouse hand to be really efficient? Especially if your hand will go back to the mouse as soon as the keybind is done.
+
+And what if you are showing your current work to a few people and you are not near the keyboard? A mouse is easy to grab, asking for people to move so you can access the keyboard and change the window layout or close something is dumb. You should always be given the option to use a mouse.
+
+[I made a screencast of a potential tiling WM mouse-centric workflow.](http://a.pomf.se/axlqcn.webm) *(webm)*
 
 #Scripts and menus
 ##MouseLaunch

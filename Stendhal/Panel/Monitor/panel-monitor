@@ -70,8 +70,9 @@ do
             rotateRight="%{A:bspc desktop -R 90:}%{A}"
             flipHor="%{A:bspc desktop -F vertical:}%{A}"
             flipVer="%{A:bspc desktop -F horizontal:}%{A}"
+            monocle="%{A:bspc desktop -l next:}%{A}"
 
-            message=" $rotateLeft $flipHor $flipVer $rotateRight "
+            message=" $rotateLeft $flipHor $flipVer $rotateRight $monocle "
         ;;
         esac
 

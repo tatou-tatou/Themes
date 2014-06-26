@@ -14,6 +14,9 @@ height="18"
 bg_global="#ff1A1917"
 fg_global="#ffded0b4"
 
+### Squares
+fg_squares="#ff5C5541"
+
 # Where to look for the screen brightness value
 brightness_path="/sys/devices/virtual/backlight/apple_backlight/brightness"
 maxbrightness_path="/sys/devices/virtual/backlight/apple_backlight/max_brightness"
@@ -31,8 +34,8 @@ dzen_popup_path="/tmp/dslider.pid"
 startmenu_cmd="mygtkmenu ~/.config/GTKmenu/AppleMenu > /dev/null"
 
 ### Icon
-start_icon=" "
-#start_icon="  "
+#start_icon=" "
+start_icon="  "
 #start_icon=" Menu "
 
 ### Colors
@@ -106,13 +109,10 @@ dzen_sideline="#9D534A"
 #
 # LAYOUTS
 #_________
-### Icons
-monocle=""
 
 ### Colors
-fg_squares="#ff5C5541"
-bg_monocle="#ff62712C"
-fg_monocle="#ffded0b4"
+bg_monocle="#ff201F1D"
+fg_monocle="#ff5C5541"
 
 
 #

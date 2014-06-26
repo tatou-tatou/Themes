@@ -67,7 +67,7 @@ while read -r line ; do
                         ;;
                     L*)
                         # layout
-            layout="%{B$bg_monocle}%{F$fg_monocle}$(printf "%s" "$(echo ${name} |sed 's/tiled//g' |sed 's/monocle/%{A:bspc desktop -l next:}  Monocle %{A}/g')")%{B-}%{F-}"
+                        layout="%{B$bg_monocle}%{F$fg_monocle}$(printf "%s" "$(echo ${name} |sed 's/tiled//g' |sed 's/monocle/%{A:bspc desktop -l next:} (Click to exit Monocle) %{A}/g')")%{B-}%{F-}"
                         wm_infos="%{B$bg_startmenu}%{F$fg_startmenu}%{A:$startmenu_cmd:}$start_icon%{A}%{B$bg_tags}%{F$fg_tags}$wm_infos %{B-}%{F-}"
                         ;;
                 esac
@@ -75,5 +75,5 @@ while read -r line ; do
             done
             ;;
     esac
-    printf "%s\n" "$wm_infos$config$music$notstat $layout %{r}$torrents$mails%{A:dcal &:dzen-mount:}$horloge%{A}$unmap"
+    printf "%s\n" "$wm_infos$config$music$notstat %{c}$layout %{r}$torrents$mails%{A:dcal &:dzen-mount:}$horloge%{A}$unmap"
 done
