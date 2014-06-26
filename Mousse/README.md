@@ -1,17 +1,25 @@
 #Overview
 A collection of scripts and ideas to make tiling window managers more accessible (read more mouse-friendly), hopefully giving less "hobbyist" people the chance to experiment with tiling and the will to go further, such as learning, creating and tweaking keybinds.
 
-As most tiling WM don't even let you do "advanced" window manipulation with a mouse, a lot of "experienced" tiling WM users convinced themselves that mouses were for baby-duck retards and that they never need one in the first place. I agree that keyboard is faster for everything (as long as the said keyboard is already under your fingers), but you *should* be given the option to use your mouse if you ever want to.
+I use bspwm, but AwesomeWM is a very good choice if you want to use your mouse. Bspwm is mostly a manual tiling WM while Awesome uses layouts. The *Tools* section of this readme gives a brief overview of both, advantages and defaults.
 
-For example, if you already have a hand on your mouse, why should you move it away to do a keybind that depends on your mouse hand to be really efficient? Something that feel clumsy when done with the other hand for example, or something that needs both of your hands if you don't want to do gymnastic with your fingers. *Especially* if you will go back to the mouse as soon as the keybind is done. If you use a touchpad it's more understandable since they are only a few centimeters away, but a mouse can be pretty far from it. It would break your workflow.
+[I made a screencast of a potential manual tiling WM mouse-centric workflow.](http://a.pomf.se/axlqcn.webm) *(webm)*
+
+##"Using a mouse in a tiling WM is stupid"
+*Aka: "I'm a l33t haxor, lol"*
+
+As most tiling WM don't even let you do much window manipulation with a mouse, a lot of "experienced" tiling WM users convinced themselves that mouses were for baby-duck retards and that they never needed one in the first place.
+
+I agree that keyboard is faster for everything (as long as the said keyboard is already under your fingers), but you *should* be given the option to use your mouse if you ever want to.
+
+For example, if you already have a hand on your mouse, why should you move it away to do a keybind that depends on your mouse hand?
+Something that feel clumsy when done with the other hand for example, or something that needs both of your hands if you don't want to do gymnastic with your fingers. *Especially* if you will go back to the mouse as soon as the keybind is done. If you use a touchpad it's more understandable since they are only a few centimeters away, but a mouse can be pretty far from your keyboard. It would break your workflow.
 
 And what if you are showing your current work to a few people and you are not near the keyboard? A mouse is easy to grab, asking for people to move so you can access the keyboard and change the window layout or close something is dumb. You should *always* be given the option to use a mouse.
 
 **TL,DR:** To the hardcore guys out there, making your tiling WM usable with a mouse won't make it unusable with a keyboard, nor take away your mad hacker keyboard skills. It just gives you the freedom to get away from your keyboard and still be able to use your computer.
 
-[I made a screencast of a potential manual tiling WM mouse-centric workflow.](http://a.pomf.se/axlqcn.webm) *(webm)*
-
-I use bspwm, but AwesomeWM is a very good choice if you want to use your mouse. Bspwm is mostly a manual tiling WM while Awesome uses layouts. The *Tools* section of this readme gives a brief overview of both, advantages and defaults.
+It also let other people use your computer without them learning hundreds of keybinds or asking you every second how to do basic things.
 
 #Scripts and menus
 ##MouseLaunch
