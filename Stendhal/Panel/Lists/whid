@@ -1,4 +1,7 @@
 #!/bin/sh
+# Close the dzen popup if it's already opened
+pgrep -f "dzen2 -p -m -y 18 -x -408 -w 408 -h 20" > /dev/null && pkill -f "dzen2 -p -m -y 18 -x -408 -w 408 -h 20" && exit
+
 file="/tmp/.minimized"
 touch $file
 
@@ -12,7 +15,7 @@ updatePanel() {
     then
         echo "n" > /tmp/panel-fifo
     else
-        echo "n%{A:whid dzen:}%{B#ffA73E28} $lines %{B-}%{A}" > /tmp/panel-fifo
+        echo "n%{A:whid dzen &:}%{B#ffA73E28} $lines %{B-}%{A}" > /tmp/panel-fifo
     fi
 }
 
@@ -20,17 +23,16 @@ case $1 in
 hide)
     lines=$(wc -l < $file)
 
-    # Arbitrary limit
-    if [[ $lines -gt 9 ]]; then
-        notify-send "Ten windows are already hidden" "A few are probably not needed. Close them." -i warning
+    if [[ $lines -ge 10 ]]; then ## Fight against bad practices
+        notify-send "Ten windows are already hidden" "You should consider closing some before hiding even more." -i warning
     else
+        focusedDesktop=$(xdotool get_desktop)
         focusedID=$(xdo id)
         focusedName=$(xdotool getwindowname $focusedID)
 
-        # Remove the updatePanel part if you don't use it
-        echo "$focusedID $focusedName" >> $file && xdo hide $focusedID && updatePanel $(($lines + 1))
+        echo "$focusedID $focusedDesktop $focusedName" >> $file && xdo hide $focusedID && updatePanel $(($lines + 1)) && notify-send "A window has been hidden (${lines})." "$focusedName" -i warning
     fi
-;;
+    ;;
 dmenu)
     miniList=$(cat $file)
 
@@ -44,7 +46,7 @@ dmenu)
     # If the list is empty
     if [ -z "$miniList" ]
     then
-        miniList=" Nothing is hidden!"
+        miniList="  Nothing is hidden!"
         linesDisplayed=1
     fi
 
@@ -54,21 +56,25 @@ dmenu)
 
     # Launch dmenu
     # Comment that line if you use vanilla dmenu, and not one patched with eye candy
-    lineNumber=$(echo "$miniList" | cut -d " " -f 2- | nl -w 3 -n rn | sed -r 's/^([ 0-9]+)[ \t]*(.*)$/\1 - \2/' | dmenu -b -i -x 415 -y $yPos -w 450 -l $linesDisplayed -h 20 -fn 'Lucida Grande 8' -nb '#201F1D' -nf '#eddec9' -sb '#8F3724' -sf '#EDDEC9' -p 'Hidden:' | cut -d '-' -f -1)
-    echo $lineNumber
+    lineNumber=$(echo "$miniList" | cut -d " " -f 3- | nl -w 3 -n rn | sed -r 's/^([ 0-9]+)[ \t]*(.*)$/\1 - \2/' | dmenu -b -i -x 415 -y $yPos -w 450 -l $linesDisplayed -h 20 -fn 'Lucida Grande 8' -nb '#201F1D' -nf '#eddec9' -sb '#8F3724' -sf '#EDDEC9' -p 'Hidden:' | cut -d '-' -f -1)
 
     # If you use vanilla dmenu, enable the following line:
-    #lineNumber=$(echo "$miniList" | cut -d " " -f 2- | dmenu -b -i -l $linesDisplayed | cut -d ' ' -f 1)
+    #lineNumber=$(echo "$miniList" | cut -d " " -f 2- | nl -w 3 -n rn | sed -r 's/^([ 0-9]+)[ \t]*(.*)$/\1 - \2/' | dmenu -b -i -l $linesDisplayed -p 'Hidden:' | cut -d '-' -f -1)
 
     # If you exited dmenu without selecting anything or if the list was empty
     [ -z "$lineNumber" -o "$miniList" = " Nothing is hidden!" ] && exit
 
     # Show the selected hidden window
     selectedID=$(sed -n "$lineNumber p" $file | cut -d ' ' -f 1)
-
-    # Remove the updatePanel part if you don't use it
+    selectedDesktop=$(sed -n "$lineNumber p" $file | cut -d ' ' -f 2)
+    xdotool set_desktop $selectedDesktop
     xdo show $selectedID && sed -i "${lineNumber}d" $file && updatePanel $(($lines - 1))
-;;
+    ;;
+last)
+    lines=$(wc -l < $file)
+    selectedID=$(tail -n 1 $file | cut -d ' ' -f 1)
+    xdo show $selectedID && sed -i "${lineNumber}d" $file && updatePanel $(($lines - 1))
+    ;;
 dzen)
     # Loads color and font settings
     . panel-settings
@@ -86,12 +92,11 @@ dzen)
     fi
 
     (echo "^fg(#878438)Hidden^fg() windows:"
-    echo "$miniList" | cut -d " " -f 2- | nl -w 3 -n rn | sed -r 's/^([ 0-9]+)[ \t]*(.*)$/\^bg(#9D534A) \^bg(#201F1D)\1 \^bg() \2/') | dzen2 -p -m -x -408 -y 18 -w 408 -h 20 -fn "$dzen_font" -fg "$dzen_fg" -bg "$dzen_bg2" -l $lines -e "onstart=uncollapse;button1=menuprint,exit;button3=exit" | while read line; do
+    echo "$miniList" | cut -d " " -f 2- | nl -w 3 -n rn | sed -r 's/^([ 0-9]+)[ \t]*(.*)$/\^bg(#9D534A) \^bg(#201F1D)\1 \^bg() \2/') | dzen2 -p -m -y 18 -x -408 -w 408 -h 20 -fn "$dzen_font" -fg "$dzen_fg" -bg "$dzen_bg2" -l $lines -e "onstart=uncollapse;button1=menuprint,exit;button3=exit" | while read line; do
         line=$(echo $line | cut -d ' ' -f 1)
         selectedID=$(sed -n "$line p" $file | cut -d ' ' -f 1)
 
-        # Remove the updatePanel part if you don't use it
         xdo show $selectedID && sed -i "${line}d" $file && updatePanel $(($lines - 1))
     done
-;;
+    ;;
 esac

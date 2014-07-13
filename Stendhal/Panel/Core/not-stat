@@ -115,7 +115,7 @@ case $1 in
         fi
 
         volumeValue="$(amixer -q | grep -A5 Master | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)"
-        if [ "$(amixer -q | grep -m 5 on | cut -sd'[' -f4 | cut -d']' -f1)" == "off" ]
+        if [ "$(amixer -q | grep '\[on\]\|\[off\]' | head -n 1 | cut -sd'[' -f3 | cut -d']' -f1)" = "off" ]
         then
             icon=" "
         elif [ $volumeValue -eq 0 ]

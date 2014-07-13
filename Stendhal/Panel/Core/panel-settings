@@ -34,8 +34,8 @@ dzen_popup_path="/tmp/dslider.pid"
 startmenu_cmd="mygtkmenu ~/.config/GTKmenu/AppleMenu > /dev/null"
 
 ### Icon
-#start_icon=" "
-start_icon="  "
+start_icon=" "
+#start_icon="  "
 #start_icon=" Menu "
 
 ### Colors

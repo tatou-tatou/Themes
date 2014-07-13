@@ -47,10 +47,10 @@ mkfifo "/tmp/dzen-menu-fifo"
 
 # NUMBER OF LINES
 lines=$(wc -l < $file)
-#if [ "$lines" -gt 6 ]
-#then
-#   lines=6
-#fi
+if [ "$lines" -gt 10 ]
+then
+   lines=10
+fi
 
 # CREATE THE POPUP
 (echo "$title"
